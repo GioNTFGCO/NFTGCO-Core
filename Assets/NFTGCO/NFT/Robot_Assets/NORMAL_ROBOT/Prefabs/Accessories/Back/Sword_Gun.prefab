@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4889087816467846191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4214848041746864393}
+  m_Layer: 0
+  m_Name: Sword_Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4214848041746864393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4889087816467846191}
+  m_LocalRotation: {x: -3.469447e-18, y: 5.4805386e-14, z: -6.3966946e-14, w: 1}
+  m_LocalPosition: {x: -0.0000000012931619, y: -6.974356e-27, z: -0.0000000020102213}
+  m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1290602000463181008}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1613303322670355259
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4214848041746864393}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07999997
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.08000001
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.07999998
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00014344792
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.07401515
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.018193716
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.14335993
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.69242185
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.1557008
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.68975157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+      propertyPath: m_Name
+      value: BACK_SWORD_GUN
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+--- !u!4 &1290602000463181008 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c8969aeefac237d4c82aff5ce72a5c5b, type: 3}
+  m_PrefabInstance: {fileID: 1613303322670355259}
+  m_PrefabAsset: {fileID: 0}
