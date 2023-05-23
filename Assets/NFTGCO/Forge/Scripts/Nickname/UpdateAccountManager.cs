@@ -12,12 +12,15 @@ namespace NFTGCO
     {
         [SerializeField] private UpdateAccountUi _updateAccountUi;
 
-        public void CheckFirstSocialLogin()
+        public bool CheckFirstSocialLogin()
         {
+            bool state = false;
             if (Config.Instance.LoginType == "social" && ForgeStoredSettings.Instance.AccountDTOResponse.name == ForgeStoredSettings.Instance.AccountDTOResponse.email)
             {
                 //open panel here
             }
+
+            return state;
         }
         private void UpdateUserNickname()
         {
