@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+
 namespace SceneField.Core
 {
     public class SceneLoaderController : MonoBehaviour
     {
         [SerializeField] private SceneFieldConvertor _loadingScene;
         [SerializeField] private SceneFieldConvertor _levelScene;
+        [SerializeField] private string _levelKey;
         private AsyncOperation _loadingSceneAsync;
+
         public void StartLevel()
         {
             _loadingSceneAsync = SceneManager.LoadSceneAsync(_loadingScene);
@@ -26,6 +30,10 @@ namespace SceneField.Core
                 _loadingSceneAsync.allowSceneActivation = true;
             }
             SceneManager.LoadSceneAsync(levelScene);
+        }
+        public void LoadSceneAddressable()
+        {
+            Addressables.LoadSceneAsync(_levelKey);
         }
     }
 }

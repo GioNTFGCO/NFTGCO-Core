@@ -11,5 +11,4 @@ public static class NTFGCOApi
     public const string ACCOUNT_BASE_URL = "/api/account/v1";
     public const string NFT_BASE_URL = "/api/nft/v1";
     public const string GAME_BASE_URL = "/api/games/v1/games";
-
 }
