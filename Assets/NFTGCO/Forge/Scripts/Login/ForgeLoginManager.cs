@@ -16,20 +16,22 @@ namespace Forge
         [SerializeField] private ForgeLoginUi _forgeLoginUi;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
         [SerializeField] private UpdateAccountManager _updateAccountManager;
+        [SerializeField] private ForgeLoggedSessionManager _forgeLoggedSessionManager;
 
-        [Space]
-        [Header("Test only")]
-        [SerializeField] private string _testUserName;
+        [Space] [Header("Test only")] [SerializeField]
+        private string _testUserName;
+
         [SerializeField] private string _testUserPassword;
         [SerializeField] private string _manualToken;
 
-        [Space]
-        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton = new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
+        [Space] [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
+            new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
 
         private void OnEnable()
         {
             _forgeLoginServer.OnAuthFinish += OnLoginSuccess;
         }
+
         private void OnDisable()
         {
             _forgeLoginServer.OnAuthFinish -= OnLoginSuccess;
@@ -47,18 +49,22 @@ namespace Forge
             _forgeLoginUi.Init(() => AuthWithUserData(), () => ForgetPassword());
 
             #region Auto Login
+
             if (!string.IsNullOrEmpty(Config.Instance.RefreshToken))
             {
                 _forgeManagerUi.ShowHideBlockPanel(true);
                 _forgeLoginServer.RefreshToken();
             }
+
             #endregion
         }
 
         public void AuthWithUserData()
         {
-            AuthApi.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(), _forgeLoginServer.AuthWithCredentialsCallback);
+            AuthApi.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(),
+                _forgeLoginServer.AuthWithCredentialsCallback);
         }
+
         public void LoginWithToken(string token)
         {
             _forgeLoginServer.LoginWithToken(token);
@@ -68,13 +74,15 @@ namespace Forge
         {
             AuthApi.ForgetPasswordRequest(_forgeLoginUi.GetForgetPasswordEmail(), ForgetPasswordCallback);
         }
+
         private void ForgetPasswordCallback(RequestException exception, string response)
         {
-            if (exception == null)//success
+            if (exception == null) //success
             {
                 Debug.Log("The mail has been sent. Please verify your inbox or Junk emails.");
                 _forgeLoginUi.EnableEmailSentPanel();
             }
+
             if (exception != null)
             {
                 if (exception.IsHttpError)
@@ -88,6 +96,7 @@ namespace Forge
         {
             _forgeLoginServer.RefreshToken();
         }
+
         private void OnLoginSuccess()
         {
             _forgeManagerUi.ShowHideBlockPanel(false);
@@ -97,11 +106,27 @@ namespace Forge
             if (ForgeStoredSettings.Instance.AccountDTOResponse != null)
             {
                 UiMessage.OnMessageSent?.Invoke("Auth success");
-                _forgeManagerUi.ShowPanel("LoggedSession");
+                //show the logged session panel
+                //_forgeManagerUi.ShowPanel("LoggedSession");
+                _forgeLoggedSessionManager.StartGame();
 
                 //check if first time (check the nickname), if the nickname is empty, then it is the first time
                 //then show the nickname panel
-                _updateAccountManager.CheckFirstSocialLogin();
+                //if not, then start the game automatically
+                if (_updateAccountManager == null)
+                {
+                    return;
+                }
+
+                if (!_updateAccountManager.CheckFirstSocialLogin())
+                {
+                    //start game automatically
+                    _forgeLoggedSessionManager.StartGame();
+                }
+                //show the nickname panel
+                else
+                {
+                }
             }
             else
             {
@@ -110,10 +135,12 @@ namespace Forge
         }
 
         #region Test only
+
         private void LoginWithManualToken()
         {
             _forgeLoginServer.LoginWithToken(_manualToken);
         }
+
         #endregion
     }
 }

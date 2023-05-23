@@ -6413,6 +6413,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144233536}
   m_CullTransparentMesh: 1
+--- !u!114 &1149794200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4271662546312756291, guid: fa7e20826143e984eaf29c5777410e07, type: 3}
+  m_PrefabInstance: {fileID: 4271662547271156372}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f428d9e8beea8b140812e481ba053ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1191047169
 GameObject:
   m_ObjectHideFlags: 0
@@ -12338,6 +12349,10 @@ PrefabInstance:
       propertyPath: _testUserPassword
       value: Watwat123?
       objectReference: {fileID: 0}
+    - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: _forgeLoggedSessionManager
+      value: 
+      objectReference: {fileID: 1149794200}
     - target: {fileID: 7918563414664375046, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _errorText
       value: 

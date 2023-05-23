@@ -19,14 +19,14 @@ namespace Forge
             _forgeLoggedSessionUi.Init(() => StartGame(), () => LogOut());
         }
 
-        private void StartGame()
+        public void StartGame()
         {
             if (_sceneLoader == null)
                 return;
 
             _sceneLoader.StartLevel();
         }
-        private void LogOut()
+        public void LogOut()
         {
             PlayerPrefs.DeleteKey(Config.ACCESS_TOKEN);
             PlayerPrefs.DeleteKey(Config.REFRESH_TOKEN);
