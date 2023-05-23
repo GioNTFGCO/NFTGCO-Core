@@ -9,25 +9,21 @@ namespace Forge.API
 {
     public static class GameApi
     {
-        private const string BASE_URL = "https://dev.gaxos99.com";
-        private const string CONTENT_TYPE = "application/json";
-        private const string GAME_BASE_URL = "/api/game/v1/games";
-
         public static void GetGamesRequest(Action<RequestException, List<GameDTO>> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "Bearer " + BASE_URL);
-            RequestHelper currentRequest = new RequestHelper
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
-                Uri = BASE_URL + GAME_BASE_URL,
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + NTFGCOApi.GAME_BASE_URL,
                 EnableDebug = true,
                 Headers = headers,
             };
 
             Debug.Log("Get request: GetGames");
 
-            RestClient.Get(currentRequest, (err, res) =>
+            RestClient.Get(request, (err, res) =>
             {
                 List<GameDTO> games = Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameDTO>>(res.Text);
                 callback(err, games);
@@ -37,18 +33,18 @@ namespace Forge.API
         public static void GetGameByIdRequest(long gameId, Action<RequestException, GameDTO> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "Bearer " + BASE_URL);
-            RequestHelper currentRequest = new RequestHelper
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
-                Uri = BASE_URL + $"{GAME_BASE_URL}/{gameId.ToString()}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + $"{NTFGCOApi.GAME_BASE_URL}/{gameId.ToString()}",
                 EnableDebug = true,
                 Headers = headers,
             };
 
             Debug.Log("Get request: GetGameById");
 
-            RestClient.Get(currentRequest, (err, res) =>
+            RestClient.Get(request, (err, res) =>
             {
                 callback(err, JsonUtility.FromJson<GameDTO>(res.Text));
             });
@@ -57,19 +53,19 @@ namespace Forge.API
         public static void GetLatestGameStateRequest(long gameId, string userId, Action<RequestException, GameStateDTO> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {BASE_URL}");
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
 
-            RequestHelper currentRequest = new RequestHelper
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
                 Headers = headers,
-                Uri = BASE_URL + $"{GAME_BASE_URL}/state/{gameId.ToString()}/{userId}",
+                Uri = NTFGCOApi.BASE_URL + $"{NTFGCOApi.GAME_BASE_URL}/state/{gameId.ToString()}/{userId}",
                 EnableDebug = true,
             };
 
             Debug.Log("Get request: GetLatestGameState");
 
-            RestClient.Get(currentRequest, (err, res) =>
+            RestClient.Get(request, (err, res) =>
             {
                 callback(err, Newtonsoft.Json.JsonConvert.DeserializeObject<GameStateDTO>(res.Text));
             });
@@ -78,18 +74,18 @@ namespace Forge.API
         public static void GetGameEventsRequest(long gameId, string userId, System.DateTime from, System.DateTime to, Action<RequestException, List<GameEventDTO>> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "Bearer " + BASE_URL);
-            RequestHelper currentRequest = new RequestHelper
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
                 Headers = headers,
-                Uri = BASE_URL + $"{GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" + from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" + to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
+                Uri = NTFGCOApi.BASE_URL + $"{NTFGCOApi.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" + from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" + to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
                 EnableDebug = true,
             };
 
             Debug.Log("Get request: GetGameEvents");
 
-            RestClient.Get(currentRequest, (err, res) =>
+            RestClient.Get(request, (err, res) =>
             {
                 callback(err, Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameEventDTO>>(res.Text));
             });
@@ -98,12 +94,12 @@ namespace Forge.API
         public static void CreateGameEventRequest(long gameId, string userId, CreateGameEventDTO requestData, Action<RequestException, string> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "Bearer " + BASE_URL);
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
 
-            RequestHelper currentRequest = new RequestHelper
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
-                Uri = BASE_URL + $"{GAME_BASE_URL}/event/{gameId.ToString()}/{userId}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + $"{NTFGCOApi.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}",
                 EnableDebug = true,
                 Headers = headers,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
@@ -111,7 +107,7 @@ namespace Forge.API
 
             Debug.Log("Post request: CreateGameEvent");
 
-            RestClient.Post(currentRequest, (err, res) =>
+            RestClient.Post(request, (err, res) =>
             {
                 callback(err, "Success!");
             });
@@ -120,12 +116,12 @@ namespace Forge.API
         public static void CreateGameStateRequest(long gameId, string userId, CreateGameStateDTO requestData, Action<RequestException, string> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "Bearer " + BASE_URL);
+            headers.Add("Authorization", $"Bearer {NTFGCOApi.BASE_URL}");
 
-            RequestHelper currentRequest = new RequestHelper
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE,
-                Uri = BASE_URL + $"{GAME_BASE_URL}/state/{gameId.ToString()}/{userId}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + $"{NTFGCOApi.GAME_BASE_URL}/state/{gameId.ToString()}/{userId}",
                 EnableDebug = true,
                 Headers = headers,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
@@ -133,7 +129,7 @@ namespace Forge.API
 
             Debug.Log("Post request: CreateGameState");
 
-            RestClient.Post(currentRequest, (err, res) =>
+            RestClient.Post(request, (err, res) =>
             {
                 callback(err, "Success!");
             });

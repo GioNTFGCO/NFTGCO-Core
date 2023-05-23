@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Forge.API;
+using NFTGCO;
 using NFTGCO.Core.RestClient;
 using NFTGCO.Models.DTO;
 using SceneField.Core;
 using UnityEngine;
+
 namespace Forge
 {
     public class ForgeLoginManager : MonoBehaviour
@@ -13,6 +15,7 @@ namespace Forge
         [SerializeField] private ForgeLoginServer _forgeLoginServer;
         [SerializeField] private ForgeLoginUi _forgeLoginUi;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
+        [SerializeField] private UpdateAccountManager _updateAccountManager;
 
         [Space]
         [Header("Test only")]
@@ -95,6 +98,10 @@ namespace Forge
             {
                 UiMessage.OnMessageSent?.Invoke("Auth success");
                 _forgeManagerUi.ShowPanel("LoggedSession");
+
+                //check if first time (check the nickname), if the nickname is empty, then it is the first time
+                //then show the nickname panel
+                _updateAccountManager.CheckFirstSocialLogin();
             }
             else
             {

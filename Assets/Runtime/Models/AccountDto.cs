@@ -13,5 +13,7 @@ namespace NFTGCO.Models.DTO
         public string userId;
         public string admin;
         public string enabled;
+        public int totalXp;
+        public int sprintXp;
     }
 }

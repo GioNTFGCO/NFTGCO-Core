@@ -53,16 +53,15 @@ namespace Forge
         }
         private void CreateAvatar()
         {
-            NFTApi.CreateInitialAvatarRequest(Config.Instance.AccessToken, CreateAvatarCallback);
+            NFTApi.CreateInitialAvatarRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.id, CreateAvatarCallback);
         }
 
-        public NFTApi.AvatarDataDTO avatarData;
-        private void CreateAvatarCallback(RequestException exception, NFTApi.AvatarDataDTO response)
+        public NFTGCO.Models.DTO.AvatarDataDTO avatarData;
+        private void CreateAvatarCallback(RequestException exception, NFTGCO.Models.DTO.AvatarDataDTO response)
         {
-            Debug.Log(response.id);
             if (exception == null)
             {
-                Debug.Log($"Create avatar: {response}");
+                Debug.Log($"Create avatar: {response.id}");
                 ForgeStoredSettings.Instance.ClearData();
                 _forgeLoginNFT.GetNFTS();
                 avatarData = response;
@@ -85,11 +84,10 @@ namespace Forge
                 Debug.Log("Get Account Data Callback.");
                 ForgeStoredSettings.Instance.SetAccountDTOResponse(response);
                 OnAuthFinish?.Invoke();
-
-                //check if first time (check the nickname), if the nickname is empty, then it is the first time
-                //then show the nickname panel
             }
         }
+
+
         public void AuthWithCredentialsCallback(RequestException exception, AuthResponseDTO response)
         {
             if (exception != null)

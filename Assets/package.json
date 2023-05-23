@@ -1,7 +1,7 @@
 {
     "name": "com.nftgco.corepackage",
     "version": "1.4.0",
-    "displayName": "NFTGCO Core",
+    "displayName": "NFTGCOCore",
     "description": "Core for login, registration and creation of robots in runtime. This package contains the core base for the correct functionality of the different services and features.",
     "author": {
         "name": "NFT Gaming Company Inc.",

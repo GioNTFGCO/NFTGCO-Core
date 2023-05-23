@@ -93,6 +93,9 @@ namespace NFTGCO
             else
             {
                 Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+                //set social name in forge stored settings, to use in the future
+                ForgeStoredSettings.Instance.SetSocialName(task.Result.DisplayName);
+                //start login with google token exchange
                 LoginWithGoogle(task.Result.IdToken);
             }
         }

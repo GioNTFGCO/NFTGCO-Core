@@ -11,7 +11,6 @@ namespace Forge.API
 {
     public static class AuthApi
     {
-        private const string BASE_URL = "https://dev.gaxos99.com";
         private const string GRANT_TYPE = "grant_type";
         private const string GRANTTYPE = "grantType";
         private const string NFTGCO_SERVICE = "nftgco-service";
@@ -20,10 +19,6 @@ namespace Forge.API
         private const string PASSWORD = "password";
         private const string REFRESH_TOKEN = "/token-exchange/refresh";
 
-        private const string CONTENT_TYPE_DATA = "application/json";
-        private const string CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
-
-        private const string AUTH_BASE_URL = "/api/account/v1";
         private const string TOKEN_ENDPOINT = "/auth/realms/nftgco-service/protocol/openid-connect/token";
         private const string FORGET_PASSWORD_ENDPOINT = "/password/forgot";
         private const string TOKEN_EXCHANGE = "/token-exchange";
@@ -46,8 +41,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_FORM,
-                Uri = BASE_URL + TOKEN_ENDPOINT,
+                ContentType = NTFGCOApi.CONTENT_TYPE_URLENCODED,
+                Uri = NTFGCOApi.BASE_URL + TOKEN_ENDPOINT,
                 EnableDebug = true,
                 BodyRaw = data
             };
@@ -74,8 +69,8 @@ namespace Forge.API
         {
             RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_DATA,
-                Uri = BASE_URL + AUTH_BASE_URL + REFRESH_TOKEN,
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + NTFGCOApi.ACCOUNT_BASE_URL + REFRESH_TOKEN,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -107,17 +102,18 @@ namespace Forge.API
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {accessToken}");
-            RequestHelper currentRequest = new RequestHelper
+
+            RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_DATA,
-                Uri = $"{BASE_URL}{AUTH_BASE_URL}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}",
                 EnableDebug = true,
                 Headers = headers,
             };
 
             Debug.Log("Get request: GetAccountData");
 
-            RestClient.Get(currentRequest, (err, res) =>
+            RestClient.Get(request, (err, res) =>
             {
                 callback(err, JsonUtility.FromJson<AccountDto>(res.Text));
             });
@@ -133,8 +129,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_DATA,
-                Uri = $"{BASE_URL}{AUTH_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -142,6 +138,27 @@ namespace Forge.API
             Debug.Log("Post request: ForgetPassword");
 
             RestClient.Post(request, (err, res) =>
+            {
+                callback(err, res.Text);
+            });
+        }
+        public static void UpdateUserNickname(string accessToken, AccountNicknameDTO accountNickcname, Action<RequestException, string> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", $"Bearer {accessToken}");
+
+            RequestHelper request = new RequestHelper
+            {
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}",
+                EnableDebug = true,
+                Headers = headers,
+                Body = Newtonsoft.Json.JsonConvert.SerializeObject(accountNickcname)
+        };
+
+            Debug.Log("Put request: UpdateUserNickname");
+
+            RestClient.Put(request, (err, res) =>
             {
                 callback(err, res.Text);
             });
@@ -158,8 +175,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_DATA,
-                Uri = $"{BASE_URL}{AUTH_BASE_URL}{TOKEN_EXCHANGE}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -182,8 +199,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = CONTENT_TYPE_DATA,
-                Uri = $"{BASE_URL}{AUTH_BASE_URL}{TOKEN_EXCHANGE}",
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };

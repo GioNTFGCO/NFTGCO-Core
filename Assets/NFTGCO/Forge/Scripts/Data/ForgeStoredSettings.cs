@@ -23,6 +23,8 @@ namespace Forge
         [Tooltip("tokenId is the id from blockchain")]
         private long[] _tokenIdAtt;
         private bool _receivedArmors;
+        //social
+        private string _socialName;
 
         public GameStateDTO GameState => _gameState;
         public AccountDto AccountDTOResponse => _accountDTOResponse;
@@ -33,10 +35,18 @@ namespace Forge
         public long[] AvatarTypeAtt => _avatarTypeAtt;
         public long[] TokenIdAtt => _tokenIdAtt;
         public bool ReceivedArmors => _receivedArmors;
+        public string SocialName => _socialName;
 
         public void SetGameStateDTO(GameStateDTO newGameStateDTO) => _gameState = newGameStateDTO;
         public void SetAccountDTOResponse(AccountDto newAccountDto) => _accountDTOResponse = newAccountDto;
         public void SetCurrentNFTXp(long newNFTXp) => _currentNFTXp = newNFTXp;
+
+        //social
+        public void SetSocialName(string newSocialName)
+        {
+            _socialName = newSocialName;
+        }
+
         public void RetrieveRobotParts(List<TokenDetailsDTO> response)
         {
             _receivedArmors = false;
@@ -91,6 +101,10 @@ namespace Forge
         {
             return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[Random.Range(0, _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes.Count)] : 0;
         }
+        public long GetServerTokenByIndex(NFTTokenAttributeEnum nfttoken, int index)
+        {
+            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[index] : 0;
+        }
         public void ClearData()
         {
             _gameState = null;
@@ -99,7 +113,7 @@ namespace Forge
 
             _storedResponse = new List<TokenDetailsDTO>();
             _serverSocketsAccesories = new List<ForgeStore>();
-            
+
             _robotXPAtt = null;
             _mintTypeAtt = null;
             _avatarTypeAtt = null;

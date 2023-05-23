@@ -9,14 +9,11 @@ namespace Forge.API
 {
     public static class RegisterApi
     {
-        private const string BASE_URL = "https://dev.gaxos99.com";
-        private const string CONTENT_TYPE = "application/json";
-        private const string REGISTER_BASE_URL = "/api/account/v1";
         public static void RegisterUserRequest(string user_name, string user_username, string user_email, string user_password, System.Action<RequestException, string> callback)
         {
             RequestHelper request = new RequestHelper
             {
-                Uri = BASE_URL + REGISTER_BASE_URL,
+                Uri = NTFGCOApi.BASE_URL + NTFGCOApi.ACCOUNT_BASE_URL,
                 Body = new RegisterUserInfo
                 {
                     name = user_name,
