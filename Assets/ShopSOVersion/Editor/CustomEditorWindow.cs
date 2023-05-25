@@ -1,231 +1,205 @@
 using UnityEditor;
 using UnityEngine;
+using System;
 using System.Collections.Generic;
-
-using UnityEditor;
-using UnityEngine;
-using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using Newtonsoft.Json;
+using NFTGCOSHOP;
 
-public class CustomWindowEditor : EditorWindow
+public class CustomEditorWindow : EditorWindow
 {
-    private List<Dictionary<string, object>> items;
-    private List<ParameterInfo> parameters;
+    private List<ItemShopClass> myClassList = new List<ItemShopClass>(); // List of objects
+    private List<ItemShopClass> filteredList = new List<ItemShopClass>(); // Filtered list of objects
+    private string savePath = "Assets/Data/data.json"; // JSON file save path
+    private Vector2 scrollPosition; // Scroll position of the window
+    private List<PropertyInfo> itemProperties; // List of properties in ItemShopClass
+    private float[] columnWidths; // Array of column widths
+    private float separatorWidth = 5f; // Width of the separator
+    private string idFilter = ""; // ID filter
 
-    [MenuItem("Window/Custom Window Editor")]
-    public static void OpenWindow()
+    [MenuItem("NFTGCO/Windows/Shop Window")]
+    public static void ShowWindow()
     {
-        CustomWindowEditor window = GetWindow<CustomWindowEditor>();
-        window.titleContent = new GUIContent("Custom Editor");
-        window.Show();
+        CustomEditorWindow window = EditorWindow.GetWindow<CustomEditorWindow>();
+        window.titleContent = new GUIContent("Shop Window");
     }
 
     private void OnEnable()
     {
-        items = new List<Dictionary<string, object>>();
-        parameters = new List<ParameterInfo>();
+        // Get the properties of ItemShopClass using reflection
+        itemProperties = new List<PropertyInfo>(typeof(ItemShopClass).GetProperties());
+
+        // Initialize column widths
+        columnWidths = new float[itemProperties.Count + 1];
+        for (int i = 0; i < columnWidths.Length; i++)
+        {
+            columnWidths[i] = 100f;
+        }
     }
 
     private void OnGUI()
     {
-        EditorGUILayout.BeginVertical();
+        EditorGUILayout.LabelField("List of Items to display in Shop:");
 
-        // Display the parameters
-        DisplayParameters();
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition); // Start the vertical scroll view
 
-        // Display the table form
-        DisplayTableForm();
+        // Table header
+        EditorGUILayout.BeginHorizontal();
 
-        // Add new item button
-        if (GUILayout.Button("Add Item"))
+        GUILayout.Label("#", GUILayout.Width(columnWidths[0])); // Row number column
+
+        // Show column headers and separators
+        for (int i = 0; i < itemProperties.Count; i++)
         {
-            AddItem();
+            GUILayout.BeginVertical(GUILayout.Width(columnWidths[i + 1]));
+
+            GUILayout.Label(itemProperties[i].Name);
+
+            Rect separatorRect = GUILayoutUtility.GetLastRect();
+            separatorRect.x += separatorRect.width - separatorWidth / 2;
+            separatorRect.width = separatorWidth;
+            separatorRect.height = EditorGUIUtility.currentViewWidth;
+            DragSeparator(separatorRect, i + 1);
+
+            GUILayout.EndVertical();
         }
 
-        // Remove last item button
-        if (GUILayout.Button("Remove Last Item"))
+        GUILayout.Label("Actions", GUILayout.Width(50)); // Actions column
+
+        EditorGUILayout.EndHorizontal();
+
+        // Apply filter if ID filter is not empty
+        if (!string.IsNullOrEmpty(idFilter))
         {
-            RemoveLastItem();
+            filteredList = myClassList.FindAll(obj => obj.ItemId.Contains(idFilter));
+        }
+        else
+        {
+            filteredList = myClassList;
         }
 
-        EditorGUILayout.EndVertical();
-
-        // Save and Load buttons
-        if (GUILayout.Button("Save"))
+        // Show the list of objects
+        for (int i = 0; i < filteredList.Count; i++)
         {
-            SaveData();
-        }
+            ItemShopClass myObject = filteredList[i];
+            EditorGUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("Load"))
-        {
-            LoadData();
-        }
-    }
+            GUILayout.Label((i + 1).ToString(), GUILayout.Width(columnWidths[0])); // Row number
 
-    private void DisplayParameters()
-    {
-        EditorGUILayout.Space();
-
-        EditorGUILayout.LabelField("Parameters:");
-
-        foreach (ParameterInfo parameter in parameters)
-        {
-            EditorGUILayout.LabelField(parameter.Name);
-        }
-
-        EditorGUILayout.Space();
-    }
-
-    private void DisplayTableForm()
-    {
-        for (int i = 0; i < items.Count; i++)
-        {
-            Dictionary<string, object> item = items[i];
-
-            EditorGUILayout.BeginVertical(GUI.skin.box);
-
-            // Display the properties of the item
-            foreach (KeyValuePair<string, object> property in item)
+            for (int j = 0; j < itemProperties.Count; j++)
             {
-                string propertyName = property.Key;
-                object propertyValue = property.Value;
+                PropertyInfo property = itemProperties[j];
+                Type propertyType = property.PropertyType;
 
-                // Display the property name and input field
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(propertyName);
-                item[propertyName] = DisplayPropertyValue(propertyValue);
-                EditorGUILayout.EndHorizontal();
-            }
+                // Set column width using GUILayoutOption
+                GUILayoutOption[] options = { GUILayout.Width(columnWidths[j + 1]) };
 
-            EditorGUILayout.EndVertical();
-        }
-    }
-
-    private object DisplayPropertyValue(object value)
-    {
-        // Display the property value based on its type
-        if (value is int)
-        {
-            return EditorGUILayout.IntField((int)value);
-        }
-        else if (value is float)
-        {
-            return EditorGUILayout.FloatField((float)value);
-        }
-        else if (value is string)
-        {
-            return EditorGUILayout.TextField((string)value);
-        }
-        else if (value is bool)
-        {
-            return EditorGUILayout.Toggle((bool)value);
-        }
-        else if (value is Vector3)
-        {
-            return EditorGUILayout.Vector3Field("", (Vector3)value);
-        }
-        // Add additional cases for other supported property types
-
-        return value;
-    }
-
-    private void AddItem()
-    {
-        Dictionary<string, object> newItem = new Dictionary<string, object>();
-        items.Add(newItem);
-    }
-
-    private void RemoveLastItem()
-    {
-        if (items.Count > 0)
-        {
-            items.RemoveAt(items.Count - 1);
-        }
-    }
-
-    private void SaveData()
-    {
-        // Implement the logic to save your data here
-        // Example using PlayerPrefs:
-
-        string serializedData = JsonUtility.ToJson(items);
-        PlayerPrefs.SetString("CustomWindowEditorData", serializedData);
-        PlayerPrefs.Save();
-    }
-
-    private void LoadData()
-    {
-        // Implement the logic to load your data here
-        // Example using PlayerPrefs:
-
-        string serializedData = PlayerPrefs.GetString("CustomWindowEditorData");
-        items = JsonUtility.FromJson<List<Dictionary<string, object>>>(serializedData);
-    }
-
-    private void OnSelectionChange()
-    {
-        parameters.Clear();
-
-        if (Selection.activeGameObject != null)
-        {
-            Component[] components = Selection.activeGameObject.GetComponents<Component>();
-
-            foreach (Component component in components)
-            {
-                MethodInfo[] methods = component.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-
-                foreach (MethodInfo method in methods)
+                if (propertyType == typeof(string))
                 {
-                    if (method.Name == "MyMethod") // Replace "MyMethod" with the actual method name you want to inspect
-                    {
-                        parameters.AddRange(method.GetParameters());
-                    }
+                    property.SetValue(myObject, EditorGUILayout.TextField((string)property.GetValue(myObject), options));
+                }
+                else if (propertyType == typeof(int))
+                {
+                    property.SetValue(myObject, EditorGUILayout.IntField((int)property.GetValue(myObject), options));
+                }
+                else if (propertyType.IsEnum)
+                {
+                    property.SetValue(myObject, EditorGUILayout.EnumPopup((Enum)property.GetValue(myObject), options));
                 }
             }
+
+            // Button to delete the current object
+            if (GUILayout.Button("Delete", GUILayout.Width(50)))
+            {
+                myClassList.Remove(myObject);
+                break;
+            }
+
+            EditorGUILayout.EndHorizontal();
         }
 
-        Repaint();
-    }
-}
+        EditorGUILayout.EndScrollView(); // End the vertical scroll view
 
+        EditorGUILayout.Space();
 
-[System.Serializable]
-public class MyClass
-{
-    public string property1;
-    public int property2;
-}
+        EditorGUILayout.BeginHorizontal();
 
-public class MyClassTable
-{
-    private List<MyClass> items;
+        GUILayout.Label("ID Filter:", GUILayout.Width(70));
+        idFilter = EditorGUILayout.TextField(idFilter);
 
-    public MyClassTable()
-    {
-        items = new List<MyClass>();
-    }
+        EditorGUILayout.EndHorizontal();
 
-    public List<MyClass> GetItems()
-    {
-        return items;
-    }
+        EditorGUILayout.Space();
 
-    public void SetItems(List<MyClass> newItems)
-    {
-        items = newItems;
-    }
-
-    public void AddItem()
-    {
-        MyClass newItem = new MyClass();
-        items.Add(newItem);
-    }
-
-    public void RemoveLastItem()
-    {
-        if (items.Count > 0)
+        // Button to add a new object to the list
+        if (GUILayout.Button("Add Object"))
         {
-            items.RemoveAt(items.Count - 1);
+            myClassList.Add(new ItemShopClass());
+        }
+
+        EditorGUILayout.Space();
+
+        // Button to save the data to a JSON file
+        if (GUILayout.Button("Save Data"))
+        {
+            SaveDataToJson();
+        }
+
+        // Button to load the data from a JSON file
+        if (GUILayout.Button("Load Data"))
+        {
+            LoadDataFromJson();
+        }
+    }
+
+    // Save the data to a JSON file
+    private void SaveDataToJson()
+    {
+        string jsonData = JsonConvert.SerializeObject(myClassList, Formatting.Indented);
+        File.WriteAllText(savePath, jsonData);
+        AssetDatabase.Refresh();
+        Debug.Log("Data saved to " + savePath);
+    }
+
+    // Load the data from a JSON file
+    private void LoadDataFromJson()
+    {
+        if (File.Exists(savePath))
+        {
+            string jsonData = File.ReadAllText(savePath);
+            myClassList = JsonConvert.DeserializeObject<List<ItemShopClass>>(jsonData);
+            Debug.Log("Data loaded from " + savePath);
+        }
+        else
+        {
+            Debug.LogWarning("JSON file not found at " + savePath);
+        }
+    }
+
+    // Handle dragging of column separators
+    private void DragSeparator(Rect separatorRect, int columnIndex)
+    {
+        EditorGUIUtility.AddCursorRect(separatorRect, MouseCursor.ResizeHorizontal);
+
+        if (Event.current.type == EventType.MouseDown && separatorRect.Contains(Event.current.mousePosition))
+        {
+            // Start dragging separator
+            EditorGUIUtility.hotControl = GUIUtility.GetControlID(FocusType.Passive);
+            Event.current.Use();
+        }
+        else if (Event.current.type == EventType.MouseDrag && EditorGUIUtility.hotControl == GUIUtility.GetControlID(FocusType.Passive))
+        {
+            // Drag separator
+            columnWidths[columnIndex] += Event.current.delta.x;
+            columnWidths[columnIndex] = Mathf.Max(columnWidths[columnIndex], 50f); // Minimum width
+            Repaint();
+        }
+        else if (Event.current.type == EventType.MouseUp && EditorGUIUtility.hotControl == GUIUtility.GetControlID(FocusType.Passive))
+        {
+            // Stop dragging separator
+            EditorGUIUtility.hotControl = 0;
+            Event.current.Use();
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NFTGCOSHOP
 {
+    [System.Serializable]
     public class ItemDTO
     {
         public string gameId;

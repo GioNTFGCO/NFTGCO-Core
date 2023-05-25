@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using NFTGCO.Helpers;
 using UnityEngine;
 
 namespace NFTGCOSHOP
 {
+    [System.Serializable]
     public class InventoryItemDTO: ItemDTO
     {
         public int stock;
-        public Dictionary<string, string> paramenters = new Dictionary<string, string>();
+        public UDictionary<string, string> paramenters = new UDictionary<string, string>();
     }
 }

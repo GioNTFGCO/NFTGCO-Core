@@ -5,8 +5,8 @@ using UnityEngine;
 namespace NFTGCOSHOP
 {
     [System.Serializable]
-    public class InventoryDTO
+    public class ItemsFromServer
     {
-        public List<InventoryItemDTO> items = new List<InventoryItemDTO>();
+        public List<ItemDTO> itemsDTO = new List<ItemDTO>();
     }
 }

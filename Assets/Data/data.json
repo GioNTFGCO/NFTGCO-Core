@@ -1,0 +1,42 @@
+[
+  {
+    "Cost": 0,
+    "Quantity": 0,
+    "ItemRarityEnum": 0,
+    "ShopTypeEnum": 0,
+    "ItemTimeResetEnum": 0,
+    "ItemId": "asd",
+    "ItemName": null,
+    "ItemDescription": null
+  },
+  {
+    "Cost": 0,
+    "Quantity": 0,
+    "ItemRarityEnum": 0,
+    "ShopTypeEnum": 0,
+    "ItemTimeResetEnum": 0,
+    "ItemId": "qwe",
+    "ItemName": null,
+    "ItemDescription": null
+  },
+  {
+    "Cost": 0,
+    "Quantity": 0,
+    "ItemRarityEnum": 0,
+    "ShopTypeEnum": 0,
+    "ItemTimeResetEnum": 0,
+    "ItemId": "zxc",
+    "ItemName": null,
+    "ItemDescription": null
+  },
+  {
+    "Cost": 0,
+    "Quantity": 0,
+    "ItemRarityEnum": 0,
+    "ShopTypeEnum": 0,
+    "ItemTimeResetEnum": 0,
+    "ItemId": "dsa",
+    "ItemName": null,
+    "ItemDescription": null
+  }
+]
