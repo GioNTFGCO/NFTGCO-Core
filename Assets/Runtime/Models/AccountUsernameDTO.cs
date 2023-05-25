@@ -6,7 +6,7 @@ using System;
 namespace NFTGCO.Models.DTO
 {
     [Serializable]
-    public class AccountNicknameDTO
+    public class AccountUsernameDTO
     {
         public string name;
         public string username;

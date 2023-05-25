@@ -142,7 +142,7 @@ namespace Forge.API
                 callback(err, res.Text);
             });
         }
-        public static void UpdateUserNickname(string accessToken, AccountNicknameDTO accountNickcname, Action<RequestException, string> callback)
+        public static void UpdateUserUsername(string accessToken, AccountUsernameDTO accountNickcname, Action<RequestException, string> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {accessToken}");

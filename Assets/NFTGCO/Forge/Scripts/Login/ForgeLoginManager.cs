@@ -108,24 +108,24 @@ namespace Forge
                 UiMessage.OnMessageSent?.Invoke("Auth success");
                 //show the logged session panel
                 //_forgeManagerUi.ShowPanel("LoggedSession");
-                _forgeLoggedSessionManager.StartGame();
+                //_forgeLoggedSessionManager.StartGame();
 
                 //check if first time (check the nickname), if the nickname is empty, then it is the first time
                 //then show the nickname panel
                 //if not, then start the game automatically
                 if (_updateAccountManager == null)
-                {
                     return;
-                }
-
+                
                 if (!_updateAccountManager.CheckFirstSocialLogin())
                 {
+                    _forgeManagerUi.ShowPanel("LoggedSession");
                     //start game automatically
-                    _forgeLoggedSessionManager.StartGame();
+                    //_forgeLoggedSessionManager.StartGame();
                 }
                 //show the nickname panel
                 else
                 {
+                    _updateAccountManager.OpenUpdateNicknamePanel();
                 }
             }
             else
