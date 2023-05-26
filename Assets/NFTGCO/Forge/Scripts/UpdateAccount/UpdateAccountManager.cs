@@ -6,6 +6,7 @@ using Forge.API;
 using NFTGCO.Core.RestClient;
 using NFTGCO.Helpers;
 using NFTGCO.Models.DTO;
+using SceneField.Core;
 using UnityEngine;
 
 namespace NFTGCO
@@ -13,6 +14,7 @@ namespace NFTGCO
     public class UpdateAccountManager : MonoBehaviour
     {
         [SerializeField] private UpdateAccountUi _updateAccountUi;
+        [SerializeField] private SceneLoaderController _sceneLoaderController;
 
         private void Start()
         {
@@ -61,7 +63,7 @@ namespace NFTGCO
                 username = _updateAccountUi.GetUsername(),
                 email = ForgeStoredSettings.Instance.AccountDTOResponse.email
             };
-            AuthApi.UpdateUserUsername(Config.Instance.AccessToken, accountUsername, UpdateUserUsernameCallback);
+            AccountAPI.UpdateUserUsername(Config.Instance.AccessToken, accountUsername, UpdateUserUsernameCallback);
         }
 
         private void UpdateUserUsernameCallback(RequestException exception, ResponseHelper arg2)
@@ -80,6 +82,8 @@ namespace NFTGCO
                 UiMessage.OnMessageSent?.Invoke($"Your username now is: {_updateAccountUi.GetUsername()}");
                 ForgeStoredSettings.Instance.AccountDTOResponse.username = _updateAccountUi.GetUsername();
                 _updateAccountUi.ClosePanel();
+                if (_sceneLoaderController)
+                    _sceneLoaderController.StartLevel();
             }
         }
     }

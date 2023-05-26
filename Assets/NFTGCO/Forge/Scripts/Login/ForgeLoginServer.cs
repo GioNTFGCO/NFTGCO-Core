@@ -10,14 +10,17 @@ namespace Forge
 {
     public class ForgeLoginServer : MonoBehaviour
     {
+        public System.Action OnAuthFinish;
+
         [SerializeField] private ForgeLoginNFT _forgeLoginNFT;
 
         private string _webURL;
 
-        public System.Action OnAuthFinish;
-
-        [SerializeField] private NFTGCO.Helpers.InspectorButton CreateAvatarButton = new NFTGCO.Helpers.InspectorButton("CreateAvatar");
-        [SerializeField] private NFTGCO.Helpers.InspectorButton GetLastAvatarButton = new NFTGCO.Helpers.InspectorButton("GetLastAvatar");
+        [Space] 
+        [SerializeField] private NFTGCO.Helpers.InspectorButton GetAvailableXPButton =
+            new NFTGCO.Helpers.InspectorButton("GetAvailableXP");   
+        [SerializeField] private NFTGCO.Helpers.InspectorButton TestUpdateUserXPButton =
+            new NFTGCO.Helpers.InspectorButton("TestUpdateUserXP");
 
         public void LoginWithToken(string userToken)
         {
@@ -31,7 +34,6 @@ namespace Forge
             userToken = _webURL.Substring(index + 7);
             Debug.Log($"new URL {userToken}");
 #endif
-
             AuthByToken(userToken, "");
         }
 
@@ -52,43 +54,12 @@ namespace Forge
                 _forgeLoginNFT.GetNFTS();
             }
         }
-        private void CreateAvatar()
-        {
-            NFTApi.CreateInitialAvatarRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.id, CreateAvatarCallback);
-        }
-
-        private void GetLastAvatar()
-        {
-            NFTApi.GetLastAvatar(Config.Instance.AccessToken,ForgeStoredSettings.Instance.AccountDTOResponse.id, GetLastAvatarCallback);
-        }
-
-        private void GetLastAvatarCallback(RequestException arg1, string arg2)
-        {
-            Debug.Log(arg1);
-            Debug.Log(arg2);
-        }
-
-        public NFTGCO.Models.DTO.AvatarDataDTO avatarData;
-        private void CreateAvatarCallback(RequestException exception, NFTGCO.Models.DTO.AvatarDataDTO response)
-        {
-            if (exception == null)
-            {
-                Debug.Log($"Create avatar: {response.id}");
-                ForgeStoredSettings.Instance.ClearData();
-                _forgeLoginNFT.GetNFTS();
-                avatarData = response;
-            }
-            else
-            {
-                Debug.Log(exception);
-            }
-
-        }
 
         public void GetAccountData()
         {
-            AuthApi.GetAccountData(Config.Instance.AccessToken, GetAccountDataCallback);
+            AccountAPI.GetAccountData(Config.Instance.AccessToken, GetAccountDataCallback);
         }
+
         private void GetAccountDataCallback(RequestException exception, AccountDto response)
         {
             if (response != null)
@@ -130,31 +101,66 @@ namespace Forge
                 Debug.Log("(SDK) Get NFTs calling");
             }
         }
-        #region Methods that are never used
+
         public void RefreshToken()
         {
-            AuthApi.RefreshTokenData body = new AuthApi.RefreshTokenData
+            Dictionary<string, string> body = new Dictionary<string, string>()
             {
-                refreshToken = Config.Instance.RefreshToken,
-                loginType = Config.Instance.LoginType
+                { "refreshToken", Config.Instance.RefreshToken },
+                { "loginType", Config.Instance.LoginType }
             };
-            AuthApi.RefreshTokenRequest(body, RefreshTokenCallback);
+
+            AccountAPI.RefreshTokenRequest(body, RefreshTokenCallback);
         }
 
         private void RefreshTokenCallback(RequestException exception, AuthResponseDTO response)
         {
             AuthByToken(response.access_token, response.refresh_token);
         }
-        public void GetUserTotalXpById(string userId)
+
+        public Int64 amountForTest;
+        private void TestUpdateUserXP()
         {
-            // 1st parameter is user id
-            NFTApi.GetTotalXpOfOwnerByUserId(Config.Instance.AccessToken, userId, GetUserTotalXpByIdCallback);
+            UpdateUserXP(amountForTest);
         }
-        private void GetUserTotalXpByIdCallback(RequestException exception, long response)
+        public void UpdateUserXP(Int64 amountXP)
         {
-            // request responds with a <long> number
-            Debug.Log($"Total User Xp: {response}");
+            AccountAPI.UpdateUserXP(Config.Instance.AccessToken, amountXP, UpdateUserXPCallback);
         }
-        #endregion
+
+        private void UpdateUserXPCallback(RequestException exception, ResponseHelper response)
+        {
+            if (exception != null)
+            {
+                Debug.Log($"The game has a error with the server, server retrieve code {exception.StatusCode}");
+            }
+
+            if (response != null)
+            {
+                int result = Int32.Parse(response.Text);
+                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = result;
+                Debug.Log($"User new XP: {response.Text}");
+            }
+        }
+
+        public void GetAvailableXP()
+        {
+            AccountAPI.GetAvailableUserXP(Config.Instance.AccessToken, GetAvailableXPCallback);
+        }
+
+        private void GetAvailableXPCallback(RequestException exception, ResponseHelper response)
+        {
+            if (exception != null)
+            {
+                Debug.Log($"The game has a error with the server, server retrieve code {exception.StatusCode}");
+            }
+
+            if (response != null)
+            {
+                int result = Int32.Parse(response.Text);
+                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = result;
+                Debug.Log($"User XP: {response.Text}");
+            }
+        }
     }
 }

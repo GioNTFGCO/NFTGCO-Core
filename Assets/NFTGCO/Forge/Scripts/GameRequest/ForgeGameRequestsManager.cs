@@ -38,7 +38,7 @@ namespace Forge
 
         public void GetGames()
         {
-            GameApi.GetGamesRequest(GetGamesCallback);
+            GameAPI.GetGamesRequest(GetGamesCallback);
         }
 
         private void GetGamesCallback(RequestException exception, List<GameDTO> games)
@@ -48,7 +48,7 @@ namespace Forge
 
         public void GetGameById()
         {
-            GameApi.GetGameByIdRequest(_catchedGameId, GetGameByIdCallback);
+            GameAPI.GetGameByIdRequest(_catchedGameId, GetGameByIdCallback);
         }
 
         private void GetGameByIdCallback(RequestException exception, GameDTO game)
@@ -58,7 +58,7 @@ namespace Forge
 
         public void GetGameState()
         {
-            GameApi.GetLatestGameStateRequest(_catchedGameId, ForgeStoredSettings.Instance.AccountDTOResponse.id,
+            GameAPI.GetLatestGameStateRequest(_catchedGameId, ForgeStoredSettings.Instance.AccountDTOResponse.id,
                 GetGameStateCallback);
         }
 
@@ -86,7 +86,7 @@ namespace Forge
 
         public void GetGameEvents()
         {
-            GameApi.GetGameEventsRequest(_catchedGameId, ForgeStoredSettings.Instance.AccountDTOResponse.id,
+            GameAPI.GetGameEventsRequest(_catchedGameId, ForgeStoredSettings.Instance.AccountDTOResponse.id,
                 DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1), GetGameEventsCallback);
         }
 
@@ -112,7 +112,7 @@ namespace Forge
 
             #endregion
 
-            GameApi.CreateGameStateRequest(createGameState, SendGameStateCallback);
+            GameAPI.CreateGameStateRequest(createGameState, SendGameStateCallback);
         }
 
         private void SendGameStateCallback(RequestException exception, string response)
@@ -134,7 +134,7 @@ namespace Forge
                 gameEvent.@event[keys[i]] = values[i];
             }
 
-            GameApi.CreateGameEventRequest(gameEvent, SendGameEventCallback);
+            GameAPI.CreateGameEventRequest(gameEvent, SendGameEventCallback);
         }
 
         private void SendGameEventCallback(RequestException exception, string response)

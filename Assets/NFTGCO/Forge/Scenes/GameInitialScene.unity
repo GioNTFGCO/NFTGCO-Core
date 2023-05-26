@@ -13710,6 +13710,10 @@ PrefabInstance:
       propertyPath: _usernameInputField
       value: 
       objectReference: {fileID: 65050848}
+    - target: {fileID: 5315774014487247796, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
+      propertyPath: _sceneLoaderController
+      value: 
+      objectReference: {fileID: 66819933}
     - target: {fileID: 5315774014487247797, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
       propertyPath: m_Name
       value: UpdateAccountManager
@@ -14153,6 +14157,10 @@ PrefabInstance:
     - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _serverToken
       value: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGajYtTmRwUW00RWJCbEc3REdPdUQwUm9DQnhoaWljV3Z1ZzUtSTBiWXBnIn0.eyJleHAiOjE2ODIxMTA3ODcsImlhdCI6MTY4MjA4OTE4NywianRpIjoiNmI1MTJkYTAtZTQ1YS00YTUyLWExMDgtMzExOWI4YmU4N2FhIiwiaXNzIjoiaHR0cHM6Ly9kZXYuZ2F4b3M5OS5jb20vYXV0aC9yZWFsbXMvbmZ0Z2NvLXNlcnZpY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNWMwZDhlMGItZTBlMi00MWY2LWE3ZTctYzEwOGM1NDY2MTQ1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidG9rZW4tZXhjaGFuZ2UtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjY3ZTg4ZTY4LWMyOTktNDIyZS04MTc5LTY1NTc5MTg3MzBiOSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1uZnRnY28tc2VydmljZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJVU0VSIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiNjdlODhlNjgtYzI5OS00MjJlLTgxNzktNjU1NzkxODczMGI5IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJnaW9uZnRnY29AZ21haWwuY29tIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2lvbmZ0Z2NvQGdtYWlsLmNvbSIsImdpdmVuX25hbWUiOiJnaW9uZnRnY29AZ21haWwuY29tIiwiZW1haWwiOiJnaW9uZnRnY29AZ21haWwuY29tIn0.fMMoM6xA-ucdCTBCyL2YESpJvrleidUHhDJrTPrTnJ2PluN4EbdiFMMox613cMkJMLczo7uE2Z7NFocWWMuWwPhpCZvT3wfWgneFvjsFJCUiuyYSp9y--9m72RTS5VnN5LzpFGFKGMqIJewy38T3xNlTTnpbETZ6nMIGVvZorZKjMOMouRjZCzVpzfS46AvgtEVdV0KneaOthbzpudGOKUpcpJ2woRymxwg2B5__ll4ET0lYYHQfXnbH-nqzKN-weDPxNSdkZ8crR_yJycF_yn90K2ULcJeOZfhcHfQEFCsQ_rCGqU6xXenCduBEzYIhiwksxRMY2EHyS_lBlVW-sg
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: amountForTest
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _loginWithUser

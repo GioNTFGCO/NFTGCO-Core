@@ -61,7 +61,7 @@ namespace Forge
 
         public void AuthWithUserData()
         {
-            AuthApi.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(),
+            AccountAPI.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(),
                 _forgeLoginServer.AuthWithCredentialsCallback);
         }
 
@@ -72,7 +72,7 @@ namespace Forge
 
         private void ForgetPassword()
         {
-            AuthApi.ForgetPasswordRequest(_forgeLoginUi.GetForgetPasswordEmail(), ForgetPasswordCallback);
+            AccountAPI.ForgetPasswordRequest(_forgeLoginUi.GetForgetPasswordEmail(), ForgetPasswordCallback);
         }
 
         private void ForgetPasswordCallback(RequestException exception, string response)
@@ -109,18 +109,12 @@ namespace Forge
                 //show the logged session panel
                 //_forgeManagerUi.ShowPanel("LoggedSession");
                 //_forgeLoggedSessionManager.StartGame();
-
-                //check if first time (check the nickname), if the nickname is empty, then it is the first time
-                //then show the nickname panel
-                //if not, then start the game automatically
-                if (_updateAccountManager == null)
-                    return;
                 
                 if (!_updateAccountManager.CheckFirstSocialLogin())
                 {
-                    _forgeManagerUi.ShowPanel("LoggedSession");
+                    //_forgeManagerUi.ShowPanel("LoggedSession");
                     //start game automatically
-                    //_forgeLoggedSessionManager.StartGame();
+                    _forgeLoggedSessionManager.StartGame();
                 }
                 //show the nickname panel
                 else
@@ -135,12 +129,10 @@ namespace Forge
         }
 
         #region Test only
-
         private void LoginWithManualToken()
         {
             _forgeLoginServer.LoginWithToken(_manualToken);
         }
-
         #endregion
     }
 }

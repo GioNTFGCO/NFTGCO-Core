@@ -27,7 +27,7 @@ namespace Forge
 
                 _registerUserUi.GetFormData();
 
-                RegisterApi.RegisterUserRequest(_registerUserUi.UserFormData["name"],
+                RegisterAPI.RegisterUserRequest(_registerUserUi.UserFormData["name"],
                                          _registerUserUi.UserFormData["username"],
                                          _registerUserUi.UserFormData["email"],
                                          _registerUserUi.UserFormData["password"],

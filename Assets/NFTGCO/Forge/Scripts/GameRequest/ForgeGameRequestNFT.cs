@@ -34,7 +34,7 @@ namespace Forge
         private void GetAvailableNFTXpById(long nftId)
         {
             // 1st parameter is NFT id
-            NFTApi.GetNftAvailableXp(Config.Instance.AccessToken, nftId, GetAvailableNFTXpByIdCallback);
+            NFTAPI.GetNftAvailableXp(Config.Instance.AccessToken, nftId, GetAvailableNFTXpByIdCallback);
         }
         private void GetAvailableNFTXpByIdCallback(RequestException exception, long response)
         {
@@ -49,7 +49,7 @@ namespace Forge
             requestData.tokenId = nftId;
             requestData.quantity = xpAmount;
             Debug.Log(requestData.tokenId);
-            NFTApi.IncreaseNftXpRequest(Config.Instance.AccessToken, requestData, IncreaseNftXpCallback);
+            NFTAPI.IncreaseNftXpRequest(Config.Instance.AccessToken, requestData, IncreaseNftXpCallback);
         }
         private void IncreaseNftXpCallback(RequestException exception, long response)
         {
@@ -61,12 +61,12 @@ namespace Forge
         private void GetNFTsById()
         {
             // 1st parameter is user id
-            NFTApi.GetAccountNftsByIdRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.userId, GetNFTSByIdCallback);
+            NFTAPI.GetAccountNftsByIdRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.userId, GetNFTSByIdCallback);
         }
         private void GetNFTsByAddress()
         {
             // 1st parameter is user wallet address
-            NFTApi.GetAccountNftsByWalletAddressRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.walletAddress, GetNFTSByIdCallback);
+            NFTAPI.GetAccountNftsByWalletAddressRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.walletAddress, GetNFTSByIdCallback);
         }
         private void GetNFTSByIdCallback(RequestException exception, List<TokenDetailsDTO> response)
         {
@@ -75,7 +75,7 @@ namespace Forge
         private void GetUserTotalXpById()
         {
             // 1st parameter is user id
-            NFTApi.GetTotalXpOfOwnerByUserId(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.userId, GetUserTotalXpByIdCallback);
+            NFTAPI.GetTotalXpOfOwnerByUserId(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.userId, GetUserTotalXpByIdCallback);
         }
         private void GetUserTotalXpByIdCallback(RequestException exception, long response)
         {

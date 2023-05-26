@@ -102,7 +102,7 @@ namespace NFTGCO
         #region NFTGCO
         private void LoginWithGoogle(string googleUserToken)
         {
-            AuthApi.AuthGoogleRequest(googleUserToken, AuthGoogleCallback);
+            AccountAPI.AuthGoogleRequest(googleUserToken, AuthGoogleCallback);
         }
 
         private void AuthGoogleCallback(RequestException message, AccountExchangeDTO accountExchange)

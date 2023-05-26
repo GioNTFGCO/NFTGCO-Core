@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 
 namespace Forge.API
 {
-    public static class AuthApi
+    public static class AccountAPI
     {
         private const string GRANT_TYPE = "grant_type";
         private const string GRANTTYPE = "grantType";
@@ -43,8 +43,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_URLENCODED,
-                Uri = NTFGCOApi.BASE_URL + TOKEN_ENDPOINT,
+                ContentType = NTFGCOAPI.CONTENT_TYPE_URLENCODED,
+                Uri = NTFGCOAPI.BASE_URL + TOKEN_ENDPOINT,
                 EnableDebug = true,
                 BodyRaw = data
             };
@@ -65,13 +65,13 @@ namespace Forge.API
         /// </summary>
         /// <param name="body"></param>
         /// <param name="callback"></param>
-        public static void RefreshTokenRequest(RefreshTokenData body,
+        public static void RefreshTokenRequest(Dictionary<string, string> body,
             Action<RequestException, AuthResponseDTO> callback)
         {
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = NTFGCOApi.BASE_URL + NTFGCOApi.ACCOUNT_BASE_URL + REFRESH_TOKEN,
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = NTFGCOAPI.BASE_URL + NTFGCOAPI.ACCOUNT_BASE_URL + REFRESH_TOKEN,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -87,12 +87,6 @@ namespace Forge.API
             RestClient.Post(request, (err, res) => { callback(err, JsonUtility.FromJson<AuthResponseDTO>(res.Text)); });
         }
 
-        public class RefreshTokenData
-        {
-            public string refreshToken;
-            public string loginType;
-        }
-
         /// <summary>
         /// Send a request to the server to get the account data
         /// </summary>
@@ -105,8 +99,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}",
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 EnableDebug = true,
                 Headers = headers,
             };
@@ -127,8 +121,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -137,7 +131,12 @@ namespace Forge.API
 
             RestClient.Post(request, (err, res) => { callback(err, res.Text); });
         }
-
+        /// <summary>
+        /// Send a request to the server to update the user nickname
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="accountNickcname"></param>
+        /// <param name="callback"></param>
         public static void UpdateUserUsername(string accessToken, AccountUsernameDTO accountNickcname,
             Action<RequestException, ResponseHelper> callback)
         {
@@ -146,8 +145,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}",
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 EnableDebug = true,
                 Headers = headers,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(accountNickcname))
@@ -156,6 +155,47 @@ namespace Forge.API
             Debug.Log("Put request: UpdateUserNickname");
 
             RestClient.Put(request, callback);
+        }
+        /// <summary>
+        ///  Send a request to the server to update the user XP
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="amountXP"></param>
+        /// <param name="callback"></param>
+        public static void UpdateUserXP(string accessToken, Int64 amountXP, Action<RequestException,ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", $"Bearer {accessToken}");
+            
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/{amountXP}/increase/xp",
+                EnableDebug = true,
+                Headers = headers
+            };
+
+            RestClient.Post(request, callback);
+        }
+        /// <summary>
+        /// Send a request to the server to get the user XP
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="callback"></param>
+        public static void GetAvailableUserXP(string accessToken, Action<RequestException, ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", $"Bearer {accessToken}");
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp/available",
+                EnableDebug = true,
+                Headers = headers
+            };
+
+            RestClient.Get(request, callback);
         }
 
         #region TOKEN_EXCHANGE
@@ -172,8 +212,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -195,8 +235,8 @@ namespace Forge.API
 
             RequestHelper request = new RequestHelper
             {
-                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOApi.BASE_URL}{NTFGCOApi.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };

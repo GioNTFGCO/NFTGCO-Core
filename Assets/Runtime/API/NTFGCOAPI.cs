@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class NTFGCOApi
+public static class NTFGCOAPI
 {
     public const string BASE_URL = "https://dev.gaxos99.com";
     public const string CONTENT_TYPE_JSON = "application/json";

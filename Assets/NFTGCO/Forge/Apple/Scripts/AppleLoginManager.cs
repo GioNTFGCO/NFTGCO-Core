@@ -99,7 +99,7 @@ namespace NFTGCO
         private void LoginWithApple(string appleUserToken)
         {
             Debug.Log($"Sign in with Apple succeeded {appleUserToken}");
-            AuthApi.AuthAppleRequest(appleUserToken, AuthAppleCallback);
+            AccountAPI.AuthAppleRequest(appleUserToken, AuthAppleCallback);
         }
         private void AuthAppleCallback(RequestException message, AccountExchangeDTO accountExchange)
         {
