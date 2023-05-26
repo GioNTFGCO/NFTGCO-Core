@@ -187,5 +187,25 @@ namespace Forge.API
                 callback(err, JsonUtility.FromJson<AvatarDataDTO>(res.Text));
             });
         }
+
+        public static void GetLastAvatar(string accessToken, string id, Action<RequestException,string> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", $"Bearer {accessToken}");
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOApi.CONTENT_TYPE_JSON,
+                Uri = NTFGCOApi.BASE_URL + NTFGCOApi.NFT_BASE_URL + $"/avatar/{id}",
+                EnableDebug = true,
+                Headers = headers
+            };
+            
+            Debug.Log("Get request: GetLastAvatar");
+            RestClient.Get(request, (err, res) =>
+            {
+                callback(err, res.Text);
+            });
+        }
     }
 }

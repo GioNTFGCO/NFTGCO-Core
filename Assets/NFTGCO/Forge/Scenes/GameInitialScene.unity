@@ -9166,12 +9166,12 @@ GameObject:
   - component: {fileID: 1520689757}
   - component: {fileID: 1520689756}
   m_Layer: 5
-  m_Name: Button
+  m_Name: TestChangeUsernameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520689755
 RectTransform:
   m_ObjectHideFlags: 0

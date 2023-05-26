@@ -17,6 +17,7 @@ namespace Forge
         public System.Action OnAuthFinish;
 
         [SerializeField] private NFTGCO.Helpers.InspectorButton CreateAvatarButton = new NFTGCO.Helpers.InspectorButton("CreateAvatar");
+        [SerializeField] private NFTGCO.Helpers.InspectorButton GetLastAvatarButton = new NFTGCO.Helpers.InspectorButton("GetLastAvatar");
 
         public void LoginWithToken(string userToken)
         {
@@ -54,6 +55,17 @@ namespace Forge
         private void CreateAvatar()
         {
             NFTApi.CreateInitialAvatarRequest(Config.Instance.AccessToken, ForgeStoredSettings.Instance.AccountDTOResponse.id, CreateAvatarCallback);
+        }
+
+        private void GetLastAvatar()
+        {
+            NFTApi.GetLastAvatar(Config.Instance.AccessToken,ForgeStoredSettings.Instance.AccountDTOResponse.id, GetLastAvatarCallback);
+        }
+
+        private void GetLastAvatarCallback(RequestException arg1, string arg2)
+        {
+            Debug.Log(arg1);
+            Debug.Log(arg2);
         }
 
         public NFTGCO.Models.DTO.AvatarDataDTO avatarData;

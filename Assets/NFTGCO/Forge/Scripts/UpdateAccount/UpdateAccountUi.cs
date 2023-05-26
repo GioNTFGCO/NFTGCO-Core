@@ -24,6 +24,7 @@ namespace NFTGCO
                 OnClose?.Invoke();
                 ClosePanel();
             });
+            _closePanel.gameObject.SetActive(false);
         }
         public string GetUsername()
         {
