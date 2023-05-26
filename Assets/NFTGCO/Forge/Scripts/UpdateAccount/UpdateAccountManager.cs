@@ -24,7 +24,7 @@ namespace NFTGCO
         public void Init()
         {
             _updateAccountUi.Init(OnUpdateUserUsername, null);
-            //_updateAccountUi.ShowCurrentUsername(ForgeStoredSettings.Instance.AccountDTOResponse.username);
+            _updateAccountUi.ShowCurrentUsername(ForgeStoredSettings.Instance.AccountDTOResponse.username);
         }
 
         public bool CheckFirstSocialLogin()
@@ -43,7 +43,7 @@ namespace NFTGCO
             }
             else
             {
-                Debug.Log("enter a username of at least 3 characters");
+                UiMessage.OnMessageSent?.Invoke("Enter a username of at least 3 characters");
             }
         }
 
@@ -70,13 +70,15 @@ namespace NFTGCO
             {
                 if (exception.StatusCode == 400)////this nickname is already used
                 {
-                    Debug.Log("This username is already used");
+                    UiMessage.OnMessageSent?.Invoke("This username is already used");
                 }
             }
             //server send a 200, means the nickname is changed
             if (arg2.StatusCode==200)
             {
                 //nickname is changed
+                UiMessage.OnMessageSent?.Invoke($"Your username now is: {_updateAccountUi.GetUsername()}");
+                ForgeStoredSettings.Instance.AccountDTOResponse.username = _updateAccountUi.GetUsername();
                 _updateAccountUi.ClosePanel();
             }
         }
