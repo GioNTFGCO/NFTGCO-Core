@@ -11,17 +11,13 @@ public class CustomShopItemsWindow : EditorWindow
 {
     private const float MinColumnWidth = 100f;
 
-    private List<ItemShopObject> _itemshopObjectList = new List<ItemShopObject>();
-    private List<ItemShopObject> _filteredList = new List<ItemShopObject>();
+    private List<ItemShop> _itemshopObjectList = new List<ItemShop>();
+    private List<ItemShop> _filteredList = new List<ItemShop>();
     private string _savePath = "Assets/Data/data.json";
     private Vector2 _scrollPosition;
     private List<PropertyInfo> _itemProperties;
     private string _filterID;
     private List<float> _columnWidths;
-    private bool _resizingColumn;
-    private int _resizingColumnIndex;
-    private float _resizingColumnStartWidth;
-
 
     [MenuItem("NFTGCO/Shop Window")]
     public static void ShowWindow()
@@ -33,7 +29,7 @@ public class CustomShopItemsWindow : EditorWindow
     private void OnEnable()
     {
         // Get the properties of ItemShopObject using reflection
-        _itemProperties = new List<PropertyInfo>(typeof(ItemShopObject).GetProperties());
+        _itemProperties = new List<PropertyInfo>(typeof(ItemShop).GetProperties());
 
         _filteredList = _itemshopObjectList;
         // Initialize column widths
@@ -63,7 +59,6 @@ public class CustomShopItemsWindow : EditorWindow
                 _filteredList = _itemshopObjectList.FindAll(item => item.ItemId.Contains(_filterID.ToString()));
             }
         }
-        //_filteredList = _itemshopObjectList;
 
         EditorGUILayout.LabelField("List of Items to display in Shop:");
 
@@ -80,31 +75,6 @@ public class CustomShopItemsWindow : EditorWindow
                 GUILayout.BeginVertical(GUILayout.Width(_columnWidths[i]));
                 GUILayout.Label(_itemProperties[i].Name);
                 GUILayout.EndVertical();
-
-                Rect separatorRect = GUILayoutUtility.GetLastRect();
-                separatorRect.width = 3;
-                separatorRect.x += separatorRect.width - 1;
-                EditorGUIUtility.AddCursorRect(separatorRect, MouseCursor.ResizeHorizontal);
-
-                // Handle column width resizing
-                if (Event.current.type == EventType.MouseDown && separatorRect.Contains(Event.current.mousePosition))
-                {
-                    _resizingColumn = true;
-                    _resizingColumnIndex = i;
-                    _resizingColumnStartWidth = _columnWidths[i];
-                    Event.current.Use();
-                }
-                else if (_resizingColumn && Event.current.type == EventType.MouseDrag)
-                {
-                    float delta = Event.current.delta.x;
-                    _columnWidths[_resizingColumnIndex] = Mathf.Max(_resizingColumnStartWidth + delta, MinColumnWidth);
-                    Repaint();
-                }
-                else if (Event.current.type == EventType.MouseUp && _resizingColumn)
-                {
-                    _resizingColumn = false;
-                    Event.current.Use();
-                }
             }
 
             GUILayout.Label("Actions", GUILayout.Width(50)); // Actions column
@@ -117,7 +87,7 @@ public class CustomShopItemsWindow : EditorWindow
         // Show the list of objects
         for (int i = 0; i < _filteredList.Count; i++)
         {
-            ItemShopObject myObject = _filteredList[i];
+            ItemShop myObject = _filteredList[i];
             EditorGUILayout.BeginHorizontal();
             try
             {
@@ -262,7 +232,7 @@ public class CustomShopItemsWindow : EditorWindow
         // Button to add a new object to the list
         if (GUILayout.Button("Add Object"))
         {
-            _itemshopObjectList.Add(new ItemShopObject());
+            _itemshopObjectList.Add(new ItemShop());
         }
 
         EditorGUILayout.Space();
@@ -295,7 +265,7 @@ public class CustomShopItemsWindow : EditorWindow
         if (File.Exists(_savePath))
         {
             string jsonData = File.ReadAllText(_savePath);
-            _itemshopObjectList = JsonConvert.DeserializeObject<List<ItemShopObject>>(jsonData);
+            _itemshopObjectList = JsonConvert.DeserializeObject<List<ItemShop>>(jsonData);
             Debug.Log("Data loaded from " + _savePath);
         }
         else

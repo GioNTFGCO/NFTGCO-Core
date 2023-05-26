@@ -4,7 +4,7 @@ using NFTGCO.Helpers;
 namespace NFTGCOSHOP
 {
     [System.Serializable]
-    public class ItemShopObject
+    public class ItemShop 
     {
         public string ItemId { get; set; }
         public string ItemName { get; set; }
@@ -17,7 +17,7 @@ namespace NFTGCOSHOP
         public List<string> ItemTags { get; set; }
         public Dictionary<string,string> ItemProperties { get; set; }
         
-        public ItemShopObject()
+        public ItemShop()
         {
             ItemTags = new List<string>();
             ItemProperties = new Dictionary<string, string>();
