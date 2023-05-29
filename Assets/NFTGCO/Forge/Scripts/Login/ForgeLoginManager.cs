@@ -112,9 +112,9 @@ namespace Forge
                 
                 if (!_updateAccountManager.CheckFirstSocialLogin())
                 {
-                    //_forgeManagerUi.ShowPanel("LoggedSession");
+                    _forgeManagerUi.ShowPanel("LoggedSession");
                     //start game automatically
-                    _forgeLoggedSessionManager.StartGame();
+                    //_forgeLoggedSessionManager.StartGame();
                 }
                 //show the nickname panel
                 else

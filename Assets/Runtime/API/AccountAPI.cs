@@ -131,6 +131,7 @@ namespace Forge.API
 
             RestClient.Post(request, (err, res) => { callback(err, res.Text); });
         }
+
         /// <summary>
         /// Send a request to the server to update the user nickname
         /// </summary>
@@ -156,27 +157,35 @@ namespace Forge.API
 
             RestClient.Put(request, callback);
         }
+
         /// <summary>
         ///  Send a request to the server to update the user XP
         /// </summary>
         /// <param name="accessToken"></param>
         /// <param name="amountXP"></param>
         /// <param name="callback"></param>
-        public static void UpdateUserXP(string accessToken, Int64 amountXP, Action<RequestException,ResponseHelper> callback)
+        public static void UpdateUserXP(string accessToken, Int64 amountXP,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {accessToken}");
-            
+
+            Dictionary<string, Int64> body = new Dictionary<string, Int64>()
+            {
+                { "amount", amountXP }
+            };
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/{amountXP}/increase/xp",
+                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp",
                 EnableDebug = true,
-                Headers = headers
+                Headers = headers,
+                BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
             };
 
-            RestClient.Post(request, callback);
+            RestClient.Put(request, callback);
         }
+
         /// <summary>
         /// Send a request to the server to get the user XP
         /// </summary>

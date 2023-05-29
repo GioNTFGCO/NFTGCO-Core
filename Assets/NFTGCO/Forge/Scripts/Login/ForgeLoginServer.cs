@@ -5,6 +5,7 @@ using NFTGCO.Core.RestClient;
 using NFTGCO.Models.DTO;
 using Forge.API;
 using System;
+using Newtonsoft.Json;
 
 namespace Forge
 {
@@ -137,9 +138,10 @@ namespace Forge
 
             if (response != null)
             {
-                int result = Int32.Parse(response.Text);
-                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = result;
-                Debug.Log($"User new XP: {response.Text}");
+                var values = JsonConvert.DeserializeObject<Dictionary<string, int>>(response.Text);
+
+                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = values["availableXp"];
+                Debug.Log($"User new XP: {values["availableXp"]}");
             }
         }
 
