@@ -13,7 +13,7 @@ namespace Forge.API
         {
             RequestHelper request = new RequestHelper
             {
-                Uri = NTFGCOAPI.BASE_URL + NTFGCOAPI.ACCOUNT_BASE_URL,
+                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.ACCOUNT_BASE_URL,
                 Body = new RegisterUserInfo
                 {
                     name = user_name,

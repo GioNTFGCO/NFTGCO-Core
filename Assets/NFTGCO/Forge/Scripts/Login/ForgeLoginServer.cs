@@ -17,12 +17,6 @@ namespace Forge
 
         private string _webURL;
 
-        [Space] 
-        [SerializeField] private NFTGCO.Helpers.InspectorButton GetAvailableXPButton =
-            new NFTGCO.Helpers.InspectorButton("GetAvailableXP");   
-        [SerializeField] private NFTGCO.Helpers.InspectorButton TestUpdateUserXPButton =
-            new NFTGCO.Helpers.InspectorButton("TestUpdateUserXP");
-
         public void LoginWithToken(string userToken)
         {
             _webURL = Application.absoluteURL;
@@ -119,11 +113,8 @@ namespace Forge
             AuthByToken(response.access_token, response.refresh_token);
         }
 
-        public Int64 amountForTest;
-        private void TestUpdateUserXP()
-        {
-            UpdateUserXP(amountForTest);
-        }
+        #region Testing ENDPOINTS
+
         public void UpdateUserXP(Int64 amountXP)
         {
             AccountAPI.UpdateUserXP(Config.Instance.AccessToken, amountXP, UpdateUserXPCallback);
@@ -164,5 +155,6 @@ namespace Forge
                 Debug.Log($"User XP: {response.Text}");
             }
         }
+        #endregion
     }
 }

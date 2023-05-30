@@ -18,11 +18,6 @@
             "displayName": "NFTGCO_Core_Forge",
             "description": "Forge contains everything necessary for the login, as well as the registration and the different calls to the server (POST, GET) to obtain and send user information.",
             "path": "NFTGCO~/Forge"
-        },
-        {
-            "displayName": "NFTGCO_Core_NFT_Creator",
-            "description": "NFT folder contains everything necessary for the creation of the robots, both the normal robot and the CHIBI version.",
-            "path": "NFTGCO~/NFT"
         }
     ]
 }

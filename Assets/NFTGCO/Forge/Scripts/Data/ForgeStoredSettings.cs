@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NFTCreator;
 using NFTGCO.Models.DTO;
 using UnityEngine;
+
 namespace Forge
 {
     public class ForgeStoredSettings : NFTGCO.Helpers.Singleton<ForgeStoredSettings>
@@ -10,19 +11,27 @@ namespace Forge
         private const int TOTAL_TOKEN_ATTRIBUTES = 15;
 
         private GameStateDTO _gameState;
+
         [Tooltip("head-leftArm-rightArm-torso-waist-leftLef-rightLeg-background")]
         private AccountDto _accountDTOResponse;
+
         private long _currentNFTXp;
         private List<TokenDetailsDTO> _storedResponse;
+        private AvatarDataDTO _avatarData;
         private List<ForgeStore> _serverSocketsAccesories;
         private long[] _robotXPAtt;
+
         [Tooltip("0 - Genesis NFT, 1 - Recycled NFT")]
         private long[] _mintTypeAtt;
+
         [Tooltip("avatarType: any number but right now we only use 1 which I think it means Robot")]
         private long[] _avatarTypeAtt;
+
         [Tooltip("tokenId is the id from blockchain")]
         private long[] _tokenIdAtt;
+
         private bool _receivedArmors;
+
         //social
         private string _socialName;
 
@@ -47,6 +56,11 @@ namespace Forge
             _socialName = newSocialName;
         }
 
+        public void GetLastAvatar(AvatarDataDTO response)
+        {
+            _avatarData = response;
+        }
+
         public void RetrieveRobotParts(List<TokenDetailsDTO> response)
         {
             _receivedArmors = false;
@@ -65,24 +79,30 @@ namespace Forge
 
                     if (response[i].tokenAttributes.Count == TOTAL_TOKEN_ATTRIBUTES)
                     {
-                        for (int totalTokenAttributes = 0; totalTokenAttributes < TOTAL_TOKEN_ATTRIBUTES; totalTokenAttributes++)
+                        for (int totalTokenAttributes = 0;
+                             totalTokenAttributes < TOTAL_TOKEN_ATTRIBUTES;
+                             totalTokenAttributes++)
                         {
-                            ForgeStore cachedForgeStore = _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == (NFTTokenAttributeEnum)totalTokenAttributes);
+                            ForgeStore cachedForgeStore = _serverSocketsAccesories.Find(x =>
+                                x.NFTTokenAttribute == (NFTTokenAttributeEnum)totalTokenAttributes);
                             if (cachedForgeStore == null)
                             {
                                 ForgeStore forgeStore = new ForgeStore((NFTTokenAttributeEnum)totalTokenAttributes);
                                 _serverSocketsAccesories.Add(forgeStore);
-                                _serverSocketsAccesories[totalTokenAttributes].AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
+                                _serverSocketsAccesories[totalTokenAttributes]
+                                    .AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
                             }
                             else
                             {
-                                _serverSocketsAccesories[totalTokenAttributes].AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
+                                _serverSocketsAccesories[totalTokenAttributes]
+                                    .AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
                             }
                         }
                     }
                     else
                     {
-                        Debug.LogError("[FORGE]Token attributes count dont match anymore, token count is:" + response[i].tokenAttributes.Count);
+                        Debug.LogError("[FORGE]Token attributes count dont match anymore, token count is:" +
+                                       response[i].tokenAttributes.Count);
                     }
 
                     _robotXPAtt[i] = response[i].xp;
@@ -90,21 +110,35 @@ namespace Forge
                     _avatarTypeAtt[i] = response[i].avatarType;
                     _tokenIdAtt[i] = response[i].tokenId;
                 }
+
                 _receivedArmors = true;
             }
         }
+
         public ForgeStore GetForgeStoreByNFTTokenAttribute(NFTTokenAttributeEnum nfttoken)
         {
-            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) : null;
+            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null
+                ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken)
+                : null;
         }
+
         public long GetRandomServerTokenAttributes(NFTTokenAttributeEnum nfttoken)
         {
-            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[Random.Range(0, _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes.Count)] : 0;
+            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null
+                ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[
+                    Random.Range(0,
+                        _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes
+                            .Count)]
+                : 0;
         }
+
         public long GetServerTokenByIndex(NFTTokenAttributeEnum nfttoken, int index)
         {
-            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[index] : 0;
+            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null
+                ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[index]
+                : 0;
         }
+
         public void ClearData()
         {
             _gameState = null;

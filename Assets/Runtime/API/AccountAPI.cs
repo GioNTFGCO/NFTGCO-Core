@@ -44,7 +44,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_URLENCODED,
-                Uri = NTFGCOAPI.BASE_URL + TOKEN_ENDPOINT,
+                Uri = NTFGCOAPI.GetBASEURL() + TOKEN_ENDPOINT,
                 EnableDebug = true,
                 BodyRaw = data
             };
@@ -71,7 +71,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.BASE_URL + NTFGCOAPI.ACCOUNT_BASE_URL + REFRESH_TOKEN,
+                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.ACCOUNT_BASE_URL + REFRESH_TOKEN,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -100,7 +100,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 EnableDebug = true,
                 Headers = headers,
             };
@@ -122,7 +122,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -147,7 +147,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 EnableDebug = true,
                 Headers = headers,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(accountNickcname))
@@ -177,7 +177,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp",
                 EnableDebug = true,
                 Headers = headers,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
@@ -199,7 +199,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp/available",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp/available",
                 EnableDebug = true,
                 Headers = headers
             };
@@ -222,7 +222,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -245,7 +245,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.BASE_URL}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };

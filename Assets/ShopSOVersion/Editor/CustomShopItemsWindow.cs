@@ -19,7 +19,7 @@ public class CustomShopItemsWindow : EditorWindow
     private string _filterID;
     private List<float> _columnWidths;
 
-    [MenuItem("NFTGCO/Shop Window")]
+    //[MenuItem("NFTGCO/Shop Window")]
     public static void ShowWindow()
     {
         CustomShopItemsWindow window = EditorWindow.GetWindow<CustomShopItemsWindow>();
