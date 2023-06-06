@@ -29,7 +29,7 @@ namespace NFTCreator
         }
 
         private void Start() {
-            ForgeGameRequestsManager.OnGetGameState?.Invoke();
+            //ForgeGameRequestsManager.OnGetGameState?.Invoke();
         }
 
         private void EnableRobot()

@@ -14,8 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NFTGCO/Forge/Scenes/DemoScene.unity
     guid: 5886e4fa9abd79842a47ecaaf781195e
-  - enabled: 1
-    path: Assets/NFTGCO/NFT/Scenes/NFTCreatorScene.unity
+  - enabled: 0
+    path: Assets/NFTGCO_NFTS/NFT/Scenes/NFTCreatorScene.unity
     guid: 3b915c7055bd14e4e87a93fead2f4540
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: f97c7bd6a357e854eb2a67fb26e359aa, type: 2}

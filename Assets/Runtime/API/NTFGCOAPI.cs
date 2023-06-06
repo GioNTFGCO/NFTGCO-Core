@@ -9,9 +9,8 @@ using UnityEditor;
 [ExecuteInEditMode]
 public static class NTFGCOAPI
 {
-    private const string BASE_URL = "ENVIRONMENT"; // = "https://dev.gaxos99.com";
-    private static string ENVIRONMENT = "";
-    
+    private const string BASE_URL = "https://dev.gaxos99.com";
+
     public const string CONTENT_TYPE_JSON = "application/json";
     public const string CONTENT_TYPE_URLENCODED = "application/x-www-form-urlencoded";
 
@@ -21,7 +20,13 @@ public static class NTFGCOAPI
 
     public static string GetBASEURL()
     {
-        return PlayerPrefs.GetString(BASE_URL);
+#if DEVELOPMENT_BUILD && !UNITY_EDITOR
+return "https://dev.gaxos99.com";
+#elif !DEVELOPMENT_BUILD && !UNITY_EDITOR
+        return "https://dev.gaxos99.com";
+#elif UNITY_EDITOR
+         return PlayerPrefs.GetString(BASE_URL);
+#endif
     }
 
 #if UNITY_EDITOR
@@ -29,22 +34,14 @@ public static class NTFGCOAPI
     private static void ChangeToDevelopment()
     {
         PlayerPrefs.SetString(BASE_URL, "https://dev.gaxos99.com");
-        ENVIRONMENT = "Development";
-        Debug.Log($"Change to {ENVIRONMENT}");
+        Debug.Log($"Change to Development");
     }
 
     [MenuItem("NFTGCO/Use Production", priority = 2)]
     private static void ChangeToProduction()
     {
         PlayerPrefs.SetString(BASE_URL, "another value");
-        ENVIRONMENT = "Production";
-        Debug.Log($"Change to {ENVIRONMENT}");
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void OnBeforeSceneLoadRuntimeMethod()
-    {
-        Debug.Log($"You are using {ENVIRONMENT} environment.");
+        Debug.Log("Change to Production");
     }
 #endif
 }

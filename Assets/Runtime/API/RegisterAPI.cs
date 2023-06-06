@@ -9,7 +9,7 @@ namespace Forge.API
 {
     public static class RegisterAPI
     {
-        public static void RegisterUserRequest(string user_name, string user_username, string user_email, string user_password, System.Action<RequestException, string> callback)
+        public static void RegisterUserRequest(string user_name, string user_username, string user_email, string user_password, System.Action<RequestException, ResponseHelper> callback)
         {
             RequestHelper request = new RequestHelper
             {
@@ -34,7 +34,7 @@ namespace Forge.API
 
             RestClient.Post(request, (err, res) =>
             {
-                callback(err, res.Text);
+                callback(err, res);
             });
 
             // RestClient.Post<RegisterUserInfo>(request)

@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _forgeLoginServer: {fileID: 7918563415028824532}
+  _forgeLoginNft: {fileID: 7918563415224820120}
   _forgeLoginUi: {fileID: 7918563414664375046}
-  _sceneLoader: {fileID: 0}
+  _forgeManagerUi: {fileID: 0}
+  _updateAccountManager: {fileID: 0}
+  _forgeLoggedSessionManager: {fileID: 0}
   _testUserName: GioDev
   _testUserPassword: Watwat123?
-  _forceTokenInEditor: 0
-  _serverToken: 
+  _manualToken: 
 --- !u!1 &7918563414664375045
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,8 +102,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _userNameIF: {fileID: 0}
   _userPasswordIF: {fileID: 0}
-  _errorText: {fileID: 0}
   _loginButton: {fileID: 0}
+  _forgetPasswordButton: {fileID: 0}
+  _forgetPasswordPanel: {fileID: 0}
+  _closeForgetPasswordButton: {fileID: 0}
+  _emailImputField: {fileID: 0}
+  _resetPasswordButton: {fileID: 0}
+  _emailSentPanel: {fileID: 0}
 --- !u!1 &7918563415028824531
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _forgeLoginNFT: {fileID: 7918563415224820120}
-  _forgeLoginUi: {fileID: 7918563414664375046}
 --- !u!1 &7918563415224820119
 GameObject:
   m_ObjectHideFlags: 0

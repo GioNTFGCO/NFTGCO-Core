@@ -14,7 +14,7 @@ namespace NFTGCO
     public class UpdateAccountManager : MonoBehaviour
     {
         [SerializeField] private UpdateAccountUi _updateAccountUi;
-        [SerializeField] private SceneLoaderController _sceneLoaderController;
+        [SerializeField] private ForgeLoginNFT _forgeLoginNft;
 
         private void Start()
         {
@@ -63,27 +63,28 @@ namespace NFTGCO
                 username = _updateAccountUi.GetUsername(),
                 email = ForgeStoredSettings.Instance.AccountDTOResponse.email
             };
-            AccountAPI.UpdateUserUsername(Config.Instance.AccessToken, accountUsername, UpdateUserUsernameCallback);
+            AccountAPI.UpdateUserUsername(accountUsername, UpdateUserUsernameCallback);
         }
 
         private void UpdateUserUsernameCallback(RequestException exception, ResponseHelper arg2)
         {
             if (exception != null)
             {
-                if (exception.StatusCode == 400)////this nickname is already used
+                if (exception.StatusCode == 400) ////this nickname is already used
                 {
                     UiMessage.OnMessageSent?.Invoke("This username is already used");
                 }
             }
+
             //server send a 200, means the nickname is changed
-            if (arg2.StatusCode==200)
+            if (arg2.StatusCode == 200)
             {
                 //nickname is changed
                 UiMessage.OnMessageSent?.Invoke($"Your username now is: {_updateAccountUi.GetUsername()}");
                 ForgeStoredSettings.Instance.AccountDTOResponse.username = _updateAccountUi.GetUsername();
                 _updateAccountUi.ClosePanel();
-                if (_sceneLoaderController)
-                    _sceneLoaderController.StartLevel();
+                
+                _forgeLoginNft.GetNFTS();
             }
         }
     }

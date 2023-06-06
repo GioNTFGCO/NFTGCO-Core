@@ -30,10 +30,12 @@ namespace Forge.API
                 PlayerPrefs.DeleteKey(LOGIN_TYPE);
             }
         }
+
         private void Start()
         {
             _accessToken = AccessToken;
             _refreshToken = RefreshToken;
+            _loginType = LoginType;
         }
 
         public void SetAccessToken(string newToken)
@@ -41,11 +43,13 @@ namespace Forge.API
             PlayerPrefs.SetString(ACCESS_TOKEN, newToken);
             _accessToken = newToken;
         }
+
         public void SetRefreshToken(string newToken)
         {
             PlayerPrefs.SetString(REFRESH_TOKEN, newToken);
             _refreshToken = newToken;
         }
+
         public void SetLoginType(string newLoginType)
         {
             PlayerPrefs.SetString(LOGIN_TYPE, newLoginType);

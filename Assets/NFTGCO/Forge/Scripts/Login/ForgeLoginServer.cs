@@ -11,8 +11,6 @@ namespace Forge
 {
     public class ForgeLoginServer : MonoBehaviour
     {
-        public System.Action OnAuthFinish;
-
         [SerializeField] private ForgeLoginNFT _forgeLoginNFT;
 
         private string _webURL;
@@ -39,34 +37,27 @@ namespace Forge
             if (!string.IsNullOrEmpty(refreshToken))
                 Config.Instance.SetRefreshToken(refreshToken);
 
-            if (accessToken == null)
-            {
-                UiMessage.OnMessageSent?.Invoke("Auth error, invalid credentials");
-            }
-            else
-            {
-                GetAccountData();
-                _forgeLoginNFT.GetNFTS();
-            }
+            GetAccountData();
+            _forgeLoginNFT.GetNFTS();
         }
 
         public void GetAccountData()
         {
-            AccountAPI.GetAccountData(Config.Instance.AccessToken, GetAccountDataCallback);
+            AccountAPI.GetAccountData(GetAccountDataCallback);
         }
 
-        private void GetAccountDataCallback(RequestException exception, AccountDto response)
+        private void GetAccountDataCallback(RequestException exception, ResponseHelper response)
         {
             if (response != null)
             {
+                AccountDto accountDto = JsonConvert.DeserializeObject<AccountDto>(response.Text);
                 Debug.Log("Get Account Data Callback.");
-                ForgeStoredSettings.Instance.SetAccountDTOResponse(response);
-                OnAuthFinish?.Invoke();
+                ForgeStoredSettings.Instance.SetAccountDTOResponse(accountDto);
             }
         }
 
 
-        public void AuthWithCredentialsCallback(RequestException exception, AuthResponseDTO response)
+        public void AuthWithCredentialsCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)
             {
@@ -77,15 +68,14 @@ namespace Forge
                 }
             }
 
-            Config.Instance.SetAccessToken(response.access_token);
-            Config.Instance.SetRefreshToken(response.refresh_token);
+            AuthResponseDTO authResponse = JsonConvert.DeserializeObject<AuthResponseDTO>(response.Text);
 
-            // Set login type to user_pass
-            Config.Instance.SetLoginType("user_pass");
+            Config.Instance.SetAccessToken(authResponse.access_token);
+            Config.Instance.SetRefreshToken(authResponse.refresh_token);
 
-            Debug.Log($"Response server token: {response.access_token}");
+            Debug.Log($"Response server token: {authResponse.access_token}");
 
-            if (response.access_token == null)
+            if (authResponse.access_token == null)
             {
                 UiMessage.OnMessageSent?.Invoke("Auth error, token is invalid.");
             }
@@ -108,53 +98,10 @@ namespace Forge
             AccountAPI.RefreshTokenRequest(body, RefreshTokenCallback);
         }
 
-        private void RefreshTokenCallback(RequestException exception, AuthResponseDTO response)
+        private void RefreshTokenCallback(RequestException exception, ResponseHelper response)
         {
-            AuthByToken(response.access_token, response.refresh_token);
+            AuthResponseDTO authResponse = JsonConvert.DeserializeObject<AuthResponseDTO>(response.Text);
+            AuthByToken(authResponse.access_token, authResponse.refresh_token);
         }
-
-        #region Testing ENDPOINTS
-
-        public void UpdateUserXP(Int64 amountXP)
-        {
-            AccountAPI.UpdateUserXP(Config.Instance.AccessToken, amountXP, UpdateUserXPCallback);
-        }
-
-        private void UpdateUserXPCallback(RequestException exception, ResponseHelper response)
-        {
-            if (exception != null)
-            {
-                Debug.Log($"The game has a error with the server, server retrieve code {exception.StatusCode}");
-            }
-
-            if (response != null)
-            {
-                var values = JsonConvert.DeserializeObject<Dictionary<string, int>>(response.Text);
-
-                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = values["availableXp"];
-                Debug.Log($"User new XP: {values["availableXp"]}");
-            }
-        }
-
-        public void GetAvailableXP()
-        {
-            AccountAPI.GetAvailableUserXP(Config.Instance.AccessToken, GetAvailableXPCallback);
-        }
-
-        private void GetAvailableXPCallback(RequestException exception, ResponseHelper response)
-        {
-            if (exception != null)
-            {
-                Debug.Log($"The game has a error with the server, server retrieve code {exception.StatusCode}");
-            }
-
-            if (response != null)
-            {
-                int result = Int32.Parse(response.Text);
-                ForgeStoredSettings.Instance.AccountDTOResponse.totalXp = result;
-                Debug.Log($"User XP: {response.Text}");
-            }
-        }
-        #endregion
     }
 }

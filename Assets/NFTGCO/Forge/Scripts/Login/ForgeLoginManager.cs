@@ -13,6 +13,7 @@ namespace Forge
     public class ForgeLoginManager : MonoBehaviour
     {
         [SerializeField] private ForgeLoginServer _forgeLoginServer;
+        [SerializeField] private ForgeLoginNFT _forgeLoginNft;
         [SerializeField] private ForgeLoginUi _forgeLoginUi;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
         [SerializeField] private UpdateAccountManager _updateAccountManager;
@@ -20,21 +21,19 @@ namespace Forge
 
         [Space] [Header("Test only")] [SerializeField]
         private string _testUserName;
-
         [SerializeField] private string _testUserPassword;
-        [SerializeField] private string _manualToken;
-
-        [Space] [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
+        [Space] [SerializeField] private string _manualToken;
+        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
             new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
 
         private void OnEnable()
         {
-            _forgeLoginServer.OnAuthFinish += OnLoginSuccess;
+            _forgeLoginNft.OnNFTGCODataReceived += OnLoginSuccess;
         }
 
         private void OnDisable()
         {
-            _forgeLoginServer.OnAuthFinish -= OnLoginSuccess;
+            _forgeLoginNft.OnNFTGCODataReceived -= OnLoginSuccess;
         }
 
         void Start()
@@ -63,6 +62,9 @@ namespace Forge
         {
             AccountAPI.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(),
                 _forgeLoginServer.AuthWithCredentialsCallback);
+            
+            // Set login type to user_pass
+            Config.Instance.SetLoginType("user_pass");
         }
 
         public void LoginWithToken(string token)
@@ -75,7 +77,7 @@ namespace Forge
             AccountAPI.ForgetPasswordRequest(_forgeLoginUi.GetForgetPasswordEmail(), ForgetPasswordCallback);
         }
 
-        private void ForgetPasswordCallback(RequestException exception, string response)
+        private void ForgetPasswordCallback(RequestException exception, ResponseHelper response)
         {
             if (exception == null) //success
             {
@@ -92,10 +94,10 @@ namespace Forge
             }
         }
 
-        private void LoginWithSaveData()
-        {
-            _forgeLoginServer.RefreshToken();
-        }
+        // private void LoginWithSaveData()
+        // {
+        //     _forgeLoginServer.RefreshToken();
+        // }
 
         private void OnLoginSuccess()
         {
@@ -105,16 +107,13 @@ namespace Forge
 
             if (ForgeStoredSettings.Instance.AccountDTOResponse != null)
             {
-                UiMessage.OnMessageSent?.Invoke("Auth success");
-                //show the logged session panel
-                //_forgeManagerUi.ShowPanel("LoggedSession");
-                //_forgeLoggedSessionManager.StartGame();
-                
+                UiMessage.OnMessageSent?.Invoke("NFTGCO data success!");
+
                 if (!_updateAccountManager.CheckFirstSocialLogin())
                 {
-                    _forgeManagerUi.ShowPanel("LoggedSession");
+                    //_forgeManagerUi.ShowPanel("LoggedSession");
                     //start game automatically
-                    //_forgeLoggedSessionManager.StartGame();
+                    _forgeLoggedSessionManager.StartGame();
                 }
                 //show the nickname panel
                 else
@@ -129,10 +128,12 @@ namespace Forge
         }
 
         #region Test only
+
         private void LoginWithManualToken()
         {
             _forgeLoginServer.LoginWithToken(_manualToken);
         }
+
         #endregion
     }
 }

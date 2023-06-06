@@ -6297,6 +6297,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980121190}
   m_CullTransparentMesh: 1
+--- !u!114 &980843612 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7918563415224820120, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+  m_PrefabInstance: {fileID: 7918563416072200272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4218cfe1af071714a8915073a2df0417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035406412
 GameObject:
   m_ObjectHideFlags: 0
@@ -13742,6 +13753,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 65050848}
     - target: {fileID: 5315774014487247796, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
+      propertyPath: _forgeLoginNft
+      value: 
+      objectReference: {fileID: 980843612}
+    - target: {fileID: 5315774014487247796, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
       propertyPath: _sceneLoaderController
       value: 
       objectReference: {fileID: 66819933}
@@ -14106,6 +14121,10 @@ PrefabInstance:
       value: GioDev
       objectReference: {fileID: 0}
     - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: _forgeLoginNft
+      value: 
+      objectReference: {fileID: 980843612}
+    - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _forgeManagerUi
       value: 
       objectReference: {fileID: 1949640779}
@@ -14256,11 +14275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9086224127589091215, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}
       propertyPath: _levelScene._sceneName
-      value: NFTCreatorScene
+      value: DemoScene
       objectReference: {fileID: 0}
     - target: {fileID: 9086224127589091215, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}
       propertyPath: _levelScene._sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: 3b915c7055bd14e4e87a93fead2f4540, type: 3}
+      objectReference: {fileID: 102900000, guid: 5886e4fa9abd79842a47ecaaf781195e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+
 namespace NFTGCO.Helpers
 {
     public static class NFTGCOHelpers
@@ -12,6 +13,7 @@ namespace NFTGCO.Helpers
         {
             return source.Select((item, index) => (item, index));
         }
+
         /// <summary>
         /// Get the attribute of an Enum
         /// </summary>
@@ -21,10 +23,12 @@ namespace NFTGCO.Helpers
             var name = Enum.GetName(enumType, value);
             return enumType.GetField(name).GetCustomAttributes(false).OfType<TAttribute>().SingleOrDefault();
         }
+
         public static int FindIndex<T>(this T[] array, Predicate<T> match)
         {
             return Array.FindIndex(array, match);
         }
+
         /// <summary>
         /// Join two list into one
         /// </summary>
@@ -44,16 +48,7 @@ namespace NFTGCO.Helpers
         }
 
         #region Awaits
-        /// <summary>
-        /// Wait until a condition is met
-        /// </summary>
-        public static async Task WaitUntil(Func<bool> predicate, int sleep = 50)
-        {
-            while (!predicate())
-            {
-                await Task.Delay(sleep);
-            }
-        }
+
         /// <summary>
         /// Executes an action after the given condition is met
         /// </summary>
@@ -65,6 +60,19 @@ namespace NFTGCO.Helpers
         {
             return WW.Waiters.WaitController.DoAfter(inCompletionCheck, DoAction).SetID(me);
         }
+        /// <summary>
+        /// Executes an action after x seconds
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="inTimeToWait"></param>
+        /// <param name="inOnCompleteAction"></param>
+        /// <returns></returns>
+        public static WW.Waiters.Waiter DoAfterWait(this MonoBehaviour me, float inTimeToWait,
+            Action inOnCompleteAction)
+        {
+            return WW.Waiters.WaitController.DoAfterWait(inTimeToWait, inOnCompleteAction).SetID(me);
+        }
+
         /// <summary>
         /// Deep clone an object https://github.com/dotnet/designs/blob/main/accepted/2020/better-obsoletion/binaryformatter-obsoletion.md
         /// </summary>
@@ -82,9 +90,11 @@ namespace NFTGCO.Helpers
                 return (T)formatter.Deserialize(memoryStream);
             }
         }
+
         #endregion
 
         #region UI
+
         /// <summary>
         /// Set the state of a CanvasGroup
         /// </summary>
@@ -96,8 +106,11 @@ namespace NFTGCO.Helpers
             canvasGroup.interactable = state;
             canvasGroup.blocksRaycasts = state;
         }
+
         #endregion
+
         #region DateTime
+
         /// <summary>
         /// Get the week of the month
         /// </summary>
@@ -106,10 +119,12 @@ namespace NFTGCO.Helpers
         public static int GetWeekOfMonth(DateTime date)
         {
             DateTime beginningOfMonth = new DateTime(date.Year, date.Month, 1);
-            while (date.Date.AddDays(1).DayOfWeek != System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+            while (date.Date.AddDays(1).DayOfWeek !=
+                   System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
                 date = date.AddDays(1);
             return (int)Math.Truncate((double)date.Subtract(beginningOfMonth).TotalDays / 7f) + 1;
         }
+
         /// <summary>
         /// Get the month of the year
         /// </summary>
@@ -119,6 +134,7 @@ namespace NFTGCO.Helpers
         {
             return date.Month;
         }
+
         /// <summary>
         /// Check if two dates are in the same week
         /// </summary>
@@ -129,6 +145,7 @@ namespace NFTGCO.Helpers
         {
             return GetWeekOfMonth(date1) == GetWeekOfMonth(date2);
         }
+
         /// <summary>
         /// Check if two dates are in the same month
         /// </summary>
@@ -139,6 +156,7 @@ namespace NFTGCO.Helpers
         {
             return GetMonthOfYear(date1) == GetMonthOfYear(date2);
         }
+
         /// <summary>
         /// Check if two dates are in the same week, month and year
         /// </summary>
@@ -149,6 +167,7 @@ namespace NFTGCO.Helpers
         {
             return IsSameWeek(date1, date2) && IsSameMonth(date1, date2) && date1.Year == date2.Year;
         }
+
         public static DateTime ParseStringToDateTime(string date)
         {
             //since the id are composed by the name of the item and the date of the reset, we need to split the string to get the date
@@ -156,6 +175,7 @@ namespace NFTGCO.Helpers
             //return the last element of the array, that is the date
             return DateTime.Parse(splitString.Last());
         }
+
         #endregion
     }
 }

@@ -9,17 +9,10 @@ namespace Forge.API
 {
     public static class NFTAPI
     {
-        private static List<TokenDetailsDTO> parseTokenResponse(ResponseHelper response)
-        {
-            AccountNFTsDTO accountNFTs = JsonUtility.FromJson<AccountNFTsDTO>(response.Text);
-            return accountNFTs.nftDetails;
-        }
-
-        public static void GetAccountNftsRequest(string accessToken,
-            Action<RequestException, List<TokenDetailsDTO>> callback)
+        public static void GetAccountNftsRequest(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -30,19 +23,14 @@ namespace Forge.API
             };
 
             Debug.Log("Get request: GetAccountNftsRequest");
-
-            RestClient.Get(request, (err, res) =>
-            {
-                List<TokenDetailsDTO> accountNFTsList = parseTokenResponse(res);
-                callback(err, accountNFTsList);
-            });
+            RestClient.Get(request, callback);
         }
 
-        public static void GetAccountNftsByIdRequest(string accessToken, string id,
-            Action<RequestException, List<TokenDetailsDTO>> callback)
+        public static void GetAccountNftsByIdRequest(string id,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -53,18 +41,14 @@ namespace Forge.API
 
             Debug.Log("Get request: GetAccountNftsByIdRequest");
 
-            RestClient.Get(request, (err, res) =>
-            {
-                List<TokenDetailsDTO> accountNFTsList = parseTokenResponse(res);
-                callback(err, accountNFTsList);
-            });
+            RestClient.Get(request, callback);
         }
 
-        public static void GetAccountNftsByWalletAddressRequest(string accessToken, string walletAddress,
-            Action<RequestException, List<TokenDetailsDTO>> callback)
+        public static void GetAccountNftsByWalletAddressRequest(string walletAddress,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -75,17 +59,13 @@ namespace Forge.API
 
             Debug.Log("Get request: GetAccountNftsByAddressRequest");
 
-            RestClient.Get(request, (err, res) =>
-            {
-                List<TokenDetailsDTO> accountNFTsList = parseTokenResponse(res);
-                callback(err, accountNFTsList);
-            });
+            RestClient.Get(request, callback);
         }
 
-        public static void GetNftAvailableXp(string accessToken, long id, Action<RequestException, long> callback)
+        public static void GetNftAvailableXp(long id, Action<RequestException, long> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -106,11 +86,11 @@ namespace Forge.API
             });
         }
 
-        public static void GetTotalXpOfOwnerByUserId(string accessToken, string id,
-            Action<RequestException, long> callback)
+        public static void GetTotalXpOfOwnerByUserId(string id,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -121,21 +101,14 @@ namespace Forge.API
 
             Debug.Log("Get request: GetTotalXpOfOwnerByUserId");
 
-            RestClient.Get(request, (err, res) =>
-            {
-                long callBackValue;
-                if (Int64.TryParse(res.Text, out callBackValue))
-                {
-                    callback(err, callBackValue);
-                }
-            });
+            RestClient.Get(request, callback);
         }
 
-        public static void GetTotalXpOfOwnerByAddress(string accessToken, string address,
-            Action<RequestException, long> callback)
+        public static void GetTotalXpOfOwnerByAddress(string address,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -146,21 +119,14 @@ namespace Forge.API
 
             Debug.Log("Get request: GetTotalXpOfOwnerByAddress");
 
-            RestClient.Get(request, (err, res) =>
-            {
-                long callBackValue;
-                if (Int64.TryParse(res.Text, out callBackValue))
-                {
-                    callback(err, callBackValue);
-                }
-            });
+            RestClient.Get(request, callback);
         }
 
-        public static void IncreaseNftXpRequest(string accessToken, IncreaseNftXpRequest requestData,
-            Action<RequestException, long> callback)
+        public static void IncreaseNftXpRequest(IncreaseNftXpRequest requestData,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -172,14 +138,14 @@ namespace Forge.API
 
             Debug.Log("Post request: IncreaseNftXp");
 
-            RestClient.Post(request, (err, res) => { callback(err, Int64.Parse(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
-        public static void CreateInitialAvatarRequest(string accessToken, string id,
-            Action<RequestException, AvatarDataDTO> callback)
+        public static void CreateInitialAvatarRequest(string id,
+            Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             Dictionary<string, string> userAccount = new Dictionary<string, string>();
             userAccount.Add("accountId", id);
@@ -194,14 +160,14 @@ namespace Forge.API
             };
 
             Debug.Log("Post request: CreateInitialAvatar");
-            RestClient.Post(request, (err, res) => { callback(err, JsonUtility.FromJson<AvatarDataDTO>(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
-        public static void GetLastAvatar(string accessToken, string id,
+        public static void GetLastAvatar(string id,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper()
             {
@@ -212,7 +178,7 @@ namespace Forge.API
             };
 
             Debug.Log("Get request: GetLastAvatar");
-            RestClient.Get(request, (err, res) => { callback(err, res); });
+            RestClient.Get(request, callback);
         }
     }
 }

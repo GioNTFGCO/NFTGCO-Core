@@ -24,8 +24,14 @@ namespace Forge.API
         private const string FORGET_PASSWORD_ENDPOINT = "/password/forgot";
         private const string TOKEN_EXCHANGE = "/token-exchange";
 
+        /// <summary>
+        /// Send a request to the server to get the account data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="callback"></param>
         public static void AuthRequest(string username, string password,
-            Action<RequestException, AuthResponseDTO> callback)
+            Action<RequestException, ResponseHelper> callback)
         {
             string postData = "";
             Dictionary<string, string> postParameters = new Dictionary<string, string>()
@@ -57,7 +63,7 @@ namespace Forge.API
 
             Debug.Log("Post request: Auth");
 
-            RestClient.Post(request, (err, res) => { callback(err, JsonUtility.FromJson<AuthResponseDTO>(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
         /// <summary>
@@ -66,7 +72,7 @@ namespace Forge.API
         /// <param name="body"></param>
         /// <param name="callback"></param>
         public static void RefreshTokenRequest(Dictionary<string, string> body,
-            Action<RequestException, AuthResponseDTO> callback)
+            Action<RequestException, ResponseHelper> callback)
         {
             RequestHelper request = new RequestHelper
             {
@@ -84,18 +90,17 @@ namespace Forge.API
 
             Debug.Log("Post request: RefreshToken");
 
-            RestClient.Post(request, (err, res) => { callback(err, JsonUtility.FromJson<AuthResponseDTO>(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
         /// <summary>
         /// Send a request to the server to get the account data
         /// </summary>
-        /// <param name="accessToken"></param>
         /// <param name="callback"></param>
-        public static void GetAccountData(string accessToken, Action<RequestException, AccountDto> callback)
+        public static void GetAccountData(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -107,7 +112,7 @@ namespace Forge.API
 
             Debug.Log("Get request: GetAccountData");
 
-            RestClient.Get(request, (err, res) => { callback(err, JsonUtility.FromJson<AccountDto>(res.Text)); });
+            RestClient.Get(request, callback);
         }
 
         /// <summary>
@@ -115,7 +120,7 @@ namespace Forge.API
         /// </summary>
         /// <param name="email"></param>
         /// <param name="callback"></param>
-        public static void ForgetPasswordRequest(string email, Action<RequestException, string> callback)
+        public static void ForgetPasswordRequest(string email, Action<RequestException, ResponseHelper> callback)
         {
             ForgetPasswordDTO body = new ForgetPasswordDTO(email);
 
@@ -129,20 +134,19 @@ namespace Forge.API
 
             Debug.Log("Post request: ForgetPassword");
 
-            RestClient.Post(request, (err, res) => { callback(err, res.Text); });
+            RestClient.Post(request, callback);
         }
 
         /// <summary>
         /// Send a request to the server to update the user nickname
         /// </summary>
-        /// <param name="accessToken"></param>
         /// <param name="accountNickcname"></param>
         /// <param name="callback"></param>
-        public static void UpdateUserUsername(string accessToken, AccountUsernameDTO accountNickcname,
+        public static void UpdateUserUsername(AccountUsernameDTO accountNickcname,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -161,14 +165,13 @@ namespace Forge.API
         /// <summary>
         ///  Send a request to the server to update the user XP
         /// </summary>
-        /// <param name="accessToken"></param>
         /// <param name="amountXP"></param>
         /// <param name="callback"></param>
-        public static void UpdateUserXP(string accessToken, Int64 amountXP,
+        public static void UpdateUserXP(Int64 amountXP,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             Dictionary<string, Int64> body = new Dictionary<string, Int64>()
             {
@@ -189,12 +192,11 @@ namespace Forge.API
         /// <summary>
         /// Send a request to the server to get the user XP
         /// </summary>
-        /// <param name="accessToken"></param>
         /// <param name="callback"></param>
-        public static void GetAvailableUserXP(string accessToken, Action<RequestException, ResponseHelper> callback)
+        public static void GetAvailableUserXP(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {accessToken}");
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper()
             {
@@ -215,7 +217,7 @@ namespace Forge.API
         /// <param name="googleTokenId"></param>
         /// <param name="callback"></param>
         public static void AuthGoogleRequest(string googleTokenId,
-            Action<RequestException, AccountExchangeDTO> callback)
+            Action<RequestException, ResponseHelper> callback)
         {
             AccountTokenExchange body = new AccountTokenExchange(googleTokenId, "google");
 
@@ -229,8 +231,7 @@ namespace Forge.API
 
             Debug.Log("Post request: AuthGoogle");
 
-            RestClient.Post(request,
-                (err, res) => { callback(err, JsonUtility.FromJson<AccountExchangeDTO>(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Forge.API
         /// </summary>
         /// <param name="appleTokenId"></param>
         /// <param name="callback"></param>
-        public static void AuthAppleRequest(string appleTokenId, Action<RequestException, AccountExchangeDTO> callback)
+        public static void AuthAppleRequest(string appleTokenId, Action<RequestException, ResponseHelper> callback)
         {
             AccountTokenExchange body = new AccountTokenExchange(appleTokenId, "apple");
 
@@ -252,8 +253,7 @@ namespace Forge.API
 
             Debug.Log("Post request: AuthApple");
 
-            RestClient.Post(request,
-                (err, res) => { callback(err, JsonUtility.FromJson<AccountExchangeDTO>(res.Text)); });
+            RestClient.Post(request, callback);
         }
 
         #endregion

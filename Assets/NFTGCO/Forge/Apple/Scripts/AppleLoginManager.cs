@@ -19,16 +19,16 @@ namespace NFTGCO
         [SerializeField] private ForgeLoginManager _forgeLoginManager;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
 
-        [Header("Test")]
-        [SerializeField] private string _manualAppleToken;
-        [Space]
-        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton = new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
-
         private IAppleAuthManager _appleAuthManager;
         private IAppleIDCredential _appleIdCredential;
         private string _appleUserToken;
 
-        // Start is called before the first frame update
+        [Space] [Header("Test")] [SerializeField]
+        private string _manualAppleToken;
+
+        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
+            new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
+
         void Start()
         {
             // If the current platform is supported
@@ -47,7 +47,6 @@ namespace NFTGCO
                 //start login with Apple
                 SignInWithApple();
             });
-
 
 
 #if UNITY_IOS && !UNITY_EDITOR
@@ -83,31 +82,39 @@ namespace NFTGCO
                 {
                     // If a sign in with apple succeeds, we should have obtained the credential with the user id, name, and email, save it
                     _appleIdCredential = credential as IAppleIDCredential;
-                    _appleUserToken = Encoding.UTF8.GetString(_appleIdCredential.IdentityToken, 0, _appleIdCredential.IdentityToken.Length);
+                    _appleUserToken = Encoding.UTF8.GetString(_appleIdCredential.IdentityToken, 0,
+                        _appleIdCredential.IdentityToken.Length);
 
                     LoginWithApple(_appleUserToken);
                 },
                 error =>
                 {
                     var authorizationErrorCode = error.GetAuthorizationErrorCode();
-                    Debug.LogWarning("Sign in with Apple failed " + authorizationErrorCode.ToString() + " " + error.ToString());
+                    Debug.LogWarning("Sign in with Apple failed " + authorizationErrorCode.ToString() + " " +
+                                     error.ToString());
                     _forgeManagerUi.ShowHideBlockPanel(false);
                 });
         }
 
         #region NFTGCO
+
         private void LoginWithApple(string appleUserToken)
         {
             Debug.Log($"Sign in with Apple succeeded {appleUserToken}");
             AccountAPI.AuthAppleRequest(appleUserToken, AuthAppleCallback);
         }
-        private void AuthAppleCallback(RequestException message, AccountExchangeDTO accountExchange)
+
+        private void AuthAppleCallback(RequestException exception, ResponseHelper response)
         {
             Debug.Log("Success! - Exchange Apple API");
             // set login type to social
             Config.Instance.SetLoginType("social");
-            _forgeLoginManager.LoginWithToken(accountExchange.access_token);
+
+            AccountExchangeDTO accountExchangeDTO = JsonUtility.FromJson<AccountExchangeDTO>(response.Text);
+
+            _forgeLoginManager.LoginWithToken(accountExchangeDTO.access_token);
         }
+
         private void LoginWithManualToken()
         {
             if (!string.IsNullOrEmpty(_manualAppleToken))
@@ -115,6 +122,7 @@ namespace NFTGCO
                 LoginWithApple(_manualAppleToken);
             }
         }
+
         #endregion
     }
 }

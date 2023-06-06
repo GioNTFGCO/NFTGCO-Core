@@ -43,7 +43,7 @@ namespace Forge
 #endif
         }
 
-        private void RegisterUserCallback(RequestException exception, string response)
+        private void RegisterUserCallback(RequestException exception, ResponseHelper response)
         {
             string successMessage = "Email verification required";
             string errorMessage = "User with this username or email already registered.";
@@ -59,7 +59,7 @@ namespace Forge
             }
             else
             {
-                if (response.Contains(successMessage))
+                if (response.Text.Contains(successMessage))
                 {
                     _registerUserUi.SetMessage("Confirmation was sended to your email - see Junk email also.");
                     _registerUserUi.EnableRegistrationConfirmation();

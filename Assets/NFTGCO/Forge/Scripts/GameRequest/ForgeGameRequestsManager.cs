@@ -41,8 +41,10 @@ namespace Forge
             GameAPI.GetGamesRequest(GetGamesCallback);
         }
 
-        private void GetGamesCallback(RequestException exception, List<GameDTO> games)
+        private void GetGamesCallback(RequestException exception, ResponseHelper response)
         {
+            List<GameDTO> games = Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameDTO>>(response.Text);
+
             games.ForEach(game => Debug.Log("[GameRequests] Get game name: " + game.name + " and id: " + game.id));
         }
 
@@ -51,8 +53,9 @@ namespace Forge
             GameAPI.GetGameByIdRequest(_catchedGameId, GetGameByIdCallback);
         }
 
-        private void GetGameByIdCallback(RequestException exception, GameDTO game)
+        private void GetGameByIdCallback(RequestException exception, ResponseHelper repsonse)
         {
+            GameDTO game = JsonUtility.FromJson<GameDTO>(repsonse.Text);
             Debug.Log("[GameRequests] Get game (by id) name: " + game.name);
         }
 
@@ -62,24 +65,28 @@ namespace Forge
                 GetGameStateCallback);
         }
 
-        private void GetGameStateCallback(RequestException exception, GameStateDTO gameState)
+        private void GetGameStateCallback(RequestException exception, ResponseHelper response)
         {
-            if (gameState != null && gameState.state != null)
+            if (response != null)
             {
-                Debug.Log("[GameRequests] Get game state: " +
-                          Newtonsoft.Json.JsonConvert.SerializeObject(gameState.state));
-
-                ForgeStoredSettings.Instance.SetGameStateDTO(new GameStateDTO()
+                GameStateDTO gameStateDto = Newtonsoft.Json.JsonConvert.DeserializeObject<GameStateDTO>(response.Text);
+                if (gameStateDto.state != null)
                 {
-                    gameId = gameState.gameId,
-                    id = gameState.id,
-                    userId = gameState.userId,
-                    state = new Dictionary<string, object>()
-                });
+                    Debug.Log("[GameRequests] Get game state: " +
+                              Newtonsoft.Json.JsonConvert.SerializeObject(gameStateDto.state));
 
-                foreach (KeyValuePair<string, object> pair in gameState.state)
-                {
-                    ForgeStoredSettings.Instance.GameState.state.Add(pair.Key, pair.Value);
+                    ForgeStoredSettings.Instance.SetGameStateDTO(new GameStateDTO()
+                    {
+                        gameId = gameStateDto.gameId,
+                        id = gameStateDto.id,
+                        userId = gameStateDto.userId,
+                        state = new Dictionary<string, object>()
+                    });
+
+                    foreach (KeyValuePair<string, object> pair in gameStateDto.state)
+                    {
+                        ForgeStoredSettings.Instance.GameState.state.Add(pair.Key, pair.Value);
+                    }
                 }
             }
         }
@@ -90,8 +97,11 @@ namespace Forge
                 DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1), GetGameEventsCallback);
         }
 
-        private void GetGameEventsCallback(RequestException exception, List<GameEventDTO> gameEvents)
+        private void GetGameEventsCallback(RequestException exception, ResponseHelper response)
         {
+            List<GameEventDTO> gameEvents =
+                Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameEventDTO>>(response.Text);
+            
             gameEvents.ForEach(gameEvent => Debug.Log("[GameRequests] Get game event: " +
                                                       Newtonsoft.Json.JsonConvert.SerializeObject(gameEvent.@event)));
         }
@@ -115,9 +125,9 @@ namespace Forge
             GameAPI.CreateGameStateRequest(createGameState, SendGameStateCallback);
         }
 
-        private void SendGameStateCallback(RequestException exception, string response)
+        private void SendGameStateCallback(RequestException exception, ResponseHelper response)
         {
-            Debug.Log($"[GameRequests] Sent game state, response: {response}");
+            Debug.Log($"[GameRequests] Sent game state, response: {response.StatusCode}");
         }
 
         public void SendGameEvent(string[] keys, object[] values)
@@ -137,9 +147,9 @@ namespace Forge
             GameAPI.CreateGameEventRequest(gameEvent, SendGameEventCallback);
         }
 
-        private void SendGameEventCallback(RequestException exception, string response)
+        private void SendGameEventCallback(RequestException exception, ResponseHelper response)
         {
-            Debug.Log($"[GameRequests] Sent game event, response: {response}");
+            Debug.Log($"[GameRequests] Sent game event, response: {response.StatusCode}");
         }
     }
 }

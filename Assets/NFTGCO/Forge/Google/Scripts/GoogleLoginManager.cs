@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Forge;
 using Forge.API;
-using Google;
 using NFTGCO.Core.RestClient;
 using NFTGCO.Models.DTO;
 using UnityEngine;
+
+#if !UNITY_EDITOR && UNITY_ANDROID
+using Google;
+#endif
 
 namespace NFTGCO
 {
@@ -16,18 +19,26 @@ namespace NFTGCO
         [SerializeField] private ForgeLoginManager _forgeLoginManager;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
         [SerializeField] private string _webClientId = "<your client id here>";
-
+#if !UNITY_EDITOR && UNITY_ANDROID
         private GoogleSignInConfiguration _configuration;
-
-        [Header("Test")]
-        [SerializeField] private string _manualGoogleToken;
-        [Space]
-        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton = new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
+#endif
+        [Space] [Header("Test")] [SerializeField]
+        private string _manualGoogleToken;
+        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
+            new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
 
         private void Awake()
         {
-            _configuration = new GoogleSignInConfiguration { WebClientId = _webClientId, RequestEmail = true, RequestIdToken = true };
+#if !UNITY_EDITOR && UNITY_ANDROID
+            _configuration = new GoogleSignInConfiguration
+            {
+                WebClientId = _webClientId, RequestEmail =
+                    true,
+                RequestIdToken = true
+            };
+#endif
         }
+
         private void Start()
         {
             _forgeManagerUi.DelegateButtonLoginCallback("GOOGLE", () =>
@@ -35,7 +46,9 @@ namespace NFTGCO
                 if (string.IsNullOrEmpty(_webClientId))
                     return;
 
+#if UNITY_ANDROID && !UNITY_EDITOR
                 OnSignIn();
+#endif
                 _forgeManagerUi.ShowHideBlockPanel(true);
             });
 
@@ -46,24 +59,28 @@ namespace NFTGCO
             //OnSignInSilently();
 #endif
         }
-
+#if !UNITY_EDITOR && UNITY_ANDROID
         private void OnSignIn()
         {
+
             GoogleSignIn.Configuration = _configuration;
             GoogleSignIn.Configuration.UseGameSignIn = false;
             GoogleSignIn.Configuration.RequestIdToken = true;
             Debug.Log("Calling SignIn");
 
             GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
+
         }
 
         private void OnSignInSilently()
         {
+
             GoogleSignIn.Configuration = _configuration;
             GoogleSignIn.Configuration.UseGameSignIn = false;
             GoogleSignIn.Configuration.RequestIdToken = true;
 
             GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished);
+
         }
 
         private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
@@ -99,20 +116,26 @@ namespace NFTGCO
                 LoginWithGoogle(task.Result.IdToken);
             }
         }
+#endif
+
         #region NFTGCO
+
         private void LoginWithGoogle(string googleUserToken)
         {
             AccountAPI.AuthGoogleRequest(googleUserToken, AuthGoogleCallback);
         }
 
-        private void AuthGoogleCallback(RequestException message, AccountExchangeDTO accountExchange)
+        private void AuthGoogleCallback(RequestException exception, ResponseHelper response)
         {
             Debug.Log("Success! - Exchange Google API");
             //set login type to social
             Config.Instance.SetLoginType("social");
 
+            AccountExchangeDTO accountExchange = JsonUtility.FromJson<AccountExchangeDTO>(response.Text);
+
             _forgeLoginManager.LoginWithToken(accountExchange.access_token);
         }
+
         private void LoginWithManualToken()
         {
             if (!string.IsNullOrEmpty(_manualGoogleToken))
@@ -120,6 +143,7 @@ namespace NFTGCO
                 LoginWithGoogle(_manualGoogleToken);
             }
         }
+
         #endregion
     }
 }
