@@ -32,7 +32,7 @@ namespace NFTGCO
         public bool CheckFirstSocialLogin()
         {
             bool state = Config.Instance.LoginType == "social" &&
-                         ForgeStoredSettings.Instance.AccountDTOResponse.name ==
+                         ForgeStoredSettings.Instance.AccountDTOResponse.username ==
                          ForgeStoredSettings.Instance.AccountDTOResponse.email;
             return state;
         }

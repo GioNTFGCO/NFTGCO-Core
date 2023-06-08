@@ -101,8 +101,7 @@ namespace Forge
 
         private void OnLoginSuccess()
         {
-            _forgeManagerUi.ShowHideBlockPanel(false);
-
+            //_forgeManagerUi.ShowHideBlockPanel(false);
             _forgeLoginUi.LoginButtonBehaviour(false);
 
             if (ForgeStoredSettings.Instance.AccountDTOResponse != null)
@@ -111,6 +110,7 @@ namespace Forge
 
                 if (!_updateAccountManager.CheckFirstSocialLogin())
                 {
+                    _forgeManagerUi.ShowHideBlockPanel(false);
                     //_forgeManagerUi.ShowPanel("LoggedSession");
                     //start game automatically
                     _forgeLoggedSessionManager.StartGame();
