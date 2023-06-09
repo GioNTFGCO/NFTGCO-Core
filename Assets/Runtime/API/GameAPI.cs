@@ -121,8 +121,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() +
-                      $"{NTFGCOAPI.GAME_BASE_URL}/state/{requestData.gameId}/{requestData.accountId}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.GAME_BASE_URL}/state",
                 EnableDebug = true,
                 Headers = headers,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
