@@ -15,19 +15,15 @@ namespace Forge
 
         private string _webURL;
 
-        public void LoginWithToken(string userToken)
+        public void LoginWithToken(string userToken, string refreshToken)
         {
             _webURL = Application.absoluteURL;
-
-            Debug.Log($"Absolute URL: {_webURL}");
-            Debug.Log($"Token from URL: {userToken}");
-
 #if !UNITY_EDITOR && UNITY_WEBGL
             int index = _webURL.IndexOf("?_auth=");
             userToken = _webURL.Substring(index + 7);
             Debug.Log($"new URL {userToken}");
 #endif
-            AuthByToken(userToken, "");
+            AuthByToken(userToken, refreshToken);
         }
 
         private void AuthByToken(string accessToken, string refreshToken)

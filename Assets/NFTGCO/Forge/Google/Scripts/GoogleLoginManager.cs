@@ -24,6 +24,7 @@ namespace NFTGCO
 #endif
         [Space] [Header("Test")] [SerializeField]
         private string _manualGoogleToken;
+
         [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
             new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
 
@@ -133,7 +134,7 @@ namespace NFTGCO
 
             AccountExchangeDTO accountExchange = JsonUtility.FromJson<AccountExchangeDTO>(response.Text);
 
-            _forgeLoginManager.LoginWithToken(accountExchange.access_token);
+            _forgeLoginManager.LoginWithToken(accountExchange.access_token, accountExchange.refresh_token);
         }
 
         private void LoginWithManualToken()

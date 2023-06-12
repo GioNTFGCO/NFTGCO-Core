@@ -112,7 +112,7 @@ namespace NFTGCO
 
             AccountExchangeDTO accountExchangeDTO = JsonUtility.FromJson<AccountExchangeDTO>(response.Text);
 
-            _forgeLoginManager.LoginWithToken(accountExchangeDTO.access_token);
+            _forgeLoginManager.LoginWithToken(accountExchangeDTO.access_token, accountExchangeDTO.refresh_token);
         }
 
         private void LoginWithManualToken()

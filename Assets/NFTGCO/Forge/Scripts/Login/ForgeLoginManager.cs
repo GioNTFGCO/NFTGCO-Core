@@ -21,11 +21,9 @@ namespace Forge
 
         [Space] [Header("Test only")] [SerializeField]
         private string _testUserName;
-        [SerializeField] private string _testUserPassword;
-        [Space] [SerializeField] private string _manualToken;
-        [SerializeField] private NFTGCO.Helpers.InspectorButton LoginWithManualTokenButton =
-            new NFTGCO.Helpers.InspectorButton("LoginWithManualToken");
 
+        [SerializeField] private string _testUserPassword;
+        
         private void OnEnable()
         {
             _forgeLoginNft.OnNFTGCODataReceived += OnLoginSuccess;
@@ -62,14 +60,14 @@ namespace Forge
         {
             AccountAPI.AuthRequest(_forgeLoginUi.GetUserName(), _forgeLoginUi.GetUserPassword(),
                 _forgeLoginServer.AuthWithCredentialsCallback);
-            
+
             // Set login type to user_pass
             Config.Instance.SetLoginType("user_pass");
         }
 
-        public void LoginWithToken(string token)
+        public void LoginWithToken(string token, string refreshToken)
         {
-            _forgeLoginServer.LoginWithToken(token);
+            _forgeLoginServer.LoginWithToken(token, refreshToken);
         }
 
         private void ForgetPassword()
@@ -126,14 +124,5 @@ namespace Forge
                 UiMessage.OnMessageSent?.Invoke("Auth error, reload the game with correct token");
             }
         }
-
-        #region Test only
-
-        private void LoginWithManualToken()
-        {
-            _forgeLoginServer.LoginWithToken(_manualToken);
-        }
-
-        #endregion
     }
 }
