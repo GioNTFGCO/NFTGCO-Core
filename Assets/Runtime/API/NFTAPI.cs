@@ -180,5 +180,31 @@ namespace Forge.API
             Debug.Log("Get request: GetLastAvatar");
             RestClient.Get(request, callback);
         }
+
+        public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("topSize", amount.ToString());
+
+            if (amount == 10 || amount == 20)
+            {
+                RequestHelper request = new RequestHelper()
+                {
+                    ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                    Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.NFT_BASE_URL}/top",
+                    EnableDebug = true,
+                    Headers = headers,
+                    Params = parameters
+                };
+
+                Debug.Log("Get request: Leaderboard");
+
+                RestClient.Get(request, callback);
+            }else
+                Debug.LogWarning("Amount must be 10 or 20");
+        }
     }
 }
