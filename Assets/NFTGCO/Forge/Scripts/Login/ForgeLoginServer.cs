@@ -6,11 +6,13 @@ using NFTGCO.Models.DTO;
 using Forge.API;
 using System;
 using Newtonsoft.Json;
+using NFTGCO;
 
 namespace Forge
 {
     public class ForgeLoginServer : MonoBehaviour
     {
+        [SerializeField] private UpdateAccountManager _updateAccountManager;
         [SerializeField] private ForgeLoginNFT _forgeLoginNFT;
 
         private string _webURL;
@@ -34,7 +36,6 @@ namespace Forge
                 Config.Instance.SetRefreshToken(refreshToken);
 
             GetAccountData();
-            _forgeLoginNFT.GetNFTS();
         }
 
         public void GetAccountData()
@@ -49,6 +50,13 @@ namespace Forge
                 AccountDto accountDto = JsonConvert.DeserializeObject<AccountDto>(response.Text);
                 Debug.Log("Get Account Data Callback.");
                 ForgeStoredSettings.Instance.SetAccountDTOResponse(accountDto);
+                
+                if (_updateAccountManager.CheckFirstSocialLogin(accountDto.username, accountDto.email))
+                {
+                    _updateAccountManager.OpenUpdateNicknamePanel();
+                }
+                else
+                    _forgeLoginNFT.GetNFTS();
             }
         }
 

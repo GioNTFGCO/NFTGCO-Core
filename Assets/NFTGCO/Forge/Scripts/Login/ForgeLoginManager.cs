@@ -16,7 +16,6 @@ namespace Forge
         [SerializeField] private ForgeLoginNFT _forgeLoginNft;
         [SerializeField] private ForgeLoginUi _forgeLoginUi;
         [SerializeField] private ForgeManagerUi _forgeManagerUi;
-        [SerializeField] private UpdateAccountManager _updateAccountManager;
         [SerializeField] private ForgeLoggedSessionManager _forgeLoggedSessionManager;
 
         [Space] [Header("Test only")] [SerializeField]
@@ -91,12 +90,6 @@ namespace Forge
                 }
             }
         }
-
-        // private void LoginWithSaveData()
-        // {
-        //     _forgeLoginServer.RefreshToken();
-        // }
-
         private void OnLoginSuccess()
         {
             //_forgeManagerUi.ShowHideBlockPanel(false);
@@ -106,18 +99,10 @@ namespace Forge
             {
                 UiMessage.OnMessageSent?.Invoke("NFTGCO data success!");
 
-                if (!_updateAccountManager.CheckFirstSocialLogin())
-                {
-                    _forgeManagerUi.ShowHideBlockPanel(false);
-                    //_forgeManagerUi.ShowPanel("LoggedSession");
-                    //start game automatically
-                    _forgeLoggedSessionManager.StartGame();
-                }
-                //show the nickname panel
-                else
-                {
-                    _updateAccountManager.OpenUpdateNicknamePanel();
-                }
+                _forgeManagerUi.ShowHideBlockPanel(false);
+                //_forgeManagerUi.ShowPanel("LoggedSession");
+                //start game automatically
+                _forgeLoggedSessionManager.StartGame();
             }
             else
             {

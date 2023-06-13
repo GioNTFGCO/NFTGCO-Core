@@ -28,12 +28,14 @@ namespace NFTGCO
             _updateAccountUi.Init(OnUpdateUserUsername, null);
             _updateAccountUi.ShowCurrentUsername(ForgeStoredSettings.Instance.AccountDTOResponse.username);
         }
-
-        public bool CheckFirstSocialLogin()
+        public void OpenUpdateNicknamePanel()
         {
-            bool state = Config.Instance.LoginType == "social" &&
-                         ForgeStoredSettings.Instance.AccountDTOResponse.username ==
-                         ForgeStoredSettings.Instance.AccountDTOResponse.email;
+            _updateAccountUi.ShowPanel();
+            _updateAccountUi.ShowCurrentUsername(ForgeStoredSettings.Instance.AccountDTOResponse.username);
+        }
+        public bool CheckFirstSocialLogin(string username, string email)
+        {
+            bool state = username == email;
             return state;
         }
 
@@ -49,11 +51,7 @@ namespace NFTGCO
             }
         }
 
-        public void OpenUpdateNicknamePanel()
-        {
-            _updateAccountUi.ShowPanel();
-            _updateAccountUi.ShowCurrentUsername(ForgeStoredSettings.Instance.AccountDTOResponse.username);
-        }
+
 
         private void UpdateUserNickname()
         {
@@ -66,7 +64,7 @@ namespace NFTGCO
             AccountAPI.UpdateUserUsername(accountUsername, UpdateUserUsernameCallback);
         }
 
-        private void UpdateUserUsernameCallback(RequestException exception, ResponseHelper arg2)
+        private void UpdateUserUsernameCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)
             {
@@ -77,7 +75,7 @@ namespace NFTGCO
             }
 
             //server send a 200, means the nickname is changed
-            if (arg2.StatusCode == 200)
+            if (response.StatusCode == 200)
             {
                 //nickname is changed
                 UiMessage.OnMessageSent?.Invoke($"Your username now is: {_updateAccountUi.GetUsername()}");

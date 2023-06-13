@@ -14216,6 +14216,10 @@ PrefabInstance:
       propertyPath: _loginWithUser
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: _updateAccountManager
+      value: 
+      objectReference: {fileID: 1501347833}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
 --- !u!1001 &9086224127570972882
