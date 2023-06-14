@@ -141,13 +141,13 @@ namespace Forge.API
             RestClient.Post(request, callback);
         }
 
-        public static void CreateInitialAvatarRequest(string id,
+        public static void CreateInitialAvatarRequest(long id,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
 
-            Dictionary<string, string> userAccount = new Dictionary<string, string>();
+            Dictionary<string, long> userAccount = new Dictionary<string, long>();
             userAccount.Add("accountId", id);
 
             RequestHelper request = new RequestHelper
@@ -156,14 +156,14 @@ namespace Forge.API
                 Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL,
                 EnableDebug = true,
                 Headers = headers,
-                Body = JsonConvert.SerializeObject(userAccount)
+                BodyString = JsonConvert.SerializeObject(userAccount)
             };
 
             Debug.Log("Post request: CreateInitialAvatar");
             RestClient.Post(request, callback);
         }
 
-        public static void GetLastAvatar(string id,
+        public static void GetLastAvatar(long id,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();

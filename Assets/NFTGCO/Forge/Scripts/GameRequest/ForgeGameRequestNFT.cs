@@ -52,9 +52,9 @@ namespace Forge
         {
             // tokenId is NFT id, and quantity is amount of XP
             IncreaseNftXpRequest requestData = new IncreaseNftXpRequest();
-            requestData.tokenId = ForgeStoredSettings.Instance.StoredResponse.First().tokenId;
+            requestData.id = ForgeStoredSettings.Instance.StoredResponse.First().tokenId;
             requestData.quantity = xpAmount;
-            Debug.Log(requestData.tokenId);
+            Debug.Log(requestData.id);
             NFTAPI.IncreaseNftXpRequest(requestData, IncreaseNftXpCallback);
         }
 

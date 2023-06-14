@@ -7,7 +7,7 @@ namespace NFTGCO.Models.DTO
     [Serializable]
     public class IncreaseNftXpRequest
     {
-        public long tokenId;
+        public long id;
         public long quantity;
     }
 }

@@ -7,6 +7,7 @@ namespace NFTGCO.Models.DTO
     public class AvatarDataDTO
     {
         public long id;
+        public long accountId;
         public string ownerAddress;
         public string mintType;
         public long tokenId;

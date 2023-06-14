@@ -52,7 +52,7 @@ namespace Forge.API
             RestClient.Get(request, callback);
         }
 
-        public static void GetLatestGameStateRequest(long gameId, string accountId,
+        public static void GetLatestGameStateRequest(long gameId, long accountId,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -71,7 +71,7 @@ namespace Forge.API
             RestClient.Get(request, callback);
         }
 
-        public static void GetGameEventsRequest(long gameId, string userId, System.DateTime from, System.DateTime to,
+        public static void GetGameEventsRequest(long gameId, long userId, System.DateTime from, System.DateTime to,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();

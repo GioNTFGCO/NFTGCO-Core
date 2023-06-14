@@ -5,7 +5,7 @@ namespace NFTGCO.Models.DTO
     [Serializable]
     public class AccountDto
     {
-        public string id;
+        public long id;
         public string name;
         public string username;
         public string email;
@@ -14,6 +14,6 @@ namespace NFTGCO.Models.DTO
         public string admin;
         public string enabled;
         public int totalXp;
-        public int sprintXp;
+        public int spentXp;
     }
 }
