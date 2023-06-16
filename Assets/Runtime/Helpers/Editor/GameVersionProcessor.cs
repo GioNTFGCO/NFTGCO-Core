@@ -33,10 +33,10 @@ namespace NFTGCO.Helpers.Editor
         {
             if (float.TryParse(version, out float versionNumber))
             {
-                float newVersion = versionNumber + 0.01f;
-                string date = DateTime.UtcNow.ToString("MMddyyyyHHmmss");
-                PlayerSettings.bundleVersion = $"Version [{newVersion}] - {date}";
-                Debug.Log(PlayerSettings.bundleVersion);
+                //float newVersion = versionNumber + 0.01f;
+                string date = DateTime.UtcNow.ToString("MMddyyyyHHmm");
+                //PlayerSettings.bundleVersion = $"Version [{newVersion}] - {date}";
+                PlayerSettings.bundleVersion = $"{INITIAL_VERSION}.{date}";
             }
         }
     }

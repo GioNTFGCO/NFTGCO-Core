@@ -14,12 +14,12 @@ namespace NFTGCO
         {
             if (_versionText)
             {
-                _versionText.text = Application.version;
+                _versionText.text = $"Version {Application.version}";
             }
             else
             {
                 _versionText = GetComponentInChildren<TextMeshProUGUI>();
-                _versionText.text = Application.version;
+                _versionText.text = $"Version {Application.version}";
             }
         }
     }
