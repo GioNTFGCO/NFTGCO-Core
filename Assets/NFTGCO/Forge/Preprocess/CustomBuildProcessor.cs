@@ -12,8 +12,6 @@ public class CustomBuildProcessor : IPreprocessBuildWithReport
 
     public void OnPreprocessBuild(BuildReport report)
     {
-        PlayerPrefs.DeleteKey("access_token");
-        PlayerPrefs.DeleteKey("refresh_token");
         Debug.Log($"NFTGCO Preprocess Build: {report.summary.platform} {report.summary.outputPath}");
     }
 }
