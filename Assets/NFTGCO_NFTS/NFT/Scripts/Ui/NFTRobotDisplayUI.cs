@@ -29,8 +29,7 @@ namespace NFTCreator
             }
             if (ForgeStoredSettings.Instance.ReceivedArmors)
             {
-                long currentNftId = ForgeStoredSettings.Instance.TokenIdAtt[ForgeGlobalData.Instance.NFTRobotID];
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById(currentNftId);
+                ForgeGameRequestNFT.OnGetAvailableNFTXpById();
             }
 
             DelegateButtonCallbacks();
@@ -88,9 +87,8 @@ namespace NFTCreator
 
                 _createNFTRobot.CreateRobotAssets();
                 setupFirstTime = true;
-
-                long currentNftId = ForgeStoredSettings.Instance.TokenIdAtt[ForgeGlobalData.Instance.NFTRobotID];
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke(currentNftId);
+                
+                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
             }
         }
 
@@ -108,9 +106,8 @@ namespace NFTCreator
 
                 _createNFTRobot.CreateRobotAssets();
                 setupFirstTime = true;
-
-                long currentNftId = ForgeStoredSettings.Instance.TokenIdAtt[ForgeGlobalData.Instance.NFTRobotID];
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke(currentNftId);
+                
+                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
             }
         }
     }

@@ -9,67 +9,14 @@ namespace Forge.API
 {
     public static class NFTAPI
     {
-        public static void GetAccountNftsRequest(Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-
-            RequestHelper request = new RequestHelper
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL,
-                EnableDebug = true,
-                Headers = headers,
-            };
-
-            Debug.Log("Get request: GetAccountNftsRequest");
-            RestClient.Get(request, callback);
-        }
-
-        public static void GetAccountNftsByIdRequest(string id,
-            Action<RequestException, ResponseHelper> callback)
+        public static void GetNftAvailableXp(long nftId, Action<RequestException, long> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/user/{id}",
-                EnableDebug = true,
-                Headers = headers,
-            };
-
-            Debug.Log("Get request: GetAccountNftsByIdRequest");
-
-            RestClient.Get(request, callback);
-        }
-
-        public static void GetAccountNftsByWalletAddressRequest(string walletAddress,
-            Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-            RequestHelper request = new RequestHelper
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{walletAddress}",
-                EnableDebug = true,
-                Headers = headers,
-            };
-
-            Debug.Log("Get request: GetAccountNftsByAddressRequest");
-
-            RestClient.Get(request, callback);
-        }
-
-        public static void GetNftAvailableXp(long id, Action<RequestException, long> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-            RequestHelper request = new RequestHelper
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{id}/available-xp",
+                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{nftId}/total-xp",
                 EnableDebug = true,
                 Headers = headers,
             };
@@ -84,42 +31,6 @@ namespace Forge.API
                     callback(err, callBackValue);
                 }
             });
-        }
-
-        public static void GetTotalXpOfOwnerByUserId(string id,
-            Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-            RequestHelper request = new RequestHelper
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{id}/user/total-xp",
-                EnableDebug = true,
-                Headers = headers,
-            };
-
-            Debug.Log("Get request: GetTotalXpOfOwnerByUserId");
-
-            RestClient.Get(request, callback);
-        }
-
-        public static void GetTotalXpOfOwnerByAddress(string address,
-            Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-            RequestHelper request = new RequestHelper
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{address}/total-xp",
-                EnableDebug = true,
-                Headers = headers,
-            };
-
-            Debug.Log("Get request: GetTotalXpOfOwnerByAddress");
-
-            RestClient.Get(request, callback);
         }
 
         public static void IncreaseNftXpRequest(IncreaseNftXpRequest requestData,
@@ -141,14 +52,10 @@ namespace Forge.API
             RestClient.Post(request, callback);
         }
 
-        public static void CreateInitialAvatarRequest(long id,
-            Action<RequestException, ResponseHelper> callback)
+        public static void CreateInitialAvatarRequest(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
-
-            Dictionary<string, long> userAccount = new Dictionary<string, long>();
-            userAccount.Add("accountId", id);
 
             RequestHelper request = new RequestHelper
             {
@@ -156,15 +63,13 @@ namespace Forge.API
                 Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL,
                 EnableDebug = true,
                 Headers = headers,
-                BodyString = JsonConvert.SerializeObject(userAccount)
             };
 
             Debug.Log("Post request: CreateInitialAvatar");
             RestClient.Post(request, callback);
         }
 
-        public static void GetLastAvatar(long id,
-            Action<RequestException, ResponseHelper> callback)
+        public static void GetLastAvatar(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
@@ -172,7 +77,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL + $"/avatar/{id}",
+                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL + $"/avatar",
                 EnableDebug = true,
                 Headers = headers
             };
@@ -203,7 +108,8 @@ namespace Forge.API
                 Debug.Log("Get request: Leaderboard");
 
                 RestClient.Get(request, callback);
-            }else
+            }
+            else
                 Debug.LogWarning("Amount must be 10 or 20");
         }
     }

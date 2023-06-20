@@ -18,31 +18,12 @@ namespace Forge
 
         public void GetNFTS()
         {
-            NFTAPI.GetAccountNftsRequest(GetNFTsCallback);
-        }
-
-        // ReSharper disable Unity.PerformanceAnalysis
-        private void GetNFTsCallback(RequestException exception, ResponseHelper response)
-        {
-            AccountNFTsDTO accountNFTs = JsonUtility.FromJson<AccountNFTsDTO>(response.Text);
-            List<TokenDetailsDTO> accountNFTsList = accountNFTs.nftDetails;
-
-            ForgeStoredSettings.Instance.RetrieveRobotParts(accountNFTsList);
-            Debug.Log("Get NFTs callback");
-
-            if (accountNFTsList.Count == 0)
-            {
-                GetLastAvatar();
-            }
-            else
-            {
-                OnNFTGCODataReceived?.Invoke();
-            }
+            GetLastAvatar();
         }
 
         private void CreateAvatar()
         {
-            NFTAPI.CreateInitialAvatarRequest(ForgeStoredSettings.Instance.AccountDTOResponse.id, CreateAvatarCallback);
+            NFTAPI.CreateInitialAvatarRequest(CreateAvatarCallback);
         }
 
         private void CreateAvatarCallback(RequestException exception, ResponseHelper response)
@@ -57,8 +38,7 @@ namespace Forge
 
         private void GetLastAvatar()
         {
-            NFTAPI.GetLastAvatar(ForgeStoredSettings.Instance.AccountDTOResponse.id,
-                GetLastAvatarCallback);
+            NFTAPI.GetLastAvatar(GetLastAvatarCallback);
         }
 
         private void GetLastAvatarCallback(RequestException exception, ResponseHelper response)
@@ -69,45 +49,25 @@ namespace Forge
                 CreateAvatar();
                 return;
             }
-            
+
             if (response.StatusCode == 200)
             {
                 NFTGCO.Models.DTO.AvatarDataDTO avatarData =
                     JsonUtility.FromJson<NFTGCO.Models.DTO.AvatarDataDTO>(response.Text);
-            
+
                 TokenDetailsDTO tokenDetails = new TokenDetailsDTO()
                 {
                     tokenId = avatarData.id,
                     tokenAttributes = avatarData.tokenAttributes
                 };
-            
+
                 List<TokenDetailsDTO> avatars = new List<TokenDetailsDTO>();
                 avatars.Add(tokenDetails);
-            
+
                 ForgeStoredSettings.Instance.GetLastAvatar(avatarData);
                 ForgeStoredSettings.Instance.RetrieveRobotParts(avatars);
-            
-                OnNFTGCODataReceived?.Invoke();
-            }
-        }
-        
-        public void IncreaseNftXp(int xp)
-        {
-            IncreaseNftXpRequest requestData = new IncreaseNftXpRequest()
-            {
-                id = ForgeStoredSettings.Instance.StoredResponse.First().tokenId,
-                quantity = xp
-            };
-            NFTAPI.IncreaseNftXpRequest(requestData, IncreaseNftXpCallback);
-        }
 
-        private void IncreaseNftXpCallback(RequestException exception, ResponseHelper response)
-        {
-            long callBackValue;
-            if (Int64.TryParse(response.Text, out callBackValue))
-            {
-                // request responds with a <long> number
-                Debug.Log($"Xp added: {callBackValue}");
+                OnNFTGCODataReceived?.Invoke();
             }
         }
     }

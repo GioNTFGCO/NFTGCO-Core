@@ -47,8 +47,7 @@ namespace Forge
         {
             if (ForgeStoredSettings.Instance.ReceivedArmors)
             {
-                long currentNftId = ForgeStoredSettings.Instance.TokenIdAtt[Forge.ForgeGlobalData.Instance.NFTRobotID];
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke(currentNftId);
+                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
             }
         }
         public void GetTotalXp()
@@ -213,8 +212,8 @@ namespace Forge
 
             if (ForgeStoredSettings.Instance.ReceivedArmors)
             {
-                long currentNftId = ForgeStoredSettings.Instance.TokenIdAtt[Forge.ForgeGlobalData.Instance.NFTRobotID];//PlayerPrefs.GetInt("NFTRobotId", 0)];
-                ForgeGameRequestNFT.OnIncreaseNftXp?.Invoke(currentNftId, Convert.ToInt64(Mathf.RoundToInt(addedXp)));
+               
+                ForgeGameRequestNFT.OnIncreaseNftXp?.Invoke(Convert.ToInt64(Mathf.RoundToInt(addedXp)));
             }
             _totalXp += addedXp;
             //GameObject go = Instantiate(addedXpObject, addedXpRoot, false);
