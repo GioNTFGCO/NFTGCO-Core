@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     /// <summary>
     /// General extensions to LINQ.

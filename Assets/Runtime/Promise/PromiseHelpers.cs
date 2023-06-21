@@ -1,4 +1,4 @@
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     public static class PromiseHelpers
     {

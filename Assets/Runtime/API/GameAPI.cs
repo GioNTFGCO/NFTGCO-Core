@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-namespace Forge.API
+namespace NFTGCO.API
 {
     public static class GameAPI
     {
@@ -16,7 +16,7 @@ namespace Forge.API
         public static void GetGamesRequest(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -24,6 +24,12 @@ namespace Forge.API
                 EnableDebug = true,
                 Headers = headers,
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetGames");
 
@@ -38,7 +44,7 @@ namespace Forge.API
         public static void GetGameByIdRequest(long gameId, Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -46,6 +52,12 @@ namespace Forge.API
                 EnableDebug = true,
                 Headers = headers,
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetGameById");
 
@@ -56,7 +68,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -65,6 +77,12 @@ namespace Forge.API
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
                 EnableDebug = true,
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetLatestGameState");
 
@@ -75,7 +93,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -85,6 +103,12 @@ namespace Forge.API
                       to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
                 EnableDebug = true,
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetGameEvents");
 
@@ -95,7 +119,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -106,6 +130,12 @@ namespace Forge.API
                 Headers = headers,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Post request: CreateGameEvent");
 
@@ -116,7 +146,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -126,6 +156,12 @@ namespace Forge.API
                 Headers = headers,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Post request: CreateGameState");
 

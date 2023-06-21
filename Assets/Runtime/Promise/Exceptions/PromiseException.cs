@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     /// <summary>
     /// Base class for promise exceptions.

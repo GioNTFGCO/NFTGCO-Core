@@ -8,21 +8,20 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Forge.API
+namespace NFTGCO.API
 {
     public static class AccountAPI
     {
-        private const string GRANT_TYPE = "grant_type";
-        private const string GRANTTYPE = "grantType";
-        private const string NFTGCO_SERVICE = "nftgco-service";
-        private const string CLIENT_ID = "client_id";
-        private const string USERNAME = "username";
-        private const string PASSWORD = "password";
-        private const string REFRESH_TOKEN = "/token-exchange/refresh";
+        private const string GrantType = "grant_type";
+        private const string NFTGCOService = "nftgco-service";
+        private const string ClientID = "client_id";
+        private const string Username = "username";
+        private const string Password = "password";
+        private const string RefreshToken = "/token-exchange/refresh";
 
-        private const string TOKEN_ENDPOINT = "/auth/realms/nftgco-service/protocol/openid-connect/token";
-        private const string FORGET_PASSWORD_ENDPOINT = "/password/forgot";
-        private const string TOKEN_EXCHANGE = "/token-exchange";
+        private const string TokenEndpoint = "/auth/realms/nftgco-service/protocol/openid-connect/token";
+        private const string ForgetPasswordEndpoint = "/password/forgot";
+        private const string TokenExchange = "/token-exchange";
 
         /// <summary>
         /// Send a request to the server to get the account data
@@ -36,10 +35,10 @@ namespace Forge.API
             string postData = "";
             Dictionary<string, string> postParameters = new Dictionary<string, string>()
             {
-                { GRANT_TYPE, PASSWORD },
-                { CLIENT_ID, NFTGCO_SERVICE },
-                { USERNAME, username },
-                { PASSWORD, password }
+                { GrantType, Password },
+                { ClientID, NFTGCOService },
+                { Username, username },
+                { Password, password }
             };
 
             foreach (string key in postParameters.Keys)
@@ -50,7 +49,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_URLENCODED,
-                Uri = NTFGCOAPI.GetBASEURL() + TOKEN_ENDPOINT,
+                Uri = NTFGCOAPI.GetBASEURL() + TokenEndpoint,
                 EnableDebug = true,
                 BodyRaw = data
             };
@@ -77,7 +76,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.ACCOUNT_BASE_URL + REFRESH_TOKEN,
+                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.ACCOUNT_BASE_URL + RefreshToken,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -100,7 +99,7 @@ namespace Forge.API
         public static void GetAccountData(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -109,6 +108,12 @@ namespace Forge.API
                 EnableDebug = true,
                 Headers = headers,
             };
+
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetAccountData");
 
@@ -127,10 +132,16 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{FORGET_PASSWORD_ENDPOINT}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{ForgetPasswordEndpoint}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Post request: ForgetPassword");
 
@@ -146,7 +157,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -156,6 +167,12 @@ namespace Forge.API
                 Headers = headers,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(accountNickcname))
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Put request: UpdateUserNickname");
 
@@ -167,11 +184,11 @@ namespace Forge.API
         /// </summary>
         /// <param name="amountXP"></param>
         /// <param name="callback"></param>
-        public static void UpdateUserXP(Int64 amountXP,
+        public static void UpdateUserXp(Int64 amountXP,
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             Dictionary<string, Int64> body = new Dictionary<string, Int64>()
             {
@@ -185,7 +202,15 @@ namespace Forge.API
                 Headers = headers,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
+            Debug.Log("Put request: UpdateUserXp");
+            
             RestClient.Put(request, callback);
         }
 
@@ -193,10 +218,10 @@ namespace Forge.API
         /// Send a request to the server to get the user XP
         /// </summary>
         /// <param name="callback"></param>
-        public static void GetAvailableUserXP(Action<RequestException, ResponseHelper> callback)
+        public static void GetAvailableUserXp(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper()
             {
@@ -206,6 +231,14 @@ namespace Forge.API
                 Headers = headers
             };
 
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+            
+            Debug.Log("Get request: GetAvailableUserXp");
+            
             RestClient.Get(request, callback);
         }
 
@@ -224,7 +257,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TokenExchange}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
@@ -246,7 +279,7 @@ namespace Forge.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TOKEN_EXCHANGE}",
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}{TokenExchange}",
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };

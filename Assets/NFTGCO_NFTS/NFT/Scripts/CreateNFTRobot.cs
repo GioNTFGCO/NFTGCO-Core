@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Forge;
+using NFTGCO;
 using NFTGCO.Helpers;
 using UnityEngine;
 namespace NFTCreator
@@ -35,7 +35,7 @@ namespace NFTCreator
 
         private void Awake()
         {
-            _robotId = ForgeGlobalData.Instance.NFTRobotID;
+            _robotId = NFTGCOGlobalData.Instance.NFTRobotID;
 
             _tokensInRuntime = new Dictionary<string, Dictionary<string, GameObject>>
             {
@@ -48,7 +48,7 @@ namespace NFTCreator
         {
             CatchNFTTokenAttributeEnum();
 
-            if (ForgeStoredSettings.Instance.ReceivedArmors)
+            if (NFTGCOStoredManager.Instance.ReceivedArmors)
             {
                 _serverTokensCount = _sockets.Length + _socketsAccessories.Length + _socketsAuras.Options.Count;
                 // _syncSocketIds = new int[_serverTokensCount];
@@ -63,7 +63,7 @@ namespace NFTCreator
 
         public void CreateRobotAssets(bool generateRandom = false)
         {
-            if (ForgeStoredSettings.Instance.StoredResponse == null)
+            if (NFTGCOStoredManager.Instance.StoredResponse == null)
                 return;
 
             foreach (string attributeName in _tokenAttributeEnum)
@@ -92,7 +92,7 @@ namespace NFTCreator
         /// <param name="generateRandom">If this params is true, the code generate a random asset from the User inventory</param>
         private void GenerateRobotAsset(int indexID, NFTTokenAttributeEnum tokenAttributeId, bool generateRandom = false)
         {
-            long tokenFromServerId = generateRandom == false ? ForgeStoredSettings.Instance.GetForgeStoreByNFTTokenAttribute(tokenAttributeId).ServerTokenAttributes[_robotId] : ForgeStoredSettings.Instance.GetRandomServerTokenAttributes(tokenAttributeId);
+            long tokenFromServerId = generateRandom == false ? NFTGCOStoredManager.Instance.GetForgeStoreByNFTTokenAttribute(tokenAttributeId).ServerTokenAttributes[_robotId] : NFTGCOStoredManager.Instance.GetRandomServerTokenAttributes(tokenAttributeId);
             //long tokenFromServerId = ForgeStoredSettings.Instance.GetForgeStoreByNFTTokenAttribute(tokenAttributeId).ServerTokenAttributes[_robotId];
             GenerateRobotAssets(indexID, tokenAttributeId, tokenFromServerId);
         }

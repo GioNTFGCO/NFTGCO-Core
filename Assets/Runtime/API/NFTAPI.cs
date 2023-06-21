@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-namespace Forge.API
+namespace NFTGCO.API
 {
     public static class NFTAPI
     {
         public static void GetNftAvailableXp(long nftId, Action<RequestException, long> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -21,15 +21,18 @@ namespace Forge.API
                 Headers = headers,
             };
 
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
             Debug.Log("Get request: GetNftAvailableXp");
 
             RestClient.Get(request, (err, res) =>
             {
-                long callBackValue;
-                if (Int64.TryParse(res.Text, out callBackValue))
-                {
+                if (Int64.TryParse(res.Text, out var callBackValue))
                     callback(err, callBackValue);
-                }
             });
         }
 
@@ -37,7 +40,7 @@ namespace Forge.API
             Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -47,6 +50,12 @@ namespace Forge.API
                 Body = requestData,
             };
 
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
             Debug.Log("Post request: IncreaseNftXp");
 
             RestClient.Post(request, callback);
@@ -55,7 +64,7 @@ namespace Forge.API
         public static void CreateInitialAvatarRequest(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper
             {
@@ -65,14 +74,21 @@ namespace Forge.API
                 Headers = headers,
             };
 
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
             Debug.Log("Post request: CreateInitialAvatar");
+
             RestClient.Post(request, callback);
         }
 
         public static void GetLastAvatar(Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             RequestHelper request = new RequestHelper()
             {
@@ -81,15 +97,22 @@ namespace Forge.API
                 EnableDebug = true,
                 Headers = headers
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Get request: GetLastAvatar");
+            
             RestClient.Get(request, callback);
         }
 
         public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {Config.Instance.AccessToken}");
+            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("topSize", amount.ToString());
@@ -104,6 +127,12 @@ namespace Forge.API
                     Headers = headers,
                     Params = parameters
                 };
+                
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                {
+                    Debug.LogError("Error. Check internet connection!");
+                    return;
+                }
 
                 Debug.Log("Get request: Leaderboard");
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     /// <summary>
     /// Implements a C# promise.

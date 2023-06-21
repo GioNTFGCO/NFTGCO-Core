@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Forge;
+using NFTGCO;
 using NFTGCO.Helpers;
 using UnityEngine;
 namespace NFTCreator
@@ -44,11 +44,11 @@ namespace NFTCreator
         private void ShowNextRobot()
         {
             ShowMessage("Show Next NFT Assets");
-            if (ForgeStoredSettings.Instance.StoredResponse == null)
+            if (NFTGCOStoredManager.Instance.StoredResponse == null)
                 return;
 
             _createNFTRobots[_robotToGenerate].RobotId++;
-            if (_createNFTRobots[_robotToGenerate].RobotId >= ForgeStoredSettings.Instance.StoredResponse.Count)
+            if (_createNFTRobots[_robotToGenerate].RobotId >= NFTGCOStoredManager.Instance.StoredResponse.Count)
                 _createNFTRobots[_robotToGenerate].RobotId = 0;
 
             _createNFTRobots[_robotToGenerate].CreateRobotAssets();

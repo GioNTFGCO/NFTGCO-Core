@@ -1,4 +1,4 @@
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     /// <summary>
     /// Provides static methods for creating tuple objects.

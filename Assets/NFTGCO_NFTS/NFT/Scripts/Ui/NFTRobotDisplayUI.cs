@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Forge;
+using NFTGCO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -27,9 +27,9 @@ namespace NFTCreator
             {
                 _createNFTRobot = FindObjectOfType<CreateNFTRobot>();
             }
-            if (ForgeStoredSettings.Instance.ReceivedArmors)
+            if (NFTGCOStoredManager.Instance.ReceivedArmors)
             {
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById();
+                NFTGCOGameRequestNFT.OnGetAvailableNFTXpById();
             }
 
             DelegateButtonCallbacks();
@@ -40,22 +40,22 @@ namespace NFTCreator
         {
             if (!_createNFTRobot) _createNFTRobot = FindObjectOfType<CreateNFTRobot>();
 
-            if (ForgeStoredSettings.Instance.ReceivedArmors)
+            if (NFTGCOStoredManager.Instance.ReceivedArmors)
             {
-                _xpText.text = "<color=green>Xp:</color> " + ForgeStoredSettings.Instance.CurrentNFTXp.ToString("F0");
-                _userName.text = ForgeStoredSettings.Instance.AccountDTOResponse.username;
-                if (ForgeStoredSettings.Instance.MintTypeAtt[_createNFTRobot.RobotId] == 0)
+                _xpText.text = "<color=green>Xp:</color> " + NFTGCOStoredManager.Instance.CurrentNFTXp.ToString("F0");
+                _userName.text = NFTGCOStoredManager.Instance.AccountDTOResponse.username;
+                if (NFTGCOStoredManager.Instance.MintTypeAtt[_createNFTRobot.RobotId] == 0)
                 {
                     _mintTypeText.text = $"<color=green>Mint type:</color> Genesis NFT";
                 }
-                else if (ForgeStoredSettings.Instance.MintTypeAtt[_createNFTRobot.RobotId] == 1)
+                else if (NFTGCOStoredManager.Instance.MintTypeAtt[_createNFTRobot.RobotId] == 1)
                 {
                     _mintTypeText.text = $"<color=green>Mint type:</color> Recycled NFT";
                 }
 
                 if (!setupFirstTime)
                 {
-                    _createNFTRobot.RobotId = ForgeGlobalData.Instance.NFTRobotID;
+                    _createNFTRobot.RobotId = NFTGCOGlobalData.Instance.NFTRobotID;
                     _createNFTRobot.CreateRobotAssets();
                     setupFirstTime = true;
                 }
@@ -65,7 +65,7 @@ namespace NFTCreator
                 _xpText.text = "<color=green>Xp:</color> No NFT";
                 _mintTypeText.text = $"<color=green>Mint type:</color> No NFT";
 
-                _userName.text = ForgeStoredSettings.Instance.AccountDTOResponse.username;
+                _userName.text = NFTGCOStoredManager.Instance.AccountDTOResponse.username;
 
             }
         }
@@ -76,38 +76,38 @@ namespace NFTCreator
         }
         public void PrevBtnPressed()
         {
-            if (ForgeStoredSettings.Instance.ReceivedArmors)
+            if (NFTGCOStoredManager.Instance.ReceivedArmors)
             {
                 _createNFTRobot.RobotId--;
                 if (_createNFTRobot.RobotId < 0)
                 {
-                    _createNFTRobot.RobotId = ForgeStoredSettings.Instance.StoredResponse.Count - 1;
+                    _createNFTRobot.RobotId = NFTGCOStoredManager.Instance.StoredResponse.Count - 1;
                 }
-                ForgeGlobalData.Instance.SetNFTRobotID(_createNFTRobot.RobotId);
+                NFTGCOGlobalData.Instance.SetNFTRobotID(_createNFTRobot.RobotId);
 
                 _createNFTRobot.CreateRobotAssets();
                 setupFirstTime = true;
                 
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
+                NFTGCOGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
             }
         }
 
         public void NextBtnPressed()
         {
-            if (ForgeStoredSettings.Instance.ReceivedArmors)
+            if (NFTGCOStoredManager.Instance.ReceivedArmors)
             {
                 _createNFTRobot.RobotId++;
-                if (_createNFTRobot.RobotId >= ForgeStoredSettings.Instance.StoredResponse.Count)
+                if (_createNFTRobot.RobotId >= NFTGCOStoredManager.Instance.StoredResponse.Count)
                 {
                     _createNFTRobot.RobotId = 0;
                 }
-                ForgeGlobalData.Instance.SetNFTRobotID(_createNFTRobot.RobotId);
+                NFTGCOGlobalData.Instance.SetNFTRobotID(_createNFTRobot.RobotId);
 
 
                 _createNFTRobot.CreateRobotAssets();
                 setupFirstTime = true;
                 
-                ForgeGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
+                NFTGCOGameRequestNFT.OnGetAvailableNFTXpById?.Invoke();
             }
         }
     }

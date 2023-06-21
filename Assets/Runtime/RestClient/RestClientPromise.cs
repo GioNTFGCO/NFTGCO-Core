@@ -1,4 +1,4 @@
-﻿using Forge.Core.Promise;
+﻿using NFTGCO.Core.Promise;
 
 namespace NFTGCO.Core.RestClient
 {

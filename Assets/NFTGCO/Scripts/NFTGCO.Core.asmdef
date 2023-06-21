@@ -1,0 +1,23 @@
+{
+    "name": "NFTGCO.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e945cd5e5d34b0544a7fd3b9b879190e",
+        "GUID:99ffde1e963950640b2e16394573e255",
+        "GUID:7ca81d4d89b7780498c3c715a041e76c",
+        "GUID:52bf1896acb8e7c439953cd22e7ca9d5",
+        "GUID:a490b3d4c9ef7e74695f2e5ec0bd6b01",
+        "GUID:9ec301417efcef34099e7ffbbe206b0f",
+        "GUID:17cdabef525ee9d4e8385a44834c2e0b",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

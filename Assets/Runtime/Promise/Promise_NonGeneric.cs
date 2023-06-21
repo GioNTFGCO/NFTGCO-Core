@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Forge.Core.Promise
+namespace NFTGCO.Core.Promise
 {
     /// <summary>
     /// Implements a non-generic C# promise, this is a promise that simply resolves without delivering a value.
