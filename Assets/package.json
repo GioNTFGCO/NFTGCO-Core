@@ -17,7 +17,7 @@
         {
             "displayName": "NFTGCO_Core",
             "description": "Contains everything necessary for the login, as well as the registration and the different calls to the server (POST, GET) to obtain and send user information.",
-            "path": "NFTGCO~"
+            "path": "NFTGCOSAMPLE~/NFTGCO"
         }
     ]
 }
