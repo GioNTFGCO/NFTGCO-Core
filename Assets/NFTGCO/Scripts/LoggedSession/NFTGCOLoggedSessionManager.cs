@@ -10,9 +10,9 @@ namespace NFTGCO
 {
     public class NFTGCOLoggedSessionManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_forgeLoggedSessionUi")] [SerializeField] private NFTGCOLoggedSessionUi nftgcoLoggedSessionUi;
-        [FormerlySerializedAs("_forgeManagerUi")] [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
-        [FormerlySerializedAs("_forgeLoginUi")] [SerializeField] private NFTGCOLoginUi nftgcoLoginUi;
+        [SerializeField] private NFTGCOLoggedSessionUi nftgcoLoggedSessionUi;
+        [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
+        [SerializeField] private NFTGCOLoginUi nftgcoLoginUi;
         [SerializeField] private SceneLoaderController _sceneLoader;
 
         private void Start()
@@ -27,6 +27,7 @@ namespace NFTGCO
 
             _sceneLoader.StartLevel();
         }
+
         public void LogOut()
         {
             PlayerPrefs.DeleteKey(NFTGCOConfig.ConfigAccessToken);

@@ -7,9 +7,11 @@ namespace NFTGCO
 {
     public class NFTGCOManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_forgeManagerUi")] [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
-        [Tooltip("Login / Register")]
-        [SerializeField] private string _initialPanelId;
+        [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
+
+        [Tooltip("Login / Register")] [SerializeField]
+        private string _initialPanelId;
+
         // Start is called before the first frame update
         void Start()
         {

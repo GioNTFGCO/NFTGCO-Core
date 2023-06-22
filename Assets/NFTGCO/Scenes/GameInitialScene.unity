@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13352,11 +13352,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1949640779}
     - target: {fileID: 3553488674140097477, guid: c3b46f25809ba324dafc8bb928248493, type: 3}
+      propertyPath: nftgcoManagerUi
+      value: 
+      objectReference: {fileID: 1949640779}
+    - target: {fileID: 3553488674140097477, guid: c3b46f25809ba324dafc8bb928248493, type: 3}
       propertyPath: _manualAppleToken
       value: eyJraWQiOiJXNldjT0tCIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLm5mdGdjby50ZXN0IiwiZXhwIjoxNjgzOTMxNTg5LCJpYXQiOjE2ODM4NDUxODksInN1YiI6IjAwMDE3Ny41ZWEwMTU4NzhjOWQ0NzNjYjU0YjkzNzIzMjYzY2E1NS4xNjA3IiwiY19oYXNoIjoiLVRCeW92TlVjRkNHZTVpQTlUb3J6USIsImVtYWlsIjoibXd4cGN5bXlidkBwcml2YXRlcmVsYXkuYXBwbGVpZC5jb20iLCJlbWFpbF92ZXJpZmllZCI6InRydWUiLCJpc19wcml2YXRlX2VtYWlsIjoidHJ1ZSIsImF1dGhfdGltZSI6MTY4Mzg0NTE4OSwibm9uY2Vfc3VwcG9ydGVkIjp0cnVlfQ.hR1RHo2yZCU2pvBtZ-8q4o-mXTxWKFVZk66o2dWb6vx8zR235W-U4d0UM4LQDJpdyiRvVfOw0FIrYkDr43Sddr-Cjm-ifXnawxZNTy4qPraH-OiDplrCtN6eqf4GEVRAWWkN15q7TbOdaWHSqQvzHn7dtBV72G1-zmQs83DSuJOc4TO8u683o8AHoLY5eCV9NhuLHTOqJmg0LesqKKamkMZWkbTG-9KlqisbfVdLRDiFpTCXVnpHxM54MuuEk2-39Dt2_FctEA6VWM9dvnkFJB84Jf4afhu9yzF41w-pPZFqe28GFs391e42BtuWKL-ktnTv556wb_qQJ2y0sQgtew
       objectReference: {fileID: 0}
     - target: {fileID: 3553488674140097477, guid: c3b46f25809ba324dafc8bb928248493, type: 3}
       propertyPath: _forgeLoginManager
+      value: 
+      objectReference: {fileID: 1427803777}
+    - target: {fileID: 3553488674140097477, guid: c3b46f25809ba324dafc8bb928248493, type: 3}
+      propertyPath: nftgcoLoginManager
       value: 
       objectReference: {fileID: 1427803777}
     - target: {fileID: 3553488674140097479, guid: c3b46f25809ba324dafc8bb928248493, type: 3}
@@ -13418,7 +13426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3786205047802894792, guid: a8810b110a940bc46bbb27effbd488e1, type: 3}
       propertyPath: m_Name
-      value: ForgeStoredSettings
+      value: NFTGCOStoredManager
       objectReference: {fileID: 0}
     - target: {fileID: 3786205047802894793, guid: a8810b110a940bc46bbb27effbd488e1, type: 3}
       propertyPath: _serverSocketsAccesories.Array.size
@@ -13442,7 +13450,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1949640779}
     - target: {fileID: 3885724455230376376, guid: f249ba3bdb7682b4eb3819a45e90a212, type: 3}
+      propertyPath: nftgcoManagerUi
+      value: 
+      objectReference: {fileID: 1949640779}
+    - target: {fileID: 3885724455230376376, guid: f249ba3bdb7682b4eb3819a45e90a212, type: 3}
       propertyPath: _forgeLoginManager
+      value: 
+      objectReference: {fileID: 1427803777}
+    - target: {fileID: 3885724455230376376, guid: f249ba3bdb7682b4eb3819a45e90a212, type: 3}
+      propertyPath: nftgcoLoginManager
       value: 
       objectReference: {fileID: 1427803777}
     - target: {fileID: 3885724455230376378, guid: f249ba3bdb7682b4eb3819a45e90a212, type: 3}
@@ -13680,7 +13696,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1216302209}
     - target: {fileID: 4271662546312756291, guid: fa7e20826143e984eaf29c5777410e07, type: 3}
+      propertyPath: nftgcoLoginUi
+      value: 
+      objectReference: {fileID: 1216302209}
+    - target: {fileID: 4271662546312756291, guid: fa7e20826143e984eaf29c5777410e07, type: 3}
       propertyPath: _forgeManagerUi
+      value: 
+      objectReference: {fileID: 1949640779}
+    - target: {fileID: 4271662546312756291, guid: fa7e20826143e984eaf29c5777410e07, type: 3}
+      propertyPath: nftgcoManagerUi
       value: 
       objectReference: {fileID: 1949640779}
     - target: {fileID: 4271662546312756300, guid: fa7e20826143e984eaf29c5777410e07, type: 3}
@@ -13830,6 +13854,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 980843612}
     - target: {fileID: 5315774014487247796, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
+      propertyPath: nftgcoLoginNft
+      value: 
+      objectReference: {fileID: 980843612}
+    - target: {fileID: 5315774014487247796, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
       propertyPath: _sceneLoaderController
       value: 
       objectReference: {fileID: 66819933}
@@ -13892,7 +13920,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5804889795097355773, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
       propertyPath: m_Name
-      value: ForgeGlobalData
+      value: NFTGCOGlobalData
       objectReference: {fileID: 0}
     - target: {fileID: 5804889795097355774, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
       propertyPath: _destroyOnLoad
@@ -14202,6 +14230,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1949640779}
     - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: nftgcoManagerUi
+      value: 
+      objectReference: {fileID: 1949640779}
+    - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _testUserPassword
       value: Watwat123?
       objectReference: {fileID: 0}
@@ -14211,6 +14243,10 @@ PrefabInstance:
       objectReference: {fileID: 1501347833}
     - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _forgeLoggedSessionManager
+      value: 
+      objectReference: {fileID: 1149794200}
+    - target: {fileID: 7918563414242400252, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: nftgcoLoggedSessionManager
       value: 
       objectReference: {fileID: 1149794200}
     - target: {fileID: 7918563414664375046, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}

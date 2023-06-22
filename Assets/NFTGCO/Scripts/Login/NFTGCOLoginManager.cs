@@ -13,17 +13,17 @@ namespace NFTGCO
 {
     public class NFTGCOLoginManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_forgeLoginServer")] [SerializeField] private NFTGCOLoginServer nftgcoLoginServer;
-        [FormerlySerializedAs("_forgeLoginNft")] [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
-        [FormerlySerializedAs("_forgeLoginUi")] [SerializeField] private NFTGCOLoginUi nftgcoLoginUi;
-        [FormerlySerializedAs("_forgeManagerUi")] [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
-        [FormerlySerializedAs("_forgeLoggedSessionManager")] [SerializeField] private NFTGCOLoggedSessionManager nftgcoLoggedSessionManager;
+        [SerializeField] private NFTGCOLoginServer nftgcoLoginServer;
+        [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
+        [SerializeField] private NFTGCOLoginUi nftgcoLoginUi;
+        [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
+        [SerializeField] private NFTGCOLoggedSessionManager nftgcoLoggedSessionManager;
 
         [Space] [Header("Test only")] [SerializeField]
         private string _testUserName;
 
         [SerializeField] private string _testUserPassword;
-        
+
         private void OnEnable()
         {
             nftgcoLoginNft.OnNFTGCODataReceived += OnLoginSuccess;
@@ -91,6 +91,7 @@ namespace NFTGCO
                 }
             }
         }
+
         private void OnLoginSuccess()
         {
             //_forgeManagerUi.ShowHideBlockPanel(false);

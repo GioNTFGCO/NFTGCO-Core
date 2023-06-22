@@ -14,7 +14,7 @@ namespace NFTGCO
     public class NFTGCOLoginServer : MonoBehaviour
     {
         [SerializeField] private UpdateAccountManager _updateAccountManager;
-        [FormerlySerializedAs("_forgeLoginNFT")] [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
+        [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
 
         private string _webURL;
 
@@ -56,9 +56,9 @@ namespace NFTGCO
                     Debug.Log("Account DTO is empty.");
                     return;
                 }
-                
+
                 NFTGCOStoredManager.Instance.SetAccountDTOResponse(accountDto);
-                
+
                 if (_updateAccountManager.CheckFirstSocialLogin(accountDto.username, accountDto.email))
                 {
                     _updateAccountManager.OpenUpdateNicknamePanel();

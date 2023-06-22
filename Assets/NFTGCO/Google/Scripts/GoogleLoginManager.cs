@@ -16,8 +16,8 @@ namespace NFTGCO
 {
     public class GoogleLoginManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_forgeLoginManager")] [SerializeField] private NFTGCOLoginManager nftgcoLoginManager;
-        [FormerlySerializedAs("_forgeManagerUi")] [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
+        [SerializeField] private NFTGCOLoginManager nftgcoLoginManager;
+        [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
         [SerializeField] private string _webClientId = "<your client id here>";
 #if !UNITY_EDITOR && UNITY_ANDROID
         private GoogleSignInConfiguration _configuration;
@@ -55,7 +55,7 @@ namespace NFTGCO
 
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-            if (string.IsNullOrEmpty(Config.Instance.AccessToken))
+            if (string.IsNullOrEmpty(NFTGCOConfig.Instance.AccessToken))
                 OnSignIn();
             //OnSignInSilently();
 #endif
@@ -94,25 +94,25 @@ namespace NFTGCO
                     {
                         GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
                         Debug.Log($"Got Error: {error.Status} {error.Message}");
-                        _forgeManagerUi.ShowHideBlockPanel(false);
+                        nftgcoManagerUi.ShowHideBlockPanel(false);
                     }
                     else
                     {
                         Debug.Log($"Got Unexpected Exception?!? {task.Exception}");
-                        _forgeManagerUi.ShowHideBlockPanel(false);
+                        nftgcoManagerUi.ShowHideBlockPanel(false);
                     }
                 }
             }
             else if (task.IsCanceled)
             {
                 Debug.Log("Canceled");
-                _forgeManagerUi.ShowHideBlockPanel(false);
+                nftgcoManagerUi.ShowHideBlockPanel(false);
             }
             else
             {
                 Debug.Log("Welcome: " + task.Result.DisplayName + "!");
                 //set social name in forge stored settings, to use in the future
-                ForgeStoredSettings.Instance.SetSocialName(task.Result.DisplayName);
+                NFTGCOStoredManager.Instance.SetSocialName(task.Result.DisplayName);
                 //start login with google token exchange
                 LoginWithGoogle(task.Result.IdToken);
             }

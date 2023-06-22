@@ -16,8 +16,8 @@ namespace NFTGCO
 {
     public class AppleLoginManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_forgeLoginManager")] [SerializeField] private NFTGCOLoginManager nftgcoLoginManager;
-        [FormerlySerializedAs("_forgeManagerUi")] [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
+        [SerializeField] private NFTGCOLoginManager nftgcoLoginManager;
+        [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
 
         private IAppleAuthManager _appleAuthManager;
         private IAppleIDCredential _appleIdCredential;
@@ -50,7 +50,7 @@ namespace NFTGCO
 
 
 #if UNITY_IOS && !UNITY_EDITOR
-            if (string.IsNullOrEmpty(Config.Instance.AccessToken))
+            if (string.IsNullOrEmpty(NFTGCOConfig.Instance.AccessToken))
                 SignInWithApple();
 #endif
         }

@@ -5,18 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/NFTGCO/Scenes/GameInitialScene.unity
     guid: ed36b7b06b2d5bf4faf41ae1127c22c7
-  - enabled: 1
+  - enabled: 0
     path: Assets/NFTGCO/Scenes/LoadingScene.unity
     guid: 4b64f34ddb3fd9249907ee5aca5dbda6
-  - enabled: 1
+  - enabled: 0
     path: Assets/NFTGCO/Scenes/DemoScene.unity
     guid: 5886e4fa9abd79842a47ecaaf781195e
   - enabled: 0
     path: Assets/NFTGCO_NFTS/NFT/Scenes/NFTCreatorScene.unity
     guid: 3b915c7055bd14e4e87a93fead2f4540
+  - enabled: 1
+    path: Assets/AppleSignInUnity/AppleAuthSample/LandscapeSampleScene.unity
+    guid: 68da1cf4dda854c5887ef4c16bad630f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: f97c7bd6a357e854eb2a67fb26e359aa, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: a66bf88a49059ce41b8d59f68e8b0865, type: 2}

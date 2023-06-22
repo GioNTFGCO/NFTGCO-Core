@@ -14,7 +14,7 @@ namespace NFTGCO
     public class UpdateAccountManager : MonoBehaviour
     {
         [SerializeField] private UpdateAccountUi _updateAccountUi;
-        [FormerlySerializedAs("_forgeLoginNft")] [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
+        [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
 
         private void Start()
         {
