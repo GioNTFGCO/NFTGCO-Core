@@ -13,15 +13,13 @@ namespace NFTGCO
         public static System.Action OnSendGameState;
         public static System.Action OnGetGameState;
 
-        [NFTGCO.Helpers.SearchableEnum] [SerializeField]
-        private NFTGCO.Core.Global.NFTGCOGamesId _gameId;
-
-        private long _catchedGameId => (long)_gameId;
+        private long _catchedGameId;
 
         protected override void Awake()
         {
             base.Awake();
             //ForgeGlobalData.Instance.SetNFTRobotID(0);
+            _catchedGameId = (long)NFTGCOConfig.Instance.GameId;
         }
 
         private void OnEnable()

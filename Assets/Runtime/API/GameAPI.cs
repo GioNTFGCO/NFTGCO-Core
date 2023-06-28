@@ -15,14 +15,24 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetGamesRequest(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+            
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.GAME_BASE_URL,
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true
             };
             
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -43,14 +53,24 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetGameByIdRequest(long gameId, Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+            
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/{gameId.ToString()}",
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true
             };
             
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -67,14 +87,23 @@ namespace NFTGCO.API
         public static void GetLatestGameStateRequest(long gameId, long accountId,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Headers = headers,
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
+                Headers = headers,
                 EnableDebug = true,
             };
             
@@ -92,15 +121,25 @@ namespace NFTGCO.API
         public static void GetGameEventsRequest(long gameId, long userId, System.DateTime from, System.DateTime to,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+            
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Headers = headers,
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" +
                       from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" +
                       to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
+                Headers = headers,
                 EnableDebug = true,
             };
             
@@ -118,16 +157,25 @@ namespace NFTGCO.API
         public static void CreateGameEventRequest(CreateGameEventDTO requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() +
                       $"{NTFGCOAPI.GAME_BASE_URL}/event/{requestData.gameId}/{requestData.accountId}",
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
             
@@ -145,15 +193,24 @@ namespace NFTGCO.API
         public static void CreateGameStateRequest(CreateGameStateDTO requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.GAME_BASE_URL}/state",
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
             

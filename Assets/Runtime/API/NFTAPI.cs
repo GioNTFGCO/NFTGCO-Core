@@ -11,14 +11,24 @@ namespace NFTGCO.API
     {
         public static void GetNftAvailableXp(long nftId, Action<RequestException, long> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/{nftId}/total-xp",
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true
             };
 
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -39,15 +49,25 @@ namespace NFTGCO.API
         public static void IncreaseNftXpRequest(IncreaseNftXpRequest requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.NFT_BASE_URL}/increase/xp",
-                EnableDebug = true,
                 Headers = headers,
-                Body = requestData,
+                EnableDebug = true,
+                Body = requestData
             };
 
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -63,15 +83,24 @@ namespace NFTGCO.API
 
         public static void CreateInitialAvatarRequest(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL,
-                EnableDebug = true,
                 Headers = headers,
+                EnableDebug = true
             };
 
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -87,17 +116,26 @@ namespace NFTGCO.API
 
         public static void GetLastAvatar(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.NFT_BASE_URL + $"/avatar",
+                Headers = headers,
                 EnableDebug = true,
-                Headers = headers
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -105,14 +143,23 @@ namespace NFTGCO.API
             }
 
             Debug.Log("Get request: GetLastAvatar");
-            
+
             RestClient.Get(request, callback);
         }
 
         public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}");
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("topSize", amount.ToString());
@@ -123,11 +170,11 @@ namespace NFTGCO.API
                 {
                     ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                     Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.NFT_BASE_URL}/top",
-                    EnableDebug = true,
                     Headers = headers,
+                    EnableDebug = true,
                     Params = parameters
                 };
-                
+
                 if (Application.internetReachability == NetworkReachability.NotReachable)
                 {
                     Debug.LogError("Error. Check internet connection!");

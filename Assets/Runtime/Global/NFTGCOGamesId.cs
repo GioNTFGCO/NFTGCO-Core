@@ -7,9 +7,9 @@ namespace NFTGCO.Core.Global
     public enum NFTGCOGamesId
     {
         Global = 10000,
-        Match_3D = 1,
-        Squad_Battle = 2,
-        Alien_Invasion = 3,
+        Gem_Blitz = 1,
+        Brawl_Bots = 2,
+        Invasion_Protocol  = 3,
         Laser_Quest = 4,
         Arena_Fighter = 5,
         Escape_Room = 6,

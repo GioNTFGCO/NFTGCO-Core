@@ -10,8 +10,14 @@ namespace NFTGCO.API
         public const string ConfigRefreshToken = "refresh_token";
         public const string ConfigLoginType = "loginType";
 
-        [SerializeField] private bool _clearKeys;
+        [Space] [SerializeField]
+        private bool _clearKeys;
 
+        [Space] [SerializeField] private int _companyId = 1;
+        [NFTGCO.Helpers.SearchableEnum] [SerializeField]
+        private NFTGCO.Core.Global.NFTGCOGamesId _gameId;
+
+        private int _sessionSequenceNumber = 0;
         private string _accessToken;
         private string _refreshToken;
         private string _loginType;
@@ -19,6 +25,8 @@ namespace NFTGCO.API
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
+        public int CompanyId => _companyId;
+        public NFTGCO.Core.Global.NFTGCOGamesId GameId => _gameId;
 
         protected override void Awake()
         {
@@ -54,6 +62,12 @@ namespace NFTGCO.API
         {
             PlayerPrefs.SetString(ConfigLoginType, newLoginType);
             _loginType = newLoginType;
+        }
+
+        public int GetSSN
+        {
+            set => _sessionSequenceNumber = value;
+            get => _sessionSequenceNumber++;
         }
     }
 }
