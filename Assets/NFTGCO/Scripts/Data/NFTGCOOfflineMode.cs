@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using NFTGCO.API;
 using NFTGCO.Helpers;
 using NFTGCO.Models.DTO;
 using SceneField.Core;
@@ -28,6 +29,8 @@ namespace NFTGCO
 
         public void InitWithFakeData()
         {
+            NFTGCOConfig.Instance.SetLoginOfflineMode();
+            
             GameStateDTO gameStateDto = JsonConvert.DeserializeObject<GameStateDTO>(FakeGameState);
             NFTGCOStoredManager.Instance.SetGameStateDTO(gameStateDto);
 

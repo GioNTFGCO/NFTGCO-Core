@@ -21,12 +21,14 @@ namespace NFTGCO.API
         private string _accessToken;
         private string _refreshToken;
         private string _loginType;
+        private bool _loginOfflineMode;
 
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
         public int CompanyId => _companyId;
         public NFTGCO.Core.Global.NFTGCOGamesId GameId => _gameId;
+        public bool LoginOfflineMode => _loginOfflineMode;
 
         protected override void Awake()
         {
@@ -62,6 +64,10 @@ namespace NFTGCO.API
         {
             PlayerPrefs.SetString(ConfigLoginType, newLoginType);
             _loginType = newLoginType;
+        }
+        public void SetLoginOfflineMode()
+        {
+            _loginOfflineMode = true;
         }
 
         public int GetSSN
