@@ -46,5 +46,36 @@ namespace NFTGCO.API
 
             RestClient.Post(request, callback);
         }
+
+        public static void RegistrationStatus(System.Action<RequestException, ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "browser_info", "" },
+                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
+                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
+                { "platform", NTFGCOAPI.GetPlatform() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", NTFGCOAPI.ClientVersion() }
+            };
+
+            RequestHelper request = new RequestHelper
+            {
+                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}/registration",
+                Headers = headers,
+                EnableDebug = true,
+            };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+            
+            Debug.Log("Get request: Registration Status");
+
+            RestClient.Get(request, callback);
+        }
     }
 }

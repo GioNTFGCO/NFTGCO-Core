@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4892065396539978610}
   - component: {fileID: 4892065396539978613}
   m_Layer: 0
-  m_Name: NFTGCOConfig
+  m_Name: NFTGCO_Config
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
   _clearKeys: 0
+  _companyId: 1
+  _gameId: 0

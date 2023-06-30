@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using NFTGCO.Core.RestClient;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -10,10 +14,10 @@ namespace NFTGCO.API
         public const string ConfigRefreshToken = "refresh_token";
         public const string ConfigLoginType = "loginType";
 
-        [Space] [SerializeField]
-        private bool _clearKeys;
+        [Space] [SerializeField] private bool _clearKeys;
 
         [Space] [SerializeField] private int _companyId = 1;
+
         [NFTGCO.Helpers.SearchableEnum] [SerializeField]
         private NFTGCO.Core.Global.NFTGCOGamesId _gameId;
 
@@ -22,6 +26,7 @@ namespace NFTGCO.API
         private string _refreshToken;
         private string _loginType;
         private bool _loginOfflineMode;
+        private bool _enabledRegistration;
 
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
@@ -29,17 +34,20 @@ namespace NFTGCO.API
         public int CompanyId => _companyId;
         public NFTGCO.Core.Global.NFTGCOGamesId GameId => _gameId;
         public bool LoginOfflineMode => _loginOfflineMode;
+        public bool EnabledRegistration => _enabledRegistration;
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
             if (_clearKeys)
             {
                 PlayerPrefs.DeleteKey(ConfigAccessToken);
                 PlayerPrefs.DeleteKey(ConfigRefreshToken);
                 PlayerPrefs.DeleteKey(ConfigLoginType);
             }
+
+            RegisterAPI.RegistrationStatus(RegistrationCallback);
         }
+
 
         private void Start()
         {
@@ -65,6 +73,7 @@ namespace NFTGCO.API
             PlayerPrefs.SetString(ConfigLoginType, newLoginType);
             _loginType = newLoginType;
         }
+
         public void SetLoginOfflineMode()
         {
             _loginOfflineMode = true;
@@ -74,6 +83,18 @@ namespace NFTGCO.API
         {
             set => _sessionSequenceNumber = value;
             get => _sessionSequenceNumber++;
+        }
+
+        private void RegistrationCallback(RequestException exception, ResponseHelper response)
+        {
+            if (exception != null)
+            {
+                Debug.Log($"Error registration status: {exception.Message}");
+                return;
+            }
+
+            var values = JsonConvert.DeserializeObject<Dictionary<string, bool>>(response.Text);
+            _enabledRegistration = values.First().Value;
         }
     }
 }
