@@ -20,7 +20,10 @@ namespace NFTGCO.Helpers.Editor
             Debug.Log($"NFTGCO Preprocess Build: {report.summary.platform} {report.summary.outputPath}");
 
             string currentVersion = FindCurrentVersion();
-            UpdateVersion(currentVersion);
+            if (EditorUserBuildSettings.development)
+            {
+                UpdateVersion(currentVersion);
+            }
         }
 
         private string FindCurrentVersion()
