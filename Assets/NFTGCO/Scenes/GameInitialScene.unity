@@ -14169,6 +14169,10 @@ PrefabInstance:
       value: Initial
       objectReference: {fileID: 0}
     - target: {fileID: 3906367833063929825, guid: baa51a9c6d4094c4aa7d746b406fe1fd, type: 3}
+      propertyPath: _quitGameButton
+      value: 
+      objectReference: {fileID: 1913392286}
+    - target: {fileID: 3906367833063929825, guid: baa51a9c6d4094c4aa7d746b406fe1fd, type: 3}
       propertyPath: _registerButton
       value: 
       objectReference: {fileID: 2037335276}

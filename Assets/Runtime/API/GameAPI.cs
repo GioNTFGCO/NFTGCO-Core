@@ -19,18 +19,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
             
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.GAME_BASE_URL,
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + NTFGCOAPI.GAME_BASE_URL,
                 Headers = headers,
                 EnableDebug = true
             };
@@ -57,18 +57,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
             
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/{gameId.ToString()}",
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/{gameId.ToString()}",
                 Headers = headers,
                 EnableDebug = true
             };
@@ -91,18 +91,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
                 Headers = headers,
                 EnableDebug = true,
             };
@@ -125,18 +125,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
             
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() + $"{NTFGCOAPI.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" +
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" +
                       from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" +
                       to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
                 Headers = headers,
@@ -161,18 +161,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = NTFGCOAPI.GetBASEURL() +
+                Uri = GameSettingsSO.Instance.GetGameEnvironment +
                       $"{NTFGCOAPI.GAME_BASE_URL}/event/{requestData.gameId}/{requestData.accountId}",
                 Headers = headers,
                 EnableDebug = true,
@@ -197,18 +197,18 @@ namespace NFTGCO.API
             {
                 { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.GAME_BASE_URL}/state",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.GAME_BASE_URL}/state",
                 Headers = headers,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)

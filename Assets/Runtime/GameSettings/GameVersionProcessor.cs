@@ -20,10 +20,22 @@ namespace NFTGCO.Helpers.Editor
             Debug.Log($"NFTGCO Preprocess Build: {report.summary.platform} {report.summary.outputPath}");
 
             string currentVersion = FindCurrentVersion();
-            if (EditorUserBuildSettings.development)
+
+            if (GameSettingsSO.Instance == null)
+                return;
+
+            switch (GameSettingsSO.Instance.GameEnvironmentEnum)
             {
-                UpdateVersion(currentVersion);
+                case GameEnvironmentEnum.Development:
+                    UpdateVersion(currentVersion);
+                    break;
+                case GameEnvironmentEnum.Production:
+                    PlayerSettings.bundleVersion = GameSettingsSO.Instance.GameVersion;
+                    break;
             }
+            
+            PlayerSettings.Android.bundleVersionCode = GameSettingsSO.Instance.AndroidBundleVersion;
+            PlayerSettings.iOS.buildNumber = GameSettingsSO.Instance.IOSBuildNumber.ToString();
         }
 
         private string FindCurrentVersion()

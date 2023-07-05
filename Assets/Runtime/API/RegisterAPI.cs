@@ -15,16 +15,16 @@ namespace NFTGCO.API
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
             RequestHelper request = new RequestHelper
             {
-                Uri = NTFGCOAPI.GetBASEURL() + NTFGCOAPI.ACCOUNT_BASE_URL,
+                Uri =$"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 Headers = headers,
                 EnableDebug = true,
                 Body = new RegisterUserInfo
@@ -52,17 +52,17 @@ namespace NFTGCO.API
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
                 { "browser_info", "" },
-                { "company_id", $"{NFTGCOConfig.Instance.CompanyId}" },
-                { "game_id", $"{(long)NFTGCOConfig.Instance.GameId}" },
-                { "platform", NTFGCOAPI.GetPlatform() },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", NTFGCOAPI.ClientVersion() }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID }
             };
 
             RequestHelper request = new RequestHelper
             {
-                Uri = $"{NTFGCOAPI.GetBASEURL()}{NTFGCOAPI.ACCOUNT_BASE_URL}/registration",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/registration",
                 Headers = headers,
                 EnableDebug = true,
             };

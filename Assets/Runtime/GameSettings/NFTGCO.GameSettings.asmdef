@@ -1,13 +1,9 @@
 {
-    "name": "NFTGCO.Core.API",
+    "name": "NFTGCO.GameSettings",
     "rootNamespace": "",
     "references": [
-        "GUID:7ca81d4d89b7780498c3c715a041e76c",
-        "GUID:9ec301417efcef34099e7ffbbe206b0f",
         "GUID:a490b3d4c9ef7e74695f2e5ec0bd6b01",
-        "GUID:52bf1896acb8e7c439953cd22e7ca9d5",
-        "GUID:17cdabef525ee9d4e8385a44834c2e0b",
-        "GUID:2eb4fdb68fcfa4547adb0e7eeac3539d"
+        "GUID:17cdabef525ee9d4e8385a44834c2e0b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

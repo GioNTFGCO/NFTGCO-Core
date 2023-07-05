@@ -19,7 +19,7 @@ namespace NFTGCO
         {
             base.Awake();
             //ForgeGlobalData.Instance.SetNFTRobotID(0);
-            _catchedGameId = (long)NFTGCOConfig.Instance.GameId;
+            _catchedGameId = (long)GameSettingsSO.Instance.GameId;
         }
 
         private void OnEnable()

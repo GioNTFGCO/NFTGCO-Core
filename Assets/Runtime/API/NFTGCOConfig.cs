@@ -16,11 +16,6 @@ namespace NFTGCO.API
 
         [Space] [SerializeField] private bool _clearKeys;
 
-        [Space] [SerializeField] private int _companyId = 1;
-
-        [NFTGCO.Helpers.SearchableEnum] [SerializeField]
-        private NFTGCO.Core.Global.NFTGCOGamesId _gameId;
-
         private int _sessionSequenceNumber = 0;
         private string _accessToken;
         private string _refreshToken;
@@ -31,8 +26,6 @@ namespace NFTGCO.API
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
-        public int CompanyId => _companyId;
-        public NFTGCO.Core.Global.NFTGCOGamesId GameId => _gameId;
         public bool LoginOfflineMode => _loginOfflineMode;
         public bool EnabledRegistration => _enabledRegistration;
 

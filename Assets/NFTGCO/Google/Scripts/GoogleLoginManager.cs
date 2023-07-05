@@ -19,7 +19,6 @@ namespace NFTGCO
     {
         [SerializeField] private NFTGCOLoginManager nftgcoLoginManager;
         [SerializeField] private NFTGCOManagerUi nftgcoManagerUi;
-        [SerializeField] private string _webClientId = "<your client id here>";
 #if !UNITY_EDITOR && UNITY_ANDROID
         private GoogleSignInConfiguration _configuration;
 #endif
@@ -34,7 +33,7 @@ namespace NFTGCO
 #if !UNITY_EDITOR && UNITY_ANDROID
             _configuration = new GoogleSignInConfiguration
             {
-                WebClientId = _webClientId, RequestEmail =
+                WebClientId = GameSettingsSO.Instance.GoogleWebClientId, RequestEmail =
                     true,
                 RequestIdToken = true
             };
@@ -45,7 +44,7 @@ namespace NFTGCO
         {
             nftgcoManagerUi.DelegateButtonLoginCallback("GOOGLE", () =>
             {
-                if (string.IsNullOrEmpty(_webClientId))
+                if (string.IsNullOrEmpty(GameSettingsSO.Instance.GoogleWebClientId))
                     return;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
