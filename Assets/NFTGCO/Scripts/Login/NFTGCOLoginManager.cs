@@ -49,11 +49,19 @@ namespace NFTGCO
 
             if (!string.IsNullOrEmpty(NFTGCOConfig.Instance.RefreshToken))
             {
-                nftgcoManagerUi.ShowHideBlockPanel(true);
+                GameServerLoadingScreen.OnShowLoadingScreen?.Invoke();
                 nftgcoLoginServer.RefreshToken();
             }
 
             #endregion
+
+            nftgcoManagerUi.DelegateButtonQuitGameCallback(() =>
+            {
+                Application.Quit();
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            });
         }
 
         public void AuthWithUserData()
@@ -101,7 +109,7 @@ namespace NFTGCO
             {
                 UiMessage.OnMessageSent?.Invoke("NFTGCO data success!");
 
-                nftgcoManagerUi.ShowHideBlockPanel(false);
+                GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
                 //_forgeManagerUi.ShowPanel("LoggedSession");
                 //start game automatically
                 nftgcoLoggedSessionManager.StartGame();

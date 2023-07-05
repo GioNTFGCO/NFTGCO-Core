@@ -36,8 +36,9 @@ namespace NFTGCO.API
         public bool LoginOfflineMode => _loginOfflineMode;
         public bool EnabledRegistration => _enabledRegistration;
 
-        private void OnEnable()
+        protected override void Awake()
         {
+            base.Awake();
             if (_clearKeys)
             {
                 PlayerPrefs.DeleteKey(ConfigAccessToken);
@@ -47,8 +48,6 @@ namespace NFTGCO.API
 
             RegisterAPI.RegistrationStatus(RegistrationCallback);
         }
-
-
         private void Start()
         {
             _accessToken = AccessToken;

@@ -43,7 +43,7 @@ namespace NFTGCO
             nftgcoManagerUi.DelegateButtonLoginCallback("IOS", () =>
             {
                 //lock panel
-                nftgcoManagerUi.ShowHideBlockPanel(true);
+                GameServerLoadingScreen.OnShowLoadingScreen?.Invoke();
                 //start login with Apple
                 SignInWithApple();
             });
@@ -51,7 +51,10 @@ namespace NFTGCO
 
 #if UNITY_IOS && !UNITY_EDITOR
             if (string.IsNullOrEmpty(NFTGCOConfig.Instance.AccessToken))
+            {
                 SignInWithApple();
+                GameServerLoadingScreen.OnShowLoadingScreen?.Invoke();
+            }
 #endif
         }
 
@@ -92,7 +95,7 @@ namespace NFTGCO
                     var authorizationErrorCode = error.GetAuthorizationErrorCode();
                     Debug.LogWarning("Sign in with Apple failed " + authorizationErrorCode.ToString() + " " +
                                      error.ToString());
-                    nftgcoManagerUi.ShowHideBlockPanel(false);
+                    GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
                 });
         }
 
@@ -106,6 +109,20 @@ namespace NFTGCO
 
         private void AuthAppleCallback(RequestException exception, ResponseHelper response)
         {
+            if (exception != null)
+            {
+                if (!NFTGCOConfig.Instance.EnabledRegistration)
+                {
+                    //registration unavailable
+                    nftgcoManagerUi.ShowRegistrationUnablePanel();
+                }
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(response.Text)) 
+                return;
+            
             Debug.Log("Success! - Exchange Apple API");
             // set login type to social
             NFTGCOConfig.Instance.SetLoginType("social");

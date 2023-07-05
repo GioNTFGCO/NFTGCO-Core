@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NFTGCO.API;
 using NFTGCO.Core.RestClient;
 using NFTGCO.Models.DTO;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -49,15 +50,18 @@ namespace NFTGCO
 
 #if UNITY_ANDROID && !UNITY_EDITOR
                 OnSignIn();
+                GameServerLoadingScreen.OnShowLoadingScreen?.Invoke();
 #endif
-                nftgcoManagerUi.ShowHideBlockPanel(true);
             });
 
 
 #if UNITY_ANDROID && !UNITY_EDITOR
             if (string.IsNullOrEmpty(NFTGCOConfig.Instance.AccessToken))
+            {
                 OnSignIn();
-            //OnSignInSilently();
+                GameServerLoadingScreen.OnShowLoadingScreen?.Invoke();
+            }
+
 #endif
         }
 #if !UNITY_EDITOR && UNITY_ANDROID
@@ -94,19 +98,19 @@ namespace NFTGCO
                     {
                         GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
                         Debug.Log($"Got Error: {error.Status} {error.Message}");
-                        nftgcoManagerUi.ShowHideBlockPanel(false);
+                        GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
                     }
                     else
                     {
                         Debug.Log($"Got Unexpected Exception?!? {task.Exception}");
-                        nftgcoManagerUi.ShowHideBlockPanel(false);
+                        GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
                     }
                 }
             }
             else if (task.IsCanceled)
             {
                 Debug.Log("Canceled");
-                nftgcoManagerUi.ShowHideBlockPanel(false);
+                GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
             }
             else
             {
@@ -128,6 +132,20 @@ namespace NFTGCO
 
         private void AuthGoogleCallback(RequestException exception, ResponseHelper response)
         {
+            if (exception != null)
+            {
+                if (!NFTGCOConfig.Instance.EnabledRegistration)
+                {
+                    //registration unavailable
+                    nftgcoManagerUi.ShowRegistrationUnablePanel();
+                }
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(response.Text)) 
+                return;
+            
             Debug.Log("Success! - Exchange Google API");
             //set login type to social
             NFTGCOConfig.Instance.SetLoginType("social");

@@ -4,6 +4,7 @@ using NFTGCO.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace NFTGCO
 {
@@ -13,6 +14,7 @@ namespace NFTGCO
         [SerializeField] private UDictionary<string, Button> _loginButtons;
         [SerializeField] private CanvasGroup _nftgcoLoginPanel;
         [SerializeField] private Button _openRegisterButton;
+        [SerializeField] private Button _quitGameButton;
 
         private void Start()
         {
@@ -21,11 +23,17 @@ namespace NFTGCO
 
             NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_nftgcoLoginPanel, false);
             _openRegisterButton.gameObject.SetActive(false);
+
 #if UNITY_EDITOR
-            NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_nftgcoLoginPanel, true);
-            _openRegisterButton.gameObject.SetActive(true);
+            EnableLoginForm();
 #endif
         }
+
+        public void EnableLoginForm()
+        {
+            NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_nftgcoLoginPanel, true);
+        }
+
         /// <summary>
         /// Init the Forge Manager UI
         /// </summary>
@@ -34,23 +42,27 @@ namespace NFTGCO
         {
             ShowPanel(panelId);
         }
+
         /// <summary>
         /// Delegate events to Login buttons
         /// </summary>
         /// <param name="buttonId">The id of the button in the UDictionary</param>
-        /// <param name="OnLogin">Events to add</param>
-        public void DelegateButtonLoginCallback(string buttonId, System.Action OnLogin)
+        /// <param name="onLogin">Events to add</param>
+        public void DelegateButtonLoginCallback(string buttonId, Action onLogin)
         {
-            _loginButtons[buttonId].onClick.AddListener(() => OnLogin?.Invoke());
+            _loginButtons[buttonId].onClick.AddListener(() => onLogin?.Invoke());
         }
-        /// <summary>
-        /// Delegate events to Register with NFTGCO API Button
-        /// </summary>
-        /// <param name="OnRegister">Events to add</param>
-        public void DelegateButtonRegisterCallback(System.Action OnRegister)
+
+        public void DelegateButtonRegisterCallback(Action onRegister)
         {
-            _openRegisterButton.onClick.AddListener(() => OnRegister?.Invoke());
+            _openRegisterButton.onClick.AddListener(() => onRegister?.Invoke());
         }
+        
+        public void DelegateButtonQuitGameCallback(Action onQuit)
+        {
+            _quitGameButton.onClick.AddListener(() => onQuit?.Invoke());
+        }
+
         /// <summary>
         /// Open one panel
         /// </summary>
@@ -61,16 +73,15 @@ namespace NFTGCO
             {
                 NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(item.Value, false);
             }
+
             NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_panels[panelId], true);
         }
-        /// <summary>
-        /// Show or Hide the Block Panel
-        /// </summary>
-        /// <param name="state"></param>
-        public void ShowHideBlockPanel(bool state)
+
+        public void ShowRegistrationUnablePanel()
         {
-            NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_panels["BLOCK"], state);
+            NFTGCO.Helpers.NFTGCOHelpers.CanvasGroupBehaviour(_panels["Registration"], true);
         }
+
         private void DelegateButtons()
         {
             //login
@@ -79,6 +90,7 @@ namespace NFTGCO
             //register
             DelegateButtonRegisterCallback(() => ShowPanel("NFTGCO_Register"));
         }
+
         /// <summary>
         /// Compilation buttons for the platform
         /// </summary>
