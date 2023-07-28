@@ -178,7 +178,8 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}{ForgetPasswordEndpoint}",
+                Uri =
+                    $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}{ForgetPasswordEndpoint}",
                 //Headers = headers,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
@@ -334,7 +335,9 @@ namespace NFTGCO.API
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
+                { "tc_accepted", "true" }
             };
 
             AccountTokenExchange body = new AccountTokenExchange(googleTokenId, "google");
@@ -368,7 +371,9 @@ namespace NFTGCO.API
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
                 { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
+                { "tc_accepted", "true" }
             };
 
             AccountTokenExchange body = new AccountTokenExchange(appleTokenId, "apple");

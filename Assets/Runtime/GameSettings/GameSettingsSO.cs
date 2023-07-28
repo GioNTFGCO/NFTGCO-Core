@@ -35,7 +35,7 @@ namespace NFTGCO
         public GameEnvironmentEnum GameEnvironmentEnum = GameEnvironmentEnum.Development;
 
         [Space] [Header("Game Platform")] public GamePlatformEnum GamePlatformEnum = GamePlatformEnum.Android;
-        public string addressableAssetPath = "https://nftgco-addressables.s3.amazonaws.com/u/GaxosBrawlBots/";
+        //public string addressableAssetPath = "https://nftgco-addressables.s3.amazonaws.com/u/GaxosBrawlBots/";
 
         [Space] [Header("Game Settings")]
         public int CompanyId = 1;
@@ -43,6 +43,9 @@ namespace NFTGCO
 
         [Space] [Header("Core Version")] 
         public string CoreVersionID = "2.0.0";
+        
+        [Space] [Header("Terms and conditions version")] 
+        public string TermsAndConditionsVersion = "7/21/2023";
         
         [Space] [Header("Google Settings")]
         public string GoogleWebClientId = "googleWebClientId";

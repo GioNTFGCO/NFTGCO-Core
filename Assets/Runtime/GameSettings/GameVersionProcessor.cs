@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build;
@@ -33,7 +34,7 @@ namespace NFTGCO.Helpers.Editor
                     PlayerSettings.bundleVersion = GameSettingsSO.Instance.GameVersion;
                     break;
             }
-            
+
             PlayerSettings.Android.bundleVersionCode = GameSettingsSO.Instance.AndroidBundleVersion;
             PlayerSettings.iOS.buildNumber = GameSettingsSO.Instance.IOSBuildNumber.ToString();
         }
@@ -56,3 +57,4 @@ namespace NFTGCO.Helpers.Editor
         }
     }
 }
+#endif

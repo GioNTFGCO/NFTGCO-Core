@@ -19,11 +19,6 @@ namespace NFTGCO
             GetWindow<GameSettingsCustomWindow>("Game Settings Window");
         }
 
-        // private void OnEnable()
-        // {
-        //     _gameSettings = GameSettingsSO.Instance;
-        // }
-
         private void OnEnable()
         {
             _gameSettings = Resources.Load<GameSettingsSO>("GameSettings");
@@ -49,39 +44,7 @@ namespace NFTGCO
             }
 
             _serializedObject.ApplyModifiedProperties();
-            // GUILayout.Label("Game Settings", EditorStyles.boldLabel);
-            //
-            // System.Type customSettingsType = typeof(GameSettingsSO);
-            // var fields = customSettingsType.GetFields();
-            //
-            // foreach (var field in fields)
-            // {
-            //     if (field.FieldType == typeof(string))
-            //     {
-            //         string value = (string)field.GetValue(_gameSettings);
-            //         string newValue = EditorGUILayout.TextField(field.Name, value);
-            //         field.SetValue(_gameSettings, newValue);
-            //     }
-            //     else if (field.FieldType == typeof(int))
-            //     {
-            //         int value = (int)field.GetValue(_gameSettings);
-            //         int newValue = EditorGUILayout.IntField(field.Name, value);
-            //         field.SetValue(_gameSettings, newValue);
-            //     }
-            //     else if (field.FieldType == typeof(bool))
-            //     {
-            //         bool value = (bool)field.GetValue(_gameSettings);
-            //         bool newValue = EditorGUILayout.Toggle(field.Name, value);
-            //         field.SetValue(_gameSettings, newValue);
-            //     }
-            //     else if (field.FieldType.IsEnum)
-            //     {
-            //         System.Enum value = (System.Enum)field.GetValue(_gameSettings);
-            //         System.Enum newValue = EditorGUILayout.EnumPopup(field.Name, value);
-            //         field.SetValue(_gameSettings, newValue);
-            //     }
-            // }
-
+            
             GUILayout.Space(10);
             
             if (GUILayout.Button("Save Settings"))

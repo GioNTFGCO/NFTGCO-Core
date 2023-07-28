@@ -17,8 +17,8 @@ MonoBehaviour:
   IOSBuildNumber: 1
   GameEnvironmentEnum: 0
   GamePlatformEnum: 0
-  addressableAssetPath: https://nftgco-addressables.s3.amazonaws.com/u/GaxosBrawlBots/
   CompanyId: 1
   GameId: 2
   CoreVersionID: 2.0.0
+  TermsAndConditionsVersion: 7/21/2023
   GoogleWebClientId: googleWebClientId
