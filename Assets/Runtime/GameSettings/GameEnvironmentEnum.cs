@@ -10,7 +10,7 @@ namespace NFTGCO
         [GameEnvironmentAttribute("https://dev.gaxos99.com")]
         Development,
 
-        [GameEnvironmentAttribute("https://dev.gaxos99.com")]
+        [GameEnvironmentAttribute("https://prod.gaxos.com")]
         Production
     }
 
