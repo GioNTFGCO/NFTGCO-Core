@@ -35,8 +35,7 @@ namespace NFTGCO
         public GameEnvironmentEnum GameEnvironmentEnum = GameEnvironmentEnum.Development;
 
         [Space] [Header("Game Platform")] public GamePlatformEnum GamePlatformEnum = GamePlatformEnum.Android;
-        //public string addressableAssetPath = "https://nftgco-addressables.s3.amazonaws.com/u/GaxosBrawlBots/";
-
+        
         [Space] [Header("Game Settings")]
         public int CompanyId = 1;
         public NFTGCOGamesId GameId;

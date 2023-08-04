@@ -22,11 +22,12 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
-            
+
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -34,7 +35,7 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -60,11 +61,12 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
-            
+
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -72,7 +74,7 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -94,19 +96,21 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
+                Uri = GameSettingsSO.Instance.GetGameEnvironment +
+                      $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
                 Headers = headers,
                 EnableDebug = true,
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -128,21 +132,23 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
-            
+
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" +
+                Uri = GameSettingsSO.Instance.GetGameEnvironment +
+                      $"{NTFGCOAPI.GAME_BASE_URL}/event/{gameId.ToString()}/{userId}?from=" +
                       from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" +
                       to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
                 Headers = headers,
                 EnableDebug = true,
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -164,9 +170,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -178,7 +185,7 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
@@ -200,9 +207,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -213,7 +221,7 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");

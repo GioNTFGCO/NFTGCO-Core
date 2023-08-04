@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using NFTGCO.Core.RestClient;
@@ -14,20 +15,38 @@ namespace NFTGCO.API
         public const string ConfigRefreshToken = "refresh_token";
         public const string ConfigLoginType = "loginType";
 
+        private const string LastBackgroundTimeKey = "LastBackgroundTime";
+        private const int MaxSecondsBeforeReset = 3600; // 1 hour in seconds
+
         [Space] [SerializeField] private bool _clearKeys;
 
         private int _sessionSequenceNumber = 0;
+
+        private int SessionSequenceNumber
+        {
+            get => _sessionSequenceNumber;
+            set
+            {
+                _sessionSequenceNumber = value;
+                PlayerPrefs.SetInt(nameof(_sessionSequenceNumber), _sessionSequenceNumber);
+                PlayerPrefs.Save();
+            }
+        }
+
         private string _accessToken;
         private string _refreshToken;
         private string _loginType;
-        private bool _loginOfflineMode;
-        private bool _enabledRegistration;
 
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
-        public bool LoginOfflineMode => _loginOfflineMode;
-        public bool EnabledRegistration => _enabledRegistration;
+        public bool LoginOfflineMode { get; private set; }
+        public bool EnabledRegistration { get; private set; }
+        public int GetSsn
+        {
+            set => SessionSequenceNumber = value;
+            get => SessionSequenceNumber++;
+        }
 
         protected override void Awake()
         {
@@ -41,11 +60,39 @@ namespace NFTGCO.API
 
             RegisterAPI.RegistrationStatus(RegistrationCallback);
         }
+
         private void Start()
         {
             _accessToken = AccessToken;
             _refreshToken = RefreshToken;
             _loginType = LoginType;
+
+            _sessionSequenceNumber = PlayerPrefs.GetInt(nameof(_sessionSequenceNumber), 0);
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                // The game has been put into the background, store the current date and time
+                PlayerPrefs.SetString(LastBackgroundTimeKey, DateTime.UtcNow.ToString("O"));
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                // The game has resumed, check if 1 hour has passed since it was put into the background
+                string lastBackgroundTimeStr = PlayerPrefs.GetString(LastBackgroundTimeKey, string.Empty);
+                if (!string.IsNullOrEmpty(lastBackgroundTimeStr) &&
+                    DateTime.TryParse(lastBackgroundTimeStr, out DateTime lastBackgroundTime))
+                {
+                    TimeSpan timeInBackground = DateTime.UtcNow - lastBackgroundTime;
+                    if (timeInBackground.TotalSeconds >= MaxSecondsBeforeReset)
+                    {
+                        // At least 1 hour has passed, reset the value of _sessionSequenceNumber to 0
+                        _sessionSequenceNumber = 0;
+                    }
+                }
+            }
         }
 
         public void SetAccessToken(string newToken)
@@ -68,15 +115,9 @@ namespace NFTGCO.API
 
         public void SetLoginOfflineMode()
         {
-            _loginOfflineMode = true;
+            LoginOfflineMode = true;
         }
-
-        public int GetSSN
-        {
-            set => _sessionSequenceNumber = value;
-            get => _sessionSequenceNumber++;
-        }
-
+        
         private void RegistrationCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)
@@ -86,7 +127,7 @@ namespace NFTGCO.API
             }
 
             var values = JsonConvert.DeserializeObject<Dictionary<string, bool>>(response.Text);
-            _enabledRegistration = values.First().Value;
+            EnabledRegistration = values.First().Value;
         }
     }
 }

@@ -38,9 +38,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             string postData = "";
@@ -92,9 +93,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -130,9 +132,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -168,9 +171,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             ForgetPasswordDTO body = new ForgetPasswordDTO(email);
@@ -211,9 +215,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -251,9 +256,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             Dictionary<string, Int64> body = new Dictionary<string, Int64>()
@@ -293,9 +299,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper()
@@ -333,9 +340,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" },
                 { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
                 { "tc_accepted", "true" }
             };
@@ -369,9 +377,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" },
                 { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
                 { "tc_accepted", "true" }
             };

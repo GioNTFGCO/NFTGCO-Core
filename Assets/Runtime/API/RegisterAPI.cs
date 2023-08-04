@@ -18,13 +18,14 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
             RequestHelper request = new RequestHelper
             {
-                Uri =$"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 Headers = headers,
                 EnableDebug = true,
                 Body = new RegisterUserInfo
@@ -55,9 +56,10 @@ namespace NFTGCO.API
                 { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
                 { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
                 { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSSN}" },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID }
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -66,13 +68,13 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true,
             };
-            
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
                 return;
             }
-            
+
             Debug.Log("Get request: Registration Status");
 
             RestClient.Get(request, callback);
