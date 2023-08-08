@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using NFTGCO.Core.RestClient;
+using NFTGCO.Helpers;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -42,11 +43,14 @@ namespace NFTGCO.API
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
         public bool LoginOfflineMode { get; private set; }
         public bool EnabledRegistration { get; private set; }
+
         public int GetSsn
         {
             set => SessionSequenceNumber = value;
             get => SessionSequenceNumber++;
         }
+
+        public string DeviceUuid { get; private set; }
 
         protected override void Awake()
         {
@@ -68,6 +72,8 @@ namespace NFTGCO.API
             _loginType = LoginType;
 
             _sessionSequenceNumber = PlayerPrefs.GetInt(nameof(_sessionSequenceNumber), 0);
+
+            GenerateDeviceUuid();
         }
 
         private void OnApplicationPause(bool pauseStatus)
@@ -90,6 +96,8 @@ namespace NFTGCO.API
                     {
                         // At least 1 hour has passed, reset the value of _sessionSequenceNumber to 0
                         _sessionSequenceNumber = 0;
+
+                        GenerateDeviceUuid();
                     }
                 }
             }
@@ -117,7 +125,7 @@ namespace NFTGCO.API
         {
             LoginOfflineMode = true;
         }
-        
+
         private void RegistrationCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)
@@ -128,6 +136,12 @@ namespace NFTGCO.API
 
             var values = JsonConvert.DeserializeObject<Dictionary<string, bool>>(response.Text);
             EnabledRegistration = values.First().Value;
+        }
+
+        private void GenerateDeviceUuid()
+        {
+            var uuid = Guid.NewGuid();
+            DeviceUuid = uuid.ToString();
         }
     }
 }

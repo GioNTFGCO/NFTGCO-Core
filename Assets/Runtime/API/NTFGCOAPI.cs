@@ -31,8 +31,4 @@ public static class NTFGCOAPI
         TimeSpan timeSpan = dateTime - epochStart;
         return (long)timeSpan.TotalSeconds;
     }
-    public static string GetSessionUUID()
-    {
-        return SystemInfo.deviceUniqueIdentifier;
-    }
 }

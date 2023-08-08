@@ -21,7 +21,7 @@ namespace NFTGCO.API
                 { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -60,7 +60,7 @@ namespace NFTGCO.API
                 { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -95,7 +95,7 @@ namespace NFTGCO.API
                 { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
             };
 
             RequestHelper request = new RequestHelper
@@ -129,7 +129,7 @@ namespace NFTGCO.API
                 { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
             };
 
             RequestHelper request = new RequestHelper()
@@ -163,7 +163,7 @@ namespace NFTGCO.API
                 { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
                 { "ts", $"{NTFGCOAPI.GetTime()}" },
                 { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid ", $"{NTFGCOAPI.GetSessionUUID()}" }
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
             };
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
