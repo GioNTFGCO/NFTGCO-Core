@@ -10,8 +10,6 @@ using UnityEditor;
 [ExecuteInEditMode]
 public static class NTFGCOAPI
 {
-    private const string BASE_URL = "https://dev.gaxos99.com";
-
     public const string CONTENT_TYPE_JSON = "application/json";
     public const string CONTENT_TYPE_URLENCODED = "application/x-www-form-urlencoded";
 
