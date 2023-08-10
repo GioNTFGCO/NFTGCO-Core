@@ -3,6 +3,7 @@ using NFTGCO.Core.RestClient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -32,17 +33,13 @@ namespace NFTGCO.API
         public static void AuthRequest(string username, string password,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithoutAuth();
 
             string postData = "";
             Dictionary<string, string> postParameters = new Dictionary<string, string>()
@@ -87,17 +84,13 @@ namespace NFTGCO.API
         public static void RefreshTokenRequest(Dictionary<string, string> body,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithoutAuth();
 
             RequestHelper request = new RequestHelper
             {
@@ -108,14 +101,6 @@ namespace NFTGCO.API
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Post request: RefreshToken");
-
             RestClient.Post(request, callback);
         }
 
@@ -125,18 +110,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetAccountData(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetRequestHeaders();
 
             RequestHelper request = new RequestHelper
             {
@@ -145,14 +125,6 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetAccountData");
 
             RestClient.Get(request, callback);
         }
@@ -164,18 +136,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void ForgetPasswordRequest(string email, Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             ForgetPasswordDTO body = new ForgetPasswordDTO(email);
 
@@ -189,14 +156,6 @@ namespace NFTGCO.API
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Post request: ForgetPassword");
-
             RestClient.Post(request, callback);
         }
 
@@ -208,18 +167,13 @@ namespace NFTGCO.API
         public static void UpdateUserUsername(AccountUsernameDTO accountNickcname,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -229,14 +183,6 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(accountNickcname))
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Put request: UpdateUserNickname");
 
             RestClient.Put(request, callback);
         }
@@ -249,23 +195,19 @@ namespace NFTGCO.API
         public static void UpdateUserXp(Int64 amountXP,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             Dictionary<string, Int64> body = new Dictionary<string, Int64>()
             {
                 { "amount", amountXP }
             };
+
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
@@ -274,14 +216,6 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Put request: UpdateUserXp");
 
             RestClient.Put(request, callback);
         }
@@ -292,18 +226,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetAvailableUserXp(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper()
             {
@@ -313,31 +242,18 @@ namespace NFTGCO.API
                 EnableDebug = true
             };
 
+            RestClient.Get(request, callback);
+        }
+
+        public static void DeleteAccount(Action<RequestException, ResponseHelper> callback)
+        {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
                 return;
             }
 
-            Debug.Log("Get request: GetAvailableUserXp");
-
-            RestClient.Get(request, callback);
-        }
-
-        public static void DeleteAccount(Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>
-            {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper()
             {
@@ -347,31 +263,18 @@ namespace NFTGCO.API
                 EnableDebug = true
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-            
-            Debug.Log("Delete request: Delete authenticated account");
-
             RestClient.Delete(request, callback);
         }
 
         public static void DeleteDataAccount(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper()
             {
@@ -380,14 +283,6 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-            
-            Debug.Log("Delete request: Delete data related to authenticated account");
 
             RestClient.Delete(request, callback);
         }
@@ -402,19 +297,13 @@ namespace NFTGCO.API
         public static void AuthGoogleRequest(string googleTokenId,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" },
-                { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
-                { "tc_accepted", "true" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersForTc();
 
             AccountTokenExchange body = new AccountTokenExchange(googleTokenId, "google");
 
@@ -426,14 +315,6 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
-            
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Post request: AuthGoogle");
 
             RestClient.Post(request, callback);
         }
@@ -445,19 +326,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void AuthAppleRequest(string appleTokenId, Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" },
-                { "tc_version", GameSettingsSO.Instance.TermsAndConditionsVersion },
-                { "tc_accepted", "true" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersForTc();
 
             AccountTokenExchange body = new AccountTokenExchange(appleTokenId, "apple");
 
@@ -469,14 +344,6 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-            
-            Debug.Log("Post request: AuthApple");
 
             RestClient.Post(request, callback);
         }

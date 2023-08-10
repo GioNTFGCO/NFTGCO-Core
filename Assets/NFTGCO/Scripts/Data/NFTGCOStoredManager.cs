@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using NFTCreator;
+using NFTGCO.API;
 using NFTGCO.Helpers;
 using NFTGCO.Models.DTO;
 using UnityEngine;
@@ -49,7 +50,13 @@ namespace NFTGCO
         public string SocialName => _socialName;
 
         public void SetGameStateDTO(GameStateDTO newGameStateDTO) => _gameState = newGameStateDTO;
-        public void SetAccountDTOResponse(AccountDto newAccountDto) => _accountDTOResponse = newAccountDto;
+
+        public void SetAccountDTOResponse(AccountDto newAccountDto)
+        {
+            _accountDTOResponse = newAccountDto;
+            NFTGCOConfig.Instance.SetUserAccountId(newAccountDto.id.ToString(), newAccountDto.userId);
+        }
+
         public void SetCurrentNFTXp(long newNFTXp) => _currentNFTXp = newNFTXp;
 
         //social

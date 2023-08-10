@@ -50,8 +50,11 @@ namespace NFTGCO.API
             get => SessionSequenceNumber++;
         }
 
-        public string DeviceUuid { get; private set; }
+        public string DeviceGuid { get; private set; }
 
+        public string UserAccountId { get; private set; }
+        public string UserAccountUuId { get; private set; }
+        
         protected override void Awake()
         {
             base.Awake();
@@ -141,7 +144,13 @@ namespace NFTGCO.API
         private void GenerateDeviceUuid()
         {
             var uuid = Guid.NewGuid();
-            DeviceUuid = uuid.ToString();
+            DeviceGuid = uuid.ToString();
+        }
+        
+        public void SetUserAccountId(string id, string uuid)
+        {
+            UserAccountId = id;
+            UserAccountUuId = uuid;
         }
     }
 }

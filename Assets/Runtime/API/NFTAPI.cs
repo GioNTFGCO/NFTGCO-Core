@@ -11,18 +11,13 @@ namespace NFTGCO.API
     {
         public static void GetNftAvailableXp(long nftId, Action<RequestException, long> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetRequestHeaders();
 
             RequestHelper request = new RequestHelper
             {
@@ -31,14 +26,6 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetNftAvailableXp");
 
             RestClient.Get(request, (err, res) =>
             {
@@ -50,18 +37,13 @@ namespace NFTGCO.API
         public static void IncreaseNftXpRequest(IncreaseNftXpRequest requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetRequestHeaders();
 
             RequestHelper request = new RequestHelper
             {
@@ -72,31 +54,18 @@ namespace NFTGCO.API
                 Body = requestData
             };
 
+            RestClient.Post(request, callback);
+        }
+
+        public static void CreateInitialAvatarRequest(Action<RequestException, ResponseHelper> callback)
+        {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
                 return;
             }
 
-            Debug.Log("Post request: IncreaseNftXp");
-
-            RestClient.Post(request, callback);
-        }
-
-        public static void CreateInitialAvatarRequest(Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>
-            {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+            var headers = NTFGCOAPI.GetRequestHeaders();
 
             RequestHelper request = new RequestHelper
             {
@@ -106,31 +75,18 @@ namespace NFTGCO.API
                 EnableDebug = true
             };
 
+            RestClient.Post(request, callback);
+        }
+
+        public static void GetLastAvatar(Action<RequestException, ResponseHelper> callback)
+        {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
                 return;
             }
 
-            Debug.Log("Post request: CreateInitialAvatar");
-
-            RestClient.Post(request, callback);
-        }
-
-        public static void GetLastAvatar(Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>
-            {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper()
             {
@@ -140,31 +96,18 @@ namespace NFTGCO.API
                 EnableDebug = true,
             };
 
+            RestClient.Get(request, callback);
+        }
+
+        public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
+        {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 Debug.LogError("Error. Check internet connection!");
                 return;
             }
 
-            Debug.Log("Get request: GetLastAvatar");
-
-            RestClient.Get(request, callback);
-        }
-
-        public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
-        {
-            Dictionary<string, string> headers = new Dictionary<string, string>
-            {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("topSize", amount.ToString());
@@ -179,14 +122,6 @@ namespace NFTGCO.API
                     EnableDebug = true,
                     Params = parameters
                 };
-
-                if (Application.internetReachability == NetworkReachability.NotReachable)
-                {
-                    Debug.LogError("Error. Check internet connection!");
-                    return;
-                }
-
-                Debug.Log("Get request: Leaderboard");
 
                 RestClient.Get(request, callback);
             }

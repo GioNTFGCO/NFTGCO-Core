@@ -15,18 +15,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetGamesRequest(Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -35,14 +30,6 @@ namespace NFTGCO.API
                 Headers = headers,
                 EnableDebug = true
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetGames");
 
             RestClient.Get(request, callback);
         }
@@ -54,18 +41,13 @@ namespace NFTGCO.API
         /// <param name="callback"></param>
         public static void GetGameByIdRequest(long gameId, Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -75,32 +57,19 @@ namespace NFTGCO.API
                 EnableDebug = true
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetGameById");
-
             RestClient.Get(request, callback);
         }
 
         public static void GetLatestGameStateRequest(long gameId, long accountId,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -111,32 +80,19 @@ namespace NFTGCO.API
                 EnableDebug = true,
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetLatestGameState");
-
             RestClient.Get(request, callback);
         }
 
         public static void GetGameEventsRequest(long gameId, long userId, System.DateTime from, System.DateTime to,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -149,32 +105,19 @@ namespace NFTGCO.API
                 EnableDebug = true,
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Get request: GetGameEvents");
-
             RestClient.Get(request, callback);
         }
 
         public static void CreateGameEventRequest(CreateGameEventDTO requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -186,32 +129,19 @@ namespace NFTGCO.API
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
 
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Post request: CreateGameEvent");
-
             RestClient.Post(request, callback);
         }
 
         public static void CreateGameStateRequest(CreateGameStateDTO requestData,
             Action<RequestException, ResponseHelper> callback)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
-                { "browser_info", "" },
-                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
-                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
-                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
-                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
-                { "ts", $"{NTFGCOAPI.GetTime()}" },
-                { "client_version", GameSettingsSO.Instance.CoreVersionID },
-                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
-            };
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
             RequestHelper request = new RequestHelper
             {
@@ -221,14 +151,6 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
-
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            Debug.Log("Post request: CreateGameState");
 
             RestClient.Post(request, callback);
         }
