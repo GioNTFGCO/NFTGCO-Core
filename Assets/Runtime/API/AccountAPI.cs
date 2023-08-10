@@ -324,6 +324,74 @@ namespace NFTGCO.API
             RestClient.Get(request, callback);
         }
 
+        public static void DeleteAccount(Action<RequestException, ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
+            };
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}",
+                Headers = headers,
+                EnableDebug = true
+            };
+
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+            
+            Debug.Log("Delete request: Delete authenticated account");
+
+            RestClient.Delete(request, callback);
+        }
+
+        public static void DeleteDataAccount(Action<RequestException, ResponseHelper> callback)
+        {
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Authorization", $"Bearer {NFTGCOConfig.Instance.AccessToken}" },
+                { "browser_info", "" },
+                { "company_id", $"{GameSettingsSO.Instance.CompanyId}" },
+                { "game_id", $"{(long)GameSettingsSO.Instance.GameId}" },
+                { "platform", GameSettingsSO.Instance.GamePlatformEnum.ToString() },
+                { "ssn", $"{NFTGCOConfig.Instance.GetSsn}" },
+                { "ts", $"{NTFGCOAPI.GetTime()}" },
+                { "client_version", GameSettingsSO.Instance.CoreVersionID },
+                { "session_uuid", $"{NFTGCOConfig.Instance.DeviceUuid}" }
+            };
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/data",
+                Headers = headers,
+                EnableDebug = true
+            };
+
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+            
+            Debug.Log("Delete request: Delete data related to authenticated account");
+
+            RestClient.Delete(request, callback);
+        }
+
         #region TOKEN_EXCHANGE
 
         /// <summary>
@@ -358,6 +426,12 @@ namespace NFTGCO.API
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
+            
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
             Debug.Log("Post request: AuthGoogle");
 
@@ -396,6 +470,12 @@ namespace NFTGCO.API
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
             };
 
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+            
             Debug.Log("Post request: AuthApple");
 
             RestClient.Post(request, callback);

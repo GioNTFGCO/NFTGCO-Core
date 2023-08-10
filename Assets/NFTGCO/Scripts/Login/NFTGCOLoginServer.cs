@@ -15,7 +15,7 @@ namespace NFTGCO
     {
         [SerializeField] private UpdateAccountManager _updateAccountManager;
         [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
-
+        
         private string _webURL;
 
         public void LoginWithToken(string userToken, string refreshToken)
