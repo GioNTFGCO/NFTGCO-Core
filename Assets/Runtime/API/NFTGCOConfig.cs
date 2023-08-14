@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using NFTGCO.Core.RestClient;
-using NFTGCO.Helpers;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -15,6 +12,7 @@ namespace NFTGCO.API
         public const string ConfigAccessToken = "access_token";
         public const string ConfigRefreshToken = "refresh_token";
         public const string ConfigLoginType = "loginType";
+        public const string ConfigTermsAndConditions = "accepted";
 
         private const string LastBackgroundTimeKey = "LastBackgroundTime";
         private const int MaxSecondsBeforeReset = 3600; // 1 hour in seconds
@@ -37,10 +35,12 @@ namespace NFTGCO.API
         private string _accessToken;
         private string _refreshToken;
         private string _loginType;
+        private string _termsAndConditions;
 
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
+        public string TermsAndConditions => PlayerPrefs.GetString(ConfigTermsAndConditions);
         public bool LoginOfflineMode { get; private set; }
         public bool EnabledRegistration { get; private set; }
 
@@ -60,19 +60,24 @@ namespace NFTGCO.API
             base.Awake();
             if (_clearKeys)
             {
-                PlayerPrefs.DeleteKey(ConfigAccessToken);
-                PlayerPrefs.DeleteKey(ConfigRefreshToken);
-                PlayerPrefs.DeleteKey(ConfigLoginType);
+                DeletePlayerPrefs();
             }
 
             RegisterAPI.RegistrationStatus(RegistrationCallback);
         }
-
+        public void DeletePlayerPrefs()
+        {
+            PlayerPrefs.DeleteKey(ConfigAccessToken);
+            PlayerPrefs.DeleteKey(ConfigRefreshToken);
+            PlayerPrefs.DeleteKey(ConfigLoginType);
+            PlayerPrefs.DeleteKey(ConfigTermsAndConditions);
+        }
         private void Start()
         {
             _accessToken = AccessToken;
             _refreshToken = RefreshToken;
             _loginType = LoginType;
+            _termsAndConditions = TermsAndConditions;
 
             _sessionSequenceNumber = PlayerPrefs.GetInt(nameof(_sessionSequenceNumber), 0);
 
@@ -129,6 +134,11 @@ namespace NFTGCO.API
             LoginOfflineMode = true;
         }
 
+        public void SetTermsAndConditions(string newTermsAndConditions)
+        {
+            PlayerPrefs.SetString(ConfigTermsAndConditions, newTermsAndConditions);
+            _termsAndConditions = newTermsAndConditions;
+        }
         private void RegistrationCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)

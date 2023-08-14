@@ -30,9 +30,8 @@ namespace NFTGCO
 
         public void LogOut()
         {
-            PlayerPrefs.DeleteKey(NFTGCOConfig.ConfigAccessToken);
-            PlayerPrefs.DeleteKey(NFTGCOConfig.ConfigRefreshToken);
-
+            NFTGCOConfig.Instance.DeletePlayerPrefs();
+            
             NFTGCOStoredManager.Instance.ClearData();
 
             nftgcoManagerUi.ShowPanel("Initial");

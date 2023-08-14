@@ -35,6 +35,8 @@ namespace NFTGCO
                 NFTGCOConfig.Instance.SetAccessToken(accessToken);
             if (!string.IsNullOrEmpty(refreshToken))
                 NFTGCOConfig.Instance.SetRefreshToken(refreshToken);
+            
+            NFTGCOConfig.Instance.SetTermsAndConditions("Accepted");
 
             GetAccountData();
         }
@@ -84,6 +86,7 @@ namespace NFTGCO
 
             NFTGCOConfig.Instance.SetAccessToken(authResponse.access_token);
             NFTGCOConfig.Instance.SetRefreshToken(authResponse.refresh_token);
+            NFTGCOConfig.Instance.SetTermsAndConditions("Accepted");
 
             Debug.Log($"Response server token: {authResponse.access_token}");
 
