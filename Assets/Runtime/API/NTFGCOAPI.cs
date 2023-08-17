@@ -15,8 +15,8 @@ public static class NTFGCOAPI
     public const string CONTENT_TYPE_JSON = "application/json";
     public const string CONTENT_TYPE_URLENCODED = "application/x-www-form-urlencoded";
 
-    public const string ACCOUNT_BASE_URL = "/api/account/v1";
-    public const string NFT_BASE_URL = "/api/nft/v1";
+    public const string ACCOUNT_BASE_URL = "/api/account/v1/";
+    public const string NFT_BASE_URL = "/api/nft/v1/";
     public const string GAME_BASE_URL = "/api/game/v1/games";
 
     public static Dictionary<string, string> GetRequestHeaders()

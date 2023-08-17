@@ -22,7 +22,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}/{nftId}/total-xp",
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}{nftId}/total-xp",
                 Headers = headers,
                 EnableDebug = true
             };
@@ -48,7 +48,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}/increase/xp",
+                Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}increase/xp",
                 Headers = headers,
                 EnableDebug = true,
                 Body = requestData
@@ -91,7 +91,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + NTFGCOAPI.NFT_BASE_URL + $"/avatar",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}avatar",
                 Headers = headers,
                 EnableDebug = true,
             };
@@ -117,7 +117,7 @@ namespace NFTGCO.API
                 RequestHelper request = new RequestHelper()
                 {
                     ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                    Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}/top",
+                    Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}top",
                     Headers = headers,
                     EnableDebug = true,
                     Params = parameters

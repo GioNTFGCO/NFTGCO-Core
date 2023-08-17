@@ -49,7 +49,7 @@ namespace NFTGCO.API
 
             RequestHelper request = new RequestHelper
             {
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/registration",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}registration",
                 Headers = headers,
                 EnableDebug = true,
             };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using NFTGCO.Core.RestClient;
+using NFTGCO.Helpers;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -17,8 +18,6 @@ namespace NFTGCO.API
         private const string LastBackgroundTimeKey = "LastBackgroundTime";
         private const int MaxSecondsBeforeReset = 3600; // 1 hour in seconds
 
-        [Space] [SerializeField] private bool _clearKeys;
-
         private int _sessionSequenceNumber = 0;
 
         private int SessionSequenceNumber
@@ -32,15 +31,16 @@ namespace NFTGCO.API
             }
         }
 
-        private string _accessToken;
-        private string _refreshToken;
-        private string _loginType;
-        private string _termsAndConditions;
+        [SerializeField] [ReadOnly] private string _accessToken;
+        [SerializeField] [ReadOnly] private string _refreshToken;
+        [SerializeField] [ReadOnly] private string _loginType;
+        [SerializeField] [ReadOnly] private string _termsAndConditions;
 
         public string AccessToken => PlayerPrefs.GetString(ConfigAccessToken);
         public string RefreshToken => PlayerPrefs.GetString(ConfigRefreshToken);
         public string LoginType => PlayerPrefs.GetString(ConfigLoginType);
         public string TermsAndConditions => PlayerPrefs.GetString(ConfigTermsAndConditions);
+
         public bool LoginOfflineMode { get; private set; }
         public bool EnabledRegistration { get; private set; }
 
@@ -51,20 +51,18 @@ namespace NFTGCO.API
         }
 
         public string DeviceGuid { get; private set; }
-
         public string UserAccountId { get; private set; }
         public string UserAccountUuId { get; private set; }
-        
+
         protected override void Awake()
         {
             base.Awake();
-            if (_clearKeys)
-            {
-                DeletePlayerPrefs();
-            }
-
+#if UNITY_EDITOR
+            DeletePlayerPrefs();
+#endif
             RegisterAPI.RegistrationStatus(RegistrationCallback);
         }
+
         public void DeletePlayerPrefs()
         {
             PlayerPrefs.DeleteKey(ConfigAccessToken);
@@ -72,6 +70,7 @@ namespace NFTGCO.API
             PlayerPrefs.DeleteKey(ConfigLoginType);
             PlayerPrefs.DeleteKey(ConfigTermsAndConditions);
         }
+
         private void Start()
         {
             _accessToken = AccessToken;
@@ -139,6 +138,7 @@ namespace NFTGCO.API
             PlayerPrefs.SetString(ConfigTermsAndConditions, newTermsAndConditions);
             _termsAndConditions = newTermsAndConditions;
         }
+
         private void RegistrationCallback(RequestException exception, ResponseHelper response)
         {
             if (exception != null)
@@ -156,7 +156,7 @@ namespace NFTGCO.API
             var uuid = Guid.NewGuid();
             DeviceGuid = uuid.ToString();
         }
-        
+
         public void SetUserAccountId(string id, string uuid)
         {
             UserAccountId = id;

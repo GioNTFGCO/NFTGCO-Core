@@ -18,11 +18,11 @@ namespace NFTGCO.API
         private const string ClientID = "client_id";
         private const string Username = "username";
         private const string Password = "password";
-        private const string RefreshToken = "/token-exchange/refresh";
+        private const string RefreshToken = "token-exchange/refresh";
 
         private const string TokenEndpoint = "/auth/realms/nftgco-service/protocol/openid-connect/token";
-        private const string ForgetPasswordEndpoint = "/password/forgot";
-        private const string TokenExchange = "/token-exchange";
+        private const string ForgetPasswordEndpoint = "password/forgot";
+        private const string TokenExchange = "token-exchange";
 
         /// <summary>
         /// Send a request to the server to get the account data
@@ -58,7 +58,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_URLENCODED,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + TokenEndpoint,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{TokenEndpoint}",
                 Headers = headers,
                 EnableDebug = true,
                 BodyRaw = data
@@ -95,7 +95,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = GameSettingsSO.Instance.GetGameEnvironment + NTFGCOAPI.ACCOUNT_BASE_URL + RefreshToken,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}{RefreshToken}",
                 //Headers = headers,
                 EnableDebug = true,
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(body)
@@ -211,7 +211,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}xp",
                 Headers = headers,
                 EnableDebug = true,
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
@@ -237,7 +237,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/xp/available",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}xp/available",
                 Headers = headers,
                 EnableDebug = true
             };
@@ -279,7 +279,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}/data",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}data",
                 Headers = headers,
                 EnableDebug = true
             };
