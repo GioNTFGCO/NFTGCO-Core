@@ -3,7 +3,6 @@ using NFTGCO.Core.RestClient;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 
 namespace NFTGCO.API
 {
@@ -127,6 +126,29 @@ namespace NFTGCO.API
             }
             else
                 Debug.LogWarning("Amount must be 10 or 20");
+        }
+
+        public static void LinkWallet(WalletDTO requestData,
+            Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+            
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}account/wallet",
+                Headers = headers,
+                EnableDebug = true,
+                BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
+            };
+            
+            RestClient.Put(request, callback);
         }
     }
 }
