@@ -2,6 +2,7 @@ using NFTGCO.Models.DTO;
 using NFTGCO.Core.RestClient;
 using System;
 using System.Collections.Generic;
+using Runtime.Models;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -128,7 +129,7 @@ namespace NFTGCO.API
                 Debug.LogWarning("Amount must be 10 or 20");
         }
 
-        public static void LinkWallet(WalletDTO requestData,
+        public static void UploadImageAsset(byte[] assetByte,
             Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -138,17 +139,60 @@ namespace NFTGCO.API
             }
 
             var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
-            
+
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}account/wallet",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}store",
                 Headers = headers,
                 EnableDebug = true,
-                BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
+                Body = assetByte
             };
-            
-            RestClient.Put(request, callback);
+
+            RestClient.Post(request, callback);
+        }
+
+        public static void MintAvatar(MintDTO mintProperties, Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}store",
+                Headers = headers,
+                EnableDebug = true,
+                Body = mintProperties
+            };
+
+            RestClient.Post(request, callback);
+        }
+
+        public static void GetAvatarFromWallet(string walletAddress, Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}tokens-by-owner/{walletAddress}",
+                Headers = headers,
+                EnableDebug = true,
+            };
+
+            RestClient.Get(request, callback);
         }
     }
 }
