@@ -2,7 +2,8 @@ using NFTGCO.Models.DTO;
 using NFTGCO.Core.RestClient;
 using System;
 using System.Collections.Generic;
-using Runtime.Models;
+using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace NFTGCO.API
@@ -129,7 +130,7 @@ namespace NFTGCO.API
                 Debug.LogWarning("Amount must be 10 or 20");
         }
 
-        public static void UploadImageAsset(byte[] assetByte,
+        public static void UploadImageAsset(string imgURL,
             Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -140,19 +141,22 @@ namespace NFTGCO.API
 
             var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
 
+            Dictionary<string, string> body = new Dictionary<string, string>();
+            body.Add("asset", imgURL);
+
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}store",
                 Headers = headers,
                 EnableDebug = true,
-                Body = assetByte
+                BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
             };
 
             RestClient.Post(request, callback);
         }
 
-        public static void MintAvatar(MintDTO mintProperties, Action<RequestException, ResponseHelper> callback)
+        public static void MintAvatar(MintData mintProperties, Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
@@ -165,7 +169,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}store",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}",
                 Headers = headers,
                 EnableDebug = true,
                 Body = mintProperties
