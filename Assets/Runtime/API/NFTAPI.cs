@@ -99,7 +99,26 @@ namespace NFTGCO.API
 
             RestClient.Get(request, callback);
         }
+        public static void GetLastAvatarAttributes(int avatarId, Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
 
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}avatar/{avatarId}/attributes",
+                Headers = headers,
+                EnableDebug = true,
+            };
+
+            RestClient.Get(request, callback);
+        }
         public static void GetLeaderboard(int amount, Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
