@@ -19,21 +19,21 @@ namespace NFTGCO.Helpers.Editor
         public void OnPreprocessBuild(BuildReport report)
         {
             Debug.Log($"NFTGCO Preprocess Build: {report.summary.platform} {report.summary.outputPath}");
-
-            string currentVersion = FindCurrentVersion();
-
+            
             if (GameSettingsSO.Instance == null)
                 return;
 
-            switch (GameSettingsSO.Instance.GameEnvironmentEnum)
-            {
-                case GameEnvironmentEnum.Development:
-                    UpdateVersion(currentVersion);
-                    break;
-                case GameEnvironmentEnum.Production:
-                    PlayerSettings.bundleVersion = GameSettingsSO.Instance.GameVersion;
-                    break;
-            }
+            // switch (GameSettingsSO.Instance.GameEnvironmentEnum)
+            // {
+            //     case GameEnvironmentEnum.Development:
+            //         UpdateVersion(currentVersion);
+            //         break;
+            //     case GameEnvironmentEnum.Production:
+            //         PlayerSettings.bundleVersion = GameSettingsSO.Instance.GameVersion;
+            //         break;
+            // }
+            
+            PlayerSettings.bundleVersion = GameSettingsSO.Instance.GameVersion;
 
             PlayerSettings.Android.bundleVersionCode = GameSettingsSO.Instance.AndroidBundleVersion;
             PlayerSettings.iOS.buildNumber = GameSettingsSO.Instance.IOSBuildNumber.ToString();
