@@ -15,6 +15,7 @@ namespace NFTGCO.Models.DTO
         public string nft_type;
         public string account_id;
         public List<AttributeData> attributes;
+        public References references;
         public string data;
     }
 }
