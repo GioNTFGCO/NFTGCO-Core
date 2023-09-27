@@ -20,6 +20,6 @@ namespace NFTGCO.Models.DTO
         public string data;
         public string account_id;
         public string state;
-        public object reference;
+        public References references;
     }
 }
