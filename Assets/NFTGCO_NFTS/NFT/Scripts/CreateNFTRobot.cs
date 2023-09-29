@@ -12,7 +12,7 @@ namespace NFTCreator
         private const string ARMOR_KEY = "Armor";
         private const string ACCESSORY_KEY = "Accessory";
         private const string AURA_KEY = "Aura";
-        
+
         [SerializeField] private NFTSocket[] _sockets;
         [SerializeField] private NFTSocketAcc[] _socketsArmor;
         [SerializeField] private NFTSocketAcc[] _socketsAccessories;
@@ -78,7 +78,8 @@ namespace NFTCreator
         /// <param name="tokenAttributeId">the part of the body that the asset are gonna created</param>
         private void GenerateRobotAsset(int indexID, NFTTokenAttributeEnum tokenAttributeId)
         {
-            var tokenFromServerId = NFTGCOStoredManager.Instance.GetStoreByNFTTokenAttribute(tokenAttributeId).ServerTokenAttributes[RobotId];
+            var tokenFromServerId = NFTGCOStoredManager.Instance.GetStoreByNFTTokenAttribute(tokenAttributeId)
+                .ServerTokenAttributes[RobotId];
 
             GenerateRobotAssets(indexID, tokenAttributeId, tokenFromServerId);
         }
@@ -87,16 +88,16 @@ namespace NFTCreator
         {
             if (tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name == ARMOR_KEY)
             {
-                CreateAssetWithKey(_socketsArmor[indexID], tokenFromServerId, tokenAttributeId);
+                CreateAssetWithKey(_socketsArmor[indexID], tokenFromServerId, tokenAttributeId, true);
                 //CreateAssetWithIndex(indexID, tokenFromServerId, ARMOR_KEY);
             }
             else if (tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name == ACCESSORY_KEY)
             {
-                CreateAssetWithKey(_socketsAccessories[indexID], tokenFromServerId, tokenAttributeId);
+                CreateAssetWithKey(_socketsAccessories[indexID], tokenFromServerId, tokenAttributeId, false);
             }
             else if (tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name == AURA_KEY)
             {
-                CreateAssetWithKey(_socketsAuras, tokenFromServerId, tokenAttributeId);
+                CreateAssetWithKey(_socketsAuras, tokenFromServerId, tokenAttributeId, false);
             }
         }
 
@@ -120,7 +121,7 @@ namespace NFTCreator
         //     }
         // }
 
-        private void CreateAssetWithKey(NFTSocketAcc nftObject, long nftKey, NFTTokenAttributeEnum tokenAttribute)
+        private void CreateAssetWithKey(NFTSocketAcc nftObject, long nftKey, NFTTokenAttributeEnum tokenAttribute, bool worldPositionStays)
         {
             GameObject NFTAsset = GetValueFromNFTSocketAccWithKey(nftObject, nftKey);
 
@@ -130,7 +131,7 @@ namespace NFTCreator
 
                 if (!_tokensInRuntime[tokenAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name].ContainsKey(tokenKey))
                 {
-                    GameObject tokenAsset = Instantiate(NFTAsset, nftObject.Socket, false);
+                    GameObject tokenAsset = Instantiate(NFTAsset, nftObject.Socket, worldPositionStays);
 
                     _tokensInRuntime[tokenAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name].Add(tokenKey, tokenAsset);
                     tokenAsset.SetActive(true);
@@ -141,7 +142,7 @@ namespace NFTCreator
                 }
             }
         }
-        
+
         private void DisableAssetsInRuntime(string enumAttribute)
         {
             foreach (var item in _tokensInRuntime[enumAttribute])
@@ -190,7 +191,7 @@ namespace NFTCreator
             NFTSocketAcc NFTObject = System.Array.Find(_socketsArmor, element => element.TokenAttributeIndex == tokenAttributeId);
             long randomNFTIndex = NFTObject.Options.ElementAt(Random.Range(0, NFTObject.Options.Count)).Key;
 
-            CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId);
+            CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId, true);
         }
 
 
@@ -202,14 +203,14 @@ namespace NFTCreator
             NFTSocketAcc NFTObject = System.Array.Find(_socketsAccessories, element => element.TokenAttributeIndex == tokenAttributeId);
             long randomNFTIndex = NFTObject.Options.ElementAt(Random.Range(0, NFTObject.Options.Count)).Key;
 
-            CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId);
+            CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId, false);
         }
 
         public void GenerateRandomAuraAsset()
         {
             DisableAssetsInRuntime(AURA_KEY);
             long randomNFTIndex = _socketsAuras.Options.ElementAt(Random.Range(0, _socketsAuras.Options.Count)).Key;
-            CreateAssetWithKey(_socketsAuras, randomNFTIndex, NFTTokenAttributeEnum.Aura_Accessory);
+            CreateAssetWithKey(_socketsAuras, randomNFTIndex, NFTTokenAttributeEnum.Aura_Accessory, false);
         }
 
         #endregion
