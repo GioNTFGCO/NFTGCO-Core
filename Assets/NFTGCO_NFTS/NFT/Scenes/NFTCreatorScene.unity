@@ -401,7 +401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _avatarRobot: {fileID: 3969222536915149875}
-  _typeOfAttribute: 0
+  _typeOfAttributeArmor: 0
+  _typeOfAttributeAccessory: 8
 --- !u!4 &1807282873
 Transform:
   m_ObjectHideFlags: 0

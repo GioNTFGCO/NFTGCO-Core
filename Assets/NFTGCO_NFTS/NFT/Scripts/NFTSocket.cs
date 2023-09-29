@@ -1,18 +1,18 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-
 namespace NFTCreator
 {
     [System.Serializable]
     public class NFTSocket
     {
-        [SerializeField] private string name;
+        [SerializeField] private string _name;
+        [SerializeField] private Transform _socket;
         [NFTGCO.Helpers.SearchableEnum]
         [SerializeField] private NFTTokenAttributeEnum _tokenAttributeIndex;
-        [SerializeField] private Transform _socket;
+        [SerializeField] private NFTGCO.Helpers.UDictionary<long, GameObject> _options;
 
-        [FormerlySerializedAs("options")] public GameObject[] Options;
+        public string Name => _name;
         public Transform Socket => _socket;
         public NFTTokenAttributeEnum TokenAttributeIndex => _tokenAttributeIndex;
+        public NFTGCO.Helpers.UDictionary<long, GameObject> Options => _options;
     }
 }

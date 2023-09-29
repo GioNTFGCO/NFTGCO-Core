@@ -12,46 +12,35 @@ namespace NFTCreator
     {
         [Header("Testing area")]
         [SerializeField] private CreateNFTRobot _avatarRobot;
+        [FormerlySerializedAs("_typeOfAttribute")]
         [NFTGCO.Helpers.SearchableEnum]
-        [SerializeField] private NFTTokenAttributeEnum _typeOfAttribute;
+        [SerializeField] private NFTTokenAttributeEnum _typeOfAttributeArmor;
+        [NFTGCO.Helpers.SearchableEnum]
+        [SerializeField] private NFTTokenAttributeEnum _typeOfAttributeAccessory;
 
         private string _buttonMessage;
 
         [Space]
-        [SerializeField] private NFTGCO.Helpers.InspectorButton ShowNextRobotButton = new NFTGCO.Helpers.InspectorButton(nameof(ShowNextRobot));
         [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotArmorButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotArmor));
         [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAccessoryButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotAccessory));
         [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAuraButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotAura));
-
         
-        private void ShowNextRobot()
-        {
-            ShowMessage("Show Next NFT Assets");
-            if (NFTGCOStoredManager.Instance.StoredResponse == null)
-                return;
-
-            _avatarRobot.RobotId++;
-            if (_avatarRobot.RobotId >= NFTGCOStoredManager.Instance.StoredResponse.Count)
-                _avatarRobot.RobotId = 0;
-
-            _avatarRobot.CreateRobotAssets();
-        }
         private void GenerateRandomRobotArmor()
         {
             ShowMessage("Generate Random Armor");
             
-            if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Armor")
+            if (_typeOfAttributeArmor.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Armor")
                 return;
             
-            _avatarRobot.GenerateRandomSocketAttribute(_typeOfAttribute);
+            _avatarRobot.GenerateRandomSocketAttribute(_typeOfAttributeArmor);
         }
         private void GenerateRandomRobotAccessory()
         {
-            ShowMessage($"Generate Random Accessory: {_typeOfAttribute}");
-            if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
+            ShowMessage($"Generate Random Accessory: {_typeOfAttributeArmor}");
+            if (_typeOfAttributeArmor.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
                 return;
 
-            _avatarRobot.GenerateRandomAccessoryAsset(_typeOfAttribute);
+            _avatarRobot.GenerateRandomAccessoryAsset(_typeOfAttributeArmor);
         }
         private void GenerateRandomRobotAura()
         {

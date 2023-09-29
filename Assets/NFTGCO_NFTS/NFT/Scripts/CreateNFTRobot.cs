@@ -13,10 +13,9 @@ namespace NFTCreator
         private const string ACCESSORY_KEY = "Accessory";
         private const string AURA_KEY = "Aura";
 
-        [SerializeField] private NFTSocket[] _sockets;
-        [SerializeField] private NFTSocketAcc[] _socketsArmor;
-        [SerializeField] private NFTSocketAcc[] _socketsAccessories;
-        [SerializeField] private NFTSocketAcc _socketsAuras;
+        [SerializeField] private NFTSocket[] _socketsArmor;
+        [SerializeField] private NFTSocket[] _socketsAccessories;
+        [SerializeField] private NFTSocket _socketsAuras;
 
         private bool _createOnStart;
         [SerializeField] [ReadOnly] private UDictionary<string, UDictionary<string, GameObject>> _tokensInRuntime;
@@ -89,7 +88,6 @@ namespace NFTCreator
             if (tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name == ARMOR_KEY)
             {
                 CreateAssetWithKey(_socketsArmor[indexID], tokenFromServerId, tokenAttributeId, true);
-                //CreateAssetWithIndex(indexID, tokenFromServerId, ARMOR_KEY);
             }
             else if (tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name == ACCESSORY_KEY)
             {
@@ -100,28 +98,8 @@ namespace NFTCreator
                 CreateAssetWithKey(_socketsAuras, tokenFromServerId, tokenAttributeId, false);
             }
         }
-
-        // private void CreateAssetWithIndex(int socketId, long accessoryId, string keyName)
-        // {
-        //     if (_sockets[socketId].Options[accessoryId] == null)
-        //         return;
-        //
-        //     string tokenKey = $"{keyName}-{_sockets[socketId].Options[accessoryId].name}";
-        //     //string tokenKey = $"{tokenAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name}-{tokenAttribute}-{NFTAsset.name}";
-        //
-        //     if (!_tokensInRuntime[keyName].ContainsKey(tokenKey))
-        //     {
-        //         GameObject tokenAsset = Instantiate(_sockets[socketId].Options[accessoryId], _sockets[socketId].Socket, true);
-        //         _tokensInRuntime[keyName].Add(tokenKey, tokenAsset);
-        //         tokenAsset.SetActive(true);
-        //     }
-        //     else
-        //     {
-        //         _tokensInRuntime[keyName][tokenKey].SetActive(true);
-        //     }
-        // }
-
-        private void CreateAssetWithKey(NFTSocketAcc nftObject, long nftKey, NFTTokenAttributeEnum tokenAttribute, bool worldPositionStays)
+        
+        private void CreateAssetWithKey(NFTSocket nftObject, long nftKey, NFTTokenAttributeEnum tokenAttribute, bool worldPositionStays)
         {
             GameObject NFTAsset = GetValueFromNFTSocketAccWithKey(nftObject, nftKey);
 
@@ -162,7 +140,7 @@ namespace NFTCreator
             }
         }
 
-        private GameObject GetValueFromNFTSocketAccWithKey(NFTSocketAcc nftsocketacc, long nftKey)
+        private GameObject GetValueFromNFTSocketAccWithKey(NFTSocket nftsocketacc, long nftKey)
         {
             foreach (KeyValuePair<long, GameObject> TokenAttribute in nftsocketacc.Options)
                 if (TokenAttribute.Key == nftKey)
@@ -188,19 +166,18 @@ namespace NFTCreator
             DisableAssetsInRuntimeWithKeyCondition(tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name,
                 tokenAttributeId.ToString());
 
-            NFTSocketAcc NFTObject = System.Array.Find(_socketsArmor, element => element.TokenAttributeIndex == tokenAttributeId);
+            NFTSocket NFTObject = System.Array.Find(_socketsArmor, element => element.TokenAttributeIndex == tokenAttributeId);
             long randomNFTIndex = NFTObject.Options.ElementAt(Random.Range(0, NFTObject.Options.Count)).Key;
 
             CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId, true);
         }
-
-
+        
         public void GenerateRandomAccessoryAsset(NFTTokenAttributeEnum tokenAttributeId)
         {
             DisableAssetsInRuntimeWithKeyCondition(tokenAttributeId.GetAttribute<NFTTokenAttributeEnumAttribute>().Name,
                 tokenAttributeId.ToString());
 
-            NFTSocketAcc NFTObject = System.Array.Find(_socketsAccessories, element => element.TokenAttributeIndex == tokenAttributeId);
+            NFTSocket NFTObject = System.Array.Find(_socketsAccessories, element => element.TokenAttributeIndex == tokenAttributeId);
             long randomNFTIndex = NFTObject.Options.ElementAt(Random.Range(0, NFTObject.Options.Count)).Key;
 
             CreateAssetWithKey(NFTObject, randomNFTIndex, tokenAttributeId, false);

@@ -35,7 +35,6 @@ namespace NFTGCO
         private void GetAvailableNFTXpByIdCallback(RequestException exception, long response)
         {
             Debug.Log("[NFT Requests] NFT Available Xp: " + response);
-            NFTGCOStoredManager.Instance.SetCurrentNFTXp(response);
         }
 
         private void IncreaseNftXp(long xpAmount)
