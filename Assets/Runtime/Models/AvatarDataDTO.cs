@@ -14,5 +14,6 @@ namespace NFTGCO.Models.DTO
         public long avatarTypeId;
         public string mintStatus;
         public List<long> tokenAttributes;
+        public string imageUrl;
     }
 }
