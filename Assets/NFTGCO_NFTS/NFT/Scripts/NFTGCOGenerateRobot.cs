@@ -11,49 +11,30 @@ namespace NFTCreator
     public class NFTGCOGenerateRobot : MonoBehaviour
     {
         [Header("Testing area")]
-        [SerializeField] private string _robotToGenerate;
-        [SerializeField] private NFTGCO.Helpers.UDictionary<string, CreateNFTRobot> _createNFTRobots;
+        [SerializeField] private CreateNFTRobot _avatarRobot;
         [NFTGCO.Helpers.SearchableEnum]
         [SerializeField] private NFTTokenAttributeEnum _typeOfAttribute;
 
         private string _buttonMessage;
 
         [Space]
-        [SerializeField] private NFTGCO.Helpers.InspectorButton EnableRobotButton = new NFTGCO.Helpers.InspectorButton("EnableRobot");
-        [SerializeField] private NFTGCO.Helpers.InspectorButton ShowNextRobotButton = new NFTGCO.Helpers.InspectorButton("ShowNextRobot");
-        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotArmorButton = new NFTGCO.Helpers.InspectorButton("GenerateRandomRobotArmor");
-        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAccessoryButton = new NFTGCO.Helpers.InspectorButton("GenerateRandomRobotAccessory");
-        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAuraButton = new NFTGCO.Helpers.InspectorButton("GenerateRandomRobotAura");
+        [SerializeField] private NFTGCO.Helpers.InspectorButton ShowNextRobotButton = new NFTGCO.Helpers.InspectorButton(nameof(ShowNextRobot));
+        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotArmorButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotArmor));
+        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAccessoryButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotAccessory));
+        [SerializeField] private NFTGCO.Helpers.InspectorButton GenerateRandomRobotAuraButton = new NFTGCO.Helpers.InspectorButton(nameof(GenerateRandomRobotAura));
 
-        private void Awake()
-        {
-            EnableRobot();
-        }
-
-        private void Start() {
-            //ForgeGameRequestsManager.OnGetGameState?.Invoke();
-        }
-
-        private void EnableRobot()
-        {
-            ShowMessage($"Enable robot: {_robotToGenerate}");
-            foreach (var item in _createNFTRobots)
-            {
-                item.Value.gameObject.SetActive(false);
-            }
-            _createNFTRobots[_robotToGenerate].gameObject.SetActive(true);
-        }
+        
         private void ShowNextRobot()
         {
             ShowMessage("Show Next NFT Assets");
             if (NFTGCOStoredManager.Instance.StoredResponse == null)
                 return;
 
-            _createNFTRobots[_robotToGenerate].RobotId++;
-            if (_createNFTRobots[_robotToGenerate].RobotId >= NFTGCOStoredManager.Instance.StoredResponse.Count)
-                _createNFTRobots[_robotToGenerate].RobotId = 0;
+            _avatarRobot.RobotId++;
+            if (_avatarRobot.RobotId >= NFTGCOStoredManager.Instance.StoredResponse.Count)
+                _avatarRobot.RobotId = 0;
 
-            _createNFTRobots[_robotToGenerate].CreateRobotAssets();
+            _avatarRobot.CreateRobotAssets();
         }
         private void GenerateRandomRobotArmor()
         {
@@ -62,7 +43,7 @@ namespace NFTCreator
             if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Armor")
                 return;
             
-            _createNFTRobots[_robotToGenerate].GenerateRandomSocketAttribute(_typeOfAttribute);
+            _avatarRobot.GenerateRandomSocketAttribute(_typeOfAttribute);
         }
         private void GenerateRandomRobotAccessory()
         {
@@ -70,12 +51,12 @@ namespace NFTCreator
             if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
                 return;
 
-            _createNFTRobots[_robotToGenerate].GenerateRandomAccessoryAsset(_typeOfAttribute);
+            _avatarRobot.GenerateRandomAccessoryAsset(_typeOfAttribute);
         }
         private void GenerateRandomRobotAura()
         {
             ShowMessage("Generate Random Aura");
-            _createNFTRobots[_robotToGenerate].GenerateRandomAuraAsset();
+            _avatarRobot.GenerateRandomAuraAsset();
         }
 
         private void ShowMessage(string message)

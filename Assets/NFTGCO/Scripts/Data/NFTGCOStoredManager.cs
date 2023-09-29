@@ -88,9 +88,7 @@ namespace NFTGCO
 
                     if (response[i].tokenAttributes.Count == TOTAL_TOKEN_ATTRIBUTES)
                     {
-                        for (int totalTokenAttributes = 0;
-                             totalTokenAttributes < TOTAL_TOKEN_ATTRIBUTES;
-                             totalTokenAttributes++)
+                        for (int totalTokenAttributes = 0; totalTokenAttributes < TOTAL_TOKEN_ATTRIBUTES; totalTokenAttributes++)
                         {
                             NFTGCOStored cachedNftgcoStored = _serverSocketsAccesories.Find(x =>
                                 x.NFTTokenAttribute == (NFTTokenAttributeEnum)totalTokenAttributes);
@@ -99,13 +97,11 @@ namespace NFTGCO
                                 NFTGCOStored nftgcoStored =
                                     new NFTGCOStored((NFTTokenAttributeEnum)totalTokenAttributes);
                                 _serverSocketsAccesories.Add(nftgcoStored);
-                                _serverSocketsAccesories[totalTokenAttributes]
-                                    .AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
+                                _serverSocketsAccesories[totalTokenAttributes].AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
                             }
                             else
                             {
-                                _serverSocketsAccesories[totalTokenAttributes]
-                                    .AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
+                                _serverSocketsAccesories[totalTokenAttributes].AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
                             }
                         }
                     }
