@@ -14917,11 +14917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9086224127589091215, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}
       propertyPath: _levelScene._sceneName
-      value: DemoScene
+      value: NFTCreatorScene
       objectReference: {fileID: 0}
     - target: {fileID: 9086224127589091215, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}
       propertyPath: _levelScene._sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: 5886e4fa9abd79842a47ecaaf781195e, type: 3}
+      objectReference: {fileID: 102900000, guid: 3b915c7055bd14e4e87a93fead2f4540, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51ba469493e850b4c84a732e142b4d45, type: 3}

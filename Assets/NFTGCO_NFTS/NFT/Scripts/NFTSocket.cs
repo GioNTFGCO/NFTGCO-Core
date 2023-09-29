@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace NFTCreator
 {
     [System.Serializable]
@@ -9,7 +11,7 @@ namespace NFTCreator
         [SerializeField] private NFTTokenAttributeEnum _tokenAttributeIndex;
         [SerializeField] private Transform _socket;
 
-        public GameObject[] options;
+        [FormerlySerializedAs("options")] public GameObject[] Options;
         public Transform Socket => _socket;
         public NFTTokenAttributeEnum TokenAttributeIndex => _tokenAttributeIndex;
     }

@@ -125,23 +125,13 @@ namespace NFTGCO
             }
         }
 
-        public NFTGCOStored GetForgeStoreByNFTTokenAttribute(NFTTokenAttributeEnum nfttoken)
+        public NFTGCOStored GetStoreByNFTTokenAttribute(NFTTokenAttributeEnum nfttoken)
         {
             return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null
                 ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken)
                 : null;
         }
-
-        public long GetRandomServerTokenAttributes(NFTTokenAttributeEnum nfttoken)
-        {
-            return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null
-                ? _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes[
-                    Random.Range(0,
-                        _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken).ServerTokenAttributes
-                            .Count)]
-                : 0;
-        }
-
+        
         public long GetServerTokenByIndex(NFTTokenAttributeEnum nfttoken, int index)
         {
             return _serverSocketsAccesories.Find(x => x.NFTTokenAttribute == nfttoken) != null

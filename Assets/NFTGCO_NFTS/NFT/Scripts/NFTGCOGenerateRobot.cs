@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using NFTGCO;
 using NFTGCO.Helpers;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace NFTCreator
 {
 
@@ -12,7 +14,7 @@ namespace NFTCreator
         [SerializeField] private string _robotToGenerate;
         [SerializeField] private NFTGCO.Helpers.UDictionary<string, CreateNFTRobot> _createNFTRobots;
         [NFTGCO.Helpers.SearchableEnum]
-        [SerializeField] private NFTTokenAttributeEnum _typeOfAccessory;
+        [SerializeField] private NFTTokenAttributeEnum _typeOfAttribute;
 
         private string _buttonMessage;
 
@@ -55,16 +57,20 @@ namespace NFTCreator
         }
         private void GenerateRandomRobotArmor()
         {
-            ShowMessage("Generate Random Robot Assets from inventory.");
-            _createNFTRobots[_robotToGenerate].CreateRobotAssets(true);
+            ShowMessage("Generate Random Armor");
+            
+            if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Armor")
+                return;
+            
+            _createNFTRobots[_robotToGenerate].GenerateRandomSocketAttribute(_typeOfAttribute);
         }
         private void GenerateRandomRobotAccessory()
         {
-            ShowMessage($"Generate Random Accessory: {_typeOfAccessory}");
-            if (_typeOfAccessory.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
+            ShowMessage($"Generate Random Accessory: {_typeOfAttribute}");
+            if (_typeOfAttribute.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
                 return;
 
-            _createNFTRobots[_robotToGenerate].GenerateRandomAccessoryAsset(_typeOfAccessory);
+            _createNFTRobots[_robotToGenerate].GenerateRandomAccessoryAsset(_typeOfAttribute);
         }
         private void GenerateRandomRobotAura()
         {
