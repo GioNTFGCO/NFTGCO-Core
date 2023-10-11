@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NFTGCO.Core.Global;
 using NFTGCO.Helpers;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -38,7 +37,7 @@ namespace NFTGCO
         
         [Space] [Header("Game Settings")]
         public int CompanyId = 1;
-        public NFTGCOGamesId GameId;
+        public int GameId;
 
         [Space] [Header("Core Version")] 
         public string CoreVersionID = "2.0.0";
@@ -50,6 +49,5 @@ namespace NFTGCO
         public string GoogleWebClientId = "googleWebClientId";
         
         public string GetGameEnvironment => GameEnvironmentEnum.GetAttribute<GameEnvironmentAttribute>().Uri;
-        public string GetAddressableAssetPath => $"addressableAssetPath{GamePlatformEnum.ToString()}";
     }
 }
