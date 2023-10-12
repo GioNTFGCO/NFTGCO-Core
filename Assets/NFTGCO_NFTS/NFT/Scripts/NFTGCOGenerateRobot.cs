@@ -36,11 +36,11 @@ namespace NFTCreator
         }
         private void GenerateRandomRobotAccessory()
         {
-            ShowMessage($"Generate Random Accessory: {_typeOfAttributeArmor}");
-            if (_typeOfAttributeArmor.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
+            ShowMessage($"Generate Random Accessory: {_typeOfAttributeAccessory}");
+            if (_typeOfAttributeAccessory.GetAttribute<NFTTokenAttributeEnumAttribute>().Name != "Accessory")
                 return;
 
-            _avatarRobot.GenerateRandomAccessoryAsset(_typeOfAttributeArmor);
+            _avatarRobot.GenerateRandomAccessoryAsset(_typeOfAttributeAccessory);
         }
         private void GenerateRandomRobotAura()
         {

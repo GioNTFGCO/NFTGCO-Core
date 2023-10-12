@@ -18,14 +18,14 @@ namespace NFTCreator
         [SerializeField] private NFTSocket _socketsAuras;
 
         private bool _createOnStart;
-        [SerializeField] [ReadOnly] private UDictionary<string, UDictionary<string, GameObject>> _tokensInRuntime;
         private List<string> _tokenAttributeEnum;
+        [SerializeField] [ReadOnly] private UDictionary<string, UDictionary<string, GameObject>> _tokensInRuntime;
 
-        public int RobotId { get; set; }
+        private int _robotId;
 
         private void Awake()
         {
-            RobotId = NFTGCOGlobalData.Instance.NFTRobotID;
+            _robotId = NFTGCOGlobalData.Instance.NFTRobotID;
 
             _tokensInRuntime = new UDictionary<string, UDictionary<string, GameObject>>
             {
@@ -57,7 +57,6 @@ namespace NFTCreator
 
             for (int i = 0; i < _socketsArmor.Length; i++)
             {
-                //GenerateRobotAsset(index, _sockets[index].TokenAttributeIndex);
                 GenerateRobotAsset(i, _socketsArmor[i].TokenAttributeIndex);
             }
 
@@ -78,7 +77,7 @@ namespace NFTCreator
         private void GenerateRobotAsset(int indexID, NFTTokenAttributeEnum tokenAttributeId)
         {
             var tokenFromServerId = NFTGCOStoredManager.Instance.GetStoreByNFTTokenAttribute(tokenAttributeId)
-                .ServerTokenAttributes[RobotId];
+                .ServerTokenAttributes[_robotId];
 
             GenerateRobotAssets(indexID, tokenAttributeId, tokenFromServerId);
         }
