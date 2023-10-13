@@ -2,6 +2,7 @@
   <packages>
     <package>com.google.android.gms:play-services-auth:16+</package>
     <package>com.google.signin:google-signin-support:1.0.4</package>
+    <package>com.squareup.okhttp3:okhttp:4.10.0</package>
   </packages>
   <files>
     <file>Assets/Plugins/Android/android.arch.core.common-1.0.0.jar</file>
@@ -20,6 +21,14 @@
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-base-16.0.1.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-16.0.1.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-16.0.1.aar</file>
+    <file>Assets/Plugins/Android/com.google.signin.google-signin-support-1.0.4.aar</file>
+    <file>Assets/Plugins/Android/com.squareup.okhttp3.okhttp-4.10.0.jar</file>
+    <file>Assets/Plugins/Android/com.squareup.okio.okio-jvm-3.0.0.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.annotations-13.0.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-1.6.20.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-common-1.6.20.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-jdk7-1.5.31.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-jdk8-1.5.31.jar</file>
   </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a" />
