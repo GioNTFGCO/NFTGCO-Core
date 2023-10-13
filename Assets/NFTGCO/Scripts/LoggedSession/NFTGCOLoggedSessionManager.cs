@@ -17,7 +17,7 @@ namespace NFTGCO
 
         private void Start()
         {
-            nftgcoLoggedSessionUi.Init(() => StartGame(), () => LogOut());
+            nftgcoLoggedSessionUi.Init(StartGame, LogOut);
         }
 
         public void StartGame()

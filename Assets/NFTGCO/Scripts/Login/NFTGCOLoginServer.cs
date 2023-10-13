@@ -15,6 +15,7 @@ namespace NFTGCO
     {
         [SerializeField] private UpdateAccountManager _updateAccountManager;
         [SerializeField] private NFTGCOLoginNFT nftgcoLoginNft;
+        [SerializeField] private NFTGCOLoginUi _nftgcoLoginUi;
         
         private string _webURL;
 
@@ -77,6 +78,7 @@ namespace NFTGCO
             {
                 if (exception.IsHttpError || exception.StatusCode == 400)
                 {
+                    _nftgcoLoginUi.LoginButtonBehaviour(true);
                     UiMessage.OnMessageSent?.Invoke("User not found, or need to confirm email.");
                     return;
                 }

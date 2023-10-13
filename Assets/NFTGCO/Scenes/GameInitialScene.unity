@@ -6098,7 +6098,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4892065396539978610, guid: 1c7f53ca1448d354cb73084735054a41, type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 4892065396539978610, guid: 1c7f53ca1448d354cb73084735054a41, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13976,7 +13976,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3786205047802894790, guid: a8810b110a940bc46bbb27effbd488e1, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 3786205047802894790, guid: a8810b110a940bc46bbb27effbd488e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14440,71 +14440,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d6ff478c7e4540c09d14210021cfbca, type: 3}
---- !u!1001 &5804889794035451920
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5804889795097355773, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_Name
-      value: NFTGCOGlobalData
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355774, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: _destroyOnLoad
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355774, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: _dontDestroyOnLoad
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_RootOrder
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804889795097355775, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8aaa81c45b05e564f8a5f2a73e2eabc1, type: 3}
 --- !u!1001 &6875049787015508539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14854,6 +14789,10 @@ PrefabInstance:
       propertyPath: _loginWithUser
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
+      propertyPath: _nftgcoLoginUi
+      value: 
+      objectReference: {fileID: 1216302209}
     - target: {fileID: 7918563415028824532, guid: 33ebbd074dde7d14ab2132c122536273, type: 3}
       propertyPath: _updateAccountManager
       value: 

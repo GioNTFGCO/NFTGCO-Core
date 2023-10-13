@@ -49,18 +49,19 @@ namespace NFTGCO
         }
         /// <summary>
         /// Init the Forge Login UI 
-        public void Init(System.Action OnLogin, System.Action OnForgetPassword)
+        public void Init(System.Action onLogin, System.Action onForgetPassword)
         {
             //login
             _loginButton.onClick.AddListener(() =>
             {
-                OnLogin?.Invoke();
+                LoginButtonBehaviour(false);
+                onLogin?.Invoke();
             });
 
             //forget password
             _resetPasswordButton.onClick.AddListener(() =>
             {
-                OnForgetPassword?.Invoke();
+                onForgetPassword?.Invoke();
             });
         }
 

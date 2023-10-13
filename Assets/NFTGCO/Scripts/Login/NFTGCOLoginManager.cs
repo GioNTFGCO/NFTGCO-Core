@@ -102,15 +102,11 @@ namespace NFTGCO
 
         private void OnLoginSuccess()
         {
-            //_forgeManagerUi.ShowHideBlockPanel(false);
-            nftgcoLoginUi.LoginButtonBehaviour(false);
-
             if (NFTGCOStoredManager.Instance.AccountDTOResponse != null)
             {
                 UiMessage.OnMessageSent?.Invoke("NFTGCO data success!");
 
                 GameServerLoadingScreen.OnHideLoadingScreen?.Invoke();
-                //_forgeManagerUi.ShowPanel("LoggedSession");
                 //start game automatically
                 nftgcoLoggedSessionManager.StartGame();
             }

@@ -62,8 +62,7 @@ namespace NFTGCO
                                 x.NFTTokenAttribute == (NFTTokenAttributeEnum)totalTokenAttributes);
                             if (cachedNftgcoStored == null)
                             {
-                                NFTGCOStored nftgcoStored =
-                                    new NFTGCOStored((NFTTokenAttributeEnum)totalTokenAttributes);
+                                NFTGCOStored nftgcoStored = new NFTGCOStored((NFTTokenAttributeEnum)totalTokenAttributes);
                                 _serverSocketsAccessories.Add(nftgcoStored);
                                 _serverSocketsAccessories[totalTokenAttributes].AddNewServerTokeAttribute(response[i].tokenAttributes[totalTokenAttributes]);
                             }
