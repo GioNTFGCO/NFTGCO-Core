@@ -24,7 +24,7 @@ namespace NFTGCO
         {
             if (_sceneLoader == null)
                 return;
-
+            
             _sceneLoader.StartLevel();
         }
 

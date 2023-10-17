@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using NFTGCO.API;
 using NFTGCO.Core.RestClient;
 using NFTGCO.Models.DTO;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 using Google;
