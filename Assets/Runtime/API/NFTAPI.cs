@@ -188,7 +188,7 @@ namespace NFTGCO.API
             RequestHelper request = new RequestHelper()
             {
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}/{GameSettingsSO.Instance.GamePlatformEnum.ToString().ToLower()}/IAP",
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}{GameSettingsSO.Instance.GamePlatformEnum.ToString().ToLower()}/IAP",
                 Headers = headers,
                 EnableDebug = true,
                 Body = mintServer
