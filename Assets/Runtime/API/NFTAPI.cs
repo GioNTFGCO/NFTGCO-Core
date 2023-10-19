@@ -175,28 +175,6 @@ namespace NFTGCO.API
             RestClient.Post(request, callback);
         }
 
-        public static void MintAvatar(AvatarMintServer mintServer, Action<RequestException, ResponseHelper> callback)
-        {
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Debug.LogError("Error. Check internet connection!");
-                return;
-            }
-
-            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
-
-            RequestHelper request = new RequestHelper()
-            {
-                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
-                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}{GameSettingsSO.Instance.GamePlatformEnum.ToString().ToLower()}/IAP",
-                Headers = headers,
-                EnableDebug = true,
-                Body = mintServer
-            };
-
-            RestClient.Post(request, callback);
-        }
-
         public static void GetAvatarFromWallet(string walletAddress, Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
