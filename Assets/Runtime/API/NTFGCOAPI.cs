@@ -19,6 +19,7 @@ public static class NTFGCOAPI
     public const string NFT_BASE_URL = "/api/nft/v1/";
     public const string NFT_BASE_URL_V2 = "/api/nft/v2/";
     public const string GAME_BASE_URL = "/api/game/v1/games";
+    public const string PAYMENT_BASE_URL = "/api/payment/v1/";
 
     public static Dictionary<string, string> GetRequestHeaders()
     {
