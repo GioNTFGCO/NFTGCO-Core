@@ -24,7 +24,7 @@ namespace NFTGCO.API
             {
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
                 Body = new RegisterUserInfo
                 {
                     name = userInfo.name,
@@ -51,7 +51,7 @@ namespace NFTGCO.API
             {
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.ACCOUNT_BASE_URL}registration",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);

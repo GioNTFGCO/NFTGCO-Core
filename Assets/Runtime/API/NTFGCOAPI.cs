@@ -79,4 +79,13 @@ public static class NTFGCOAPI
     {
         return SystemInfo.deviceUniqueIdentifier;
     }
+
+    public static bool IsEditor()
+    {
+#if UNITY_EDITOR
+        return true;
+#else
+        return false;
+#endif
+    }
 }

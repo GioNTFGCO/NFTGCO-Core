@@ -28,7 +28,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = GameSettingsSO.Instance.GetGameEnvironment + NTFGCOAPI.GAME_BASE_URL,
                 Headers = headers,
-                EnableDebug = true
+                EnableDebug = NTFGCOAPI.IsEditor()
             };
 
             RestClient.Get(request, callback);
@@ -54,7 +54,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.GAME_BASE_URL}/{gameId.ToString()}",
                 Headers = headers,
-                EnableDebug = true
+                EnableDebug = NTFGCOAPI.IsEditor()
             };
 
             RestClient.Get(request, callback);
@@ -77,7 +77,7 @@ namespace NFTGCO.API
                 Uri = GameSettingsSO.Instance.GetGameEnvironment +
                       $"{NTFGCOAPI.GAME_BASE_URL}/state/{gameId.ToString()}/{accountId}",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);
@@ -102,7 +102,7 @@ namespace NFTGCO.API
                       from.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) + "&to=" +
                       to.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);
@@ -125,7 +125,7 @@ namespace NFTGCO.API
                 Uri = GameSettingsSO.Instance.GetGameEnvironment +
                       $"{NTFGCOAPI.GAME_BASE_URL}/event/{requestData.gameId}/{requestData.accountId}",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
 
@@ -148,7 +148,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.GAME_BASE_URL}/state",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
                 BodyString = Newtonsoft.Json.JsonConvert.SerializeObject(requestData)
             };
 

@@ -25,7 +25,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}{nftId}/total-xp",
                 Headers = headers,
-                EnableDebug = true
+                EnableDebug = NTFGCOAPI.IsEditor()
             };
 
             RestClient.Get(request, (err, res) =>
@@ -51,7 +51,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = GameSettingsSO.Instance.GetGameEnvironment + $"{NTFGCOAPI.NFT_BASE_URL}increase/xp",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
                 Body = requestData
             };
 
@@ -73,7 +73,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = GameSettingsSO.Instance.GetGameEnvironment + NTFGCOAPI.NFT_BASE_URL,
                 Headers = headers,
-                EnableDebug = true
+                EnableDebug = NTFGCOAPI.IsEditor()
             };
 
             RestClient.Post(request, callback);
@@ -94,7 +94,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}avatar",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);
@@ -114,7 +114,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}avatar/{avatarId}/attributes",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);
@@ -139,7 +139,7 @@ namespace NFTGCO.API
                     ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                     Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL}top",
                     Headers = headers,
-                    EnableDebug = true,
+                    EnableDebug = NTFGCOAPI.IsEditor(),
                     Params = parameters
                 };
 
@@ -168,7 +168,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}store",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
                 BodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body))
             };
 
@@ -190,7 +190,7 @@ namespace NFTGCO.API
                 ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}tokens-by-owner/{walletAddress}",
                 Headers = headers,
-                EnableDebug = true,
+                EnableDebug = NTFGCOAPI.IsEditor(),
             };
 
             RestClient.Get(request, callback);
