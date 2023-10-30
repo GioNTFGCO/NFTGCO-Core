@@ -18,4 +18,19 @@ namespace NFTGCO.Models.DTO
         public References references;
         public string game_uuid;
     }
+
+    [Serializable]
+    public class MintDataV2
+    {
+        public int game_id;
+        public string wallet;
+        public string collection;
+        public string name;
+        public string description;
+        public string image;
+        public string nft_type;
+        public List<AttributeData> attributes;
+        public string data;
+        public References references;
+    }
 }
