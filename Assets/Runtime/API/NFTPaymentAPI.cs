@@ -28,5 +28,27 @@ namespace NFTGCO.API
 
             RestClient.Post(request, callback);
         }
+
+        public static void MintAvatarNFT2(MintData mintData, Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.NFT_BASE_URL_V2}",
+                Headers = headers,
+                EnableDebug = NTFGCOAPI.IsEditor(),
+                Body = mintData
+            };
+
+            RestClient.Post(request, callback);
+        }
     }
 }
