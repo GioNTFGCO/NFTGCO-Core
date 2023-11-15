@@ -7,7 +7,7 @@ namespace NFTGCO.API
 {
     public static class NFTPaymentAPI
     {
-        public static void MintAvatar(AvatarMintServer mintServer, Action<RequestException, ResponseHelper> callback)
+        public static void MintAvatarWithGoogle(AvatarMintGoogle mintData, Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
@@ -23,7 +23,29 @@ namespace NFTGCO.API
                 Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.PAYMENT_BASE_URL}{GameSettingsSO.Instance.GamePlatformEnum.ToString().ToLower()}/iap",
                 Headers = headers,
                 EnableDebug = NTFGCOAPI.IsEditor(),
-                Body = mintServer
+                Body = mintData
+            };
+
+            RestClient.Post(request, callback);
+        }
+
+        public static void MintAvatarWithApple(AvatarMintGoogle mintData, Action<RequestException, ResponseHelper> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Debug.LogError("Error. Check internet connection!");
+                return;
+            }
+
+            var headers = NTFGCOAPI.GetModifiedHeadersWithUserData();
+
+            RequestHelper request = new RequestHelper()
+            {
+                ContentType = NTFGCOAPI.CONTENT_TYPE_JSON,
+                Uri = $"{GameSettingsSO.Instance.GetGameEnvironment}{NTFGCOAPI.PAYMENT_BASE_URL}{GameSettingsSO.Instance.GamePlatformEnum.ToString().ToLower()}/iap",
+                Headers = headers,
+                EnableDebug = NTFGCOAPI.IsEditor(),
+                Body = mintData
             };
 
             RestClient.Post(request, callback);

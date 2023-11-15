@@ -16,7 +16,7 @@ namespace NFTGCO.Models.DTO
         public List<AttributeData> attributes;
         public string data;
         public References references;
-        public string game_uuid;
+        public string uuid;
     }
 
     [Serializable]

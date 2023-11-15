@@ -75,7 +75,7 @@ public static class NTFGCOAPI
         return (long)timeSpan.TotalSeconds;
     }
 
-    private static string DeviceUuid()
+    public static string DeviceUuid()
     {
         return SystemInfo.deviceUniqueIdentifier;
     }
@@ -85,7 +85,7 @@ public static class NTFGCOAPI
 #if UNITY_EDITOR
         return true;
 #else
-        return false;
+        return GameSettingsSO.Instance.GameEnvironmentEnum == GameEnvironmentEnum.Development ? true : false;
 #endif
     }
 }

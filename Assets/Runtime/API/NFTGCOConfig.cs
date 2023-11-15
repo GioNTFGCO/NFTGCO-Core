@@ -56,7 +56,8 @@ namespace NFTGCO.API
 
         protected override void Awake()
         {
-            base.Awake();
+            _dontDestroyOnLoad = true;
+            base.Awake(); 
 #if UNITY_EDITOR
             DeletePlayerPrefs();
 #endif
