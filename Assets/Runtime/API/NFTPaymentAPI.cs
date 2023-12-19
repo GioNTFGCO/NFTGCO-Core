@@ -50,7 +50,7 @@ namespace NFTGCO.API
 
             RestClient.Post(request, callback);
         }
-
+        
         public static void MintAvatarNFT2(MintDataV2 mintData, Action<RequestException, ResponseHelper> callback)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)

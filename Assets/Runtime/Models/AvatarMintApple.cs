@@ -7,6 +7,6 @@ namespace NFTGCO.Models.DTO
     public class AvatarMintApple
     {
         public string transactionId;
-        public List<MintData> data = new();
+        public List<MintData> nft_data = new();
     }
 }

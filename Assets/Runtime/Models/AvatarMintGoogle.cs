@@ -7,6 +7,6 @@ namespace NFTGCO.Models.DTO
     public class AvatarMintGoogle
     {
         public string payment_token;
-        public List<MintData> data = new();
+        public List<MintData> nft_data = new();
     }
 }
